@@ -1,7 +1,6 @@
 import { Avatar, Button, Flex } from "@chakra-ui/react";
 import { ButtonComponent } from "../../components/button";
 import { InputComponent } from "../../components/input";
-import theme from "../../themes";
 
 export const LoginPage = () => {
   return (
@@ -23,30 +22,30 @@ export const LoginPage = () => {
         <Flex
           direction={"column"}
           gap={5}
-          bg={theme.colors.white}
+          bg="primary.white"
           p="20px 24px"
           w={"100%"}
           rounded={8}
         >
           <InputComponent
-            bg={theme.colors.green}
+            bg="primary.green"
             placeholder={"SEU EMAIL AQUI"}
             type={"email"}
           />
           <InputComponent
-            bg={theme.colors.green}
+            bg="primary.green"
             placeholder={"SUA SENHA AQUI"}
             type={"password"}
           />
           <ButtonComponent
             text={"CONFIRMAR"}
-            bg={theme.colors.green}
-            color={theme.colors.white}
+            bg="primary.green"
+            color="primary.white"
           />
         </Flex>
         <Button
-          bg={theme.colors.bg}
-          color={theme.colors.yellow}
+          bg="primary.bg"
+          color="primary.yellow"
           _hover={{ bg: "none" }}
           alignSelf={"end"}
           fontSize={{ base: "sm", sm: "sm", md: "md", lg: "lg" }}

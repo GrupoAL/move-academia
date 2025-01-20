@@ -1,13 +1,12 @@
 import { Flex } from "@chakra-ui/react";
 import { HeaderComponent } from "./components/header";
-import { RecoverPasswordPage } from "./pages/recoverPassword";
-import theme from "./themes";
+import { DashboardPage } from "./pages/dashboard";
 
 function App() {
   return (
     <Flex
       direction={"column"}
-      bg={theme.colors.bg}
+      bg="primary.bg"
       width={"100dvw"}
       height={"100dvh"}
       alignItems={"center"}
@@ -19,7 +18,7 @@ function App() {
         justifyContent={"center"}
         alignItems={"center"}
       >
-        <RecoverPasswordPage />
+        <DashboardPage />
       </Flex>
     </Flex>
   );

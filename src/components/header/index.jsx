@@ -1,21 +1,23 @@
 import { Box, Flex } from "@chakra-ui/react";
+import PropTypes from "prop-types";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoExitOutline } from "react-icons/io5";
 import { MdOutlineDoubleArrow } from "react-icons/md";
 
-export const HeaderComponent = ({ children }) => {
+export const HeaderComponent = ({ type }) => {
   return (
     <Flex
       as={"header"}
       w={"full"}
       bg="primary.green"
       color={"primary.white"}
-      height={"100px"}
+      height={"80px"}
       justifyContent={"space-between"}
       alignItems={"center"}
       fontSize={"2xl"}
       px={5}
     >
+      {type}
       <Box transform={"scaleX(-1)"}>
         <MdOutlineDoubleArrow />
       </Box>
@@ -29,4 +31,8 @@ export const HeaderComponent = ({ children }) => {
       </Flex>
     </Flex>
   );
+};
+
+HeaderComponent.propTypes = {
+  type: PropTypes.string,
 };

@@ -1,6 +1,5 @@
-// @ts-nocheck
-
 import { Input } from "@chakra-ui/react";
+import PropTypes from "prop-types";
 
 export const InputComponent = ({ placeholder, type, bg }) => {
   return (
@@ -26,4 +25,10 @@ export const InputComponent = ({ placeholder, type, bg }) => {
       }}
     />
   );
+};
+
+InputComponent.propTypes = {
+  type: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
+  bg: PropTypes.any,
 };

@@ -1,6 +1,7 @@
 import { Flex } from "@chakra-ui/react";
+import { FooterComponent } from "./components/footer";
 import { HeaderComponent } from "./components/header";
-import { DashboardPage } from "./pages/dashboard";
+import { VideoPlayerPage } from "./pages/videoPlayer";
 
 function App() {
   return (
@@ -18,8 +19,9 @@ function App() {
         justifyContent={"center"}
         alignItems={"center"}
       >
-        <DashboardPage />
+        <VideoPlayerPage />
       </Flex>
+      <FooterComponent />
     </Flex>
   );
 }

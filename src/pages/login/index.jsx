@@ -1,8 +1,11 @@
 import { Avatar, Button, Flex } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 import { ButtonComponent } from "../../components/button";
 import { InputComponent } from "../../components/input";
 
 export const LoginPage = () => {
+  const navigate = useNavigate();
+
   return (
     <Flex w={"100%"} direction={"column"} alignItems={"center"} gap={5}>
       <Avatar
@@ -29,29 +32,34 @@ export const LoginPage = () => {
         >
           <InputComponent
             bg="primary.green"
-            placeholder={"SEU EMAIL AQUI"}
+            placeholder={"E-mail"}
             type={"email"}
           />
           <InputComponent
             bg="primary.green"
-            placeholder={"SUA SENHA AQUI"}
+            placeholder={"Senha"}
             type={"password"}
           />
           <ButtonComponent
-            text={"CONFIRMAR"}
+            type={"outline"}
+            text={"Confirmar"}
             bg="primary.green"
             color="primary.white"
+            sx={{ w: "150px" }}
+            alignSelf={"end"}
+            onClick={() => navigate("/dashboard")}
           />
         </Flex>
         <Button
           bg="primary.bg"
           color="primary.yellow"
-          _hover={{ bg: "none" }}
+          _hover={{ bg: "none", textDecoration: "underline" }}
           alignSelf={"end"}
           fontSize={{ base: "sm", sm: "sm", md: "md", lg: "lg" }}
           fontWeight={{ base: 600, sm: 600, md: 600, lg: 700 }}
+          onClick={() => navigate("/recoverPassword")}
         >
-          ESQUECI MINHA SENHA
+          Esqueci minha senha!
         </Button>
       </Flex>
     </Flex>

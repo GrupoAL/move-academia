@@ -1,9 +1,11 @@
 import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import { GrRefresh } from "react-icons/gr";
+import { useNavigate } from "react-router-dom";
 import { ButtonComponent } from "../../components/button";
 import { InputComponent } from "../../components/input";
 
 export const RecoverPasswordPage = () => {
+  const navigate = useNavigate();
   return (
     <Flex w={"100%"} direction={"column"} alignItems={"center"} gap={5}>
       <Flex
@@ -24,8 +26,8 @@ export const RecoverPasswordPage = () => {
             fontSize={{ base: "sm", sm: "sm", md: "md", lg: "lg" }}
             fontWeight={{ base: 600, sm: 600, md: 600, lg: 700 }}
           >
-            SÃO TANTAS SENHAS PARA LEMBRAR, <br />
-            ÀS VEZES É NORMAL ESQUECER!
+            São tantas senhas para lembrar, <br />
+            às vezes é normal esquecer!
           </Text>
           <Box>
             <Text
@@ -34,7 +36,7 @@ export const RecoverPasswordPage = () => {
               fontWeight={{ base: 600, sm: 600, md: 600, lg: 700 }}
               mb={1}
             >
-              COLOQUE O SEU E-MAIL ABAIXO:
+              Insira SEU E-MAIL ABAIXO:
             </Text>
             <InputComponent bg="primary.white" type={"email"} />
           </Box>
@@ -47,6 +49,7 @@ export const RecoverPasswordPage = () => {
             fontSize={"36px"}
             fontWeight={{ base: 600, sm: 600, md: 700, lg: 700 }}
             transform={"rotate(-45deg) scaleX(-1)"}
+            onClick={() => navigate("/")}
           >
             <GrRefresh />
           </Button>
@@ -55,6 +58,7 @@ export const RecoverPasswordPage = () => {
             color="primary.green"
             text={"ENVIAR"}
             sx={{ h: "32px", w: "100px" }}
+            onClick={() => navigate("/")}
           />
         </Flex>
       </Flex>

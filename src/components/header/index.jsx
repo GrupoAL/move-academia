@@ -3,8 +3,10 @@ import PropTypes from "prop-types";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoExitOutline } from "react-icons/io5";
 import { MdOutlineDoubleArrow } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 export const HeaderComponent = ({ type }) => {
+  const navigate = useNavigate();
   return (
     <Flex
       as={"header"}
@@ -17,18 +19,21 @@ export const HeaderComponent = ({ type }) => {
       fontSize={"2xl"}
       px={5}
     >
-      {type}
-      <Box transform={"scaleX(-1)"}>
-        <MdOutlineDoubleArrow />
-      </Box>
-      <Flex gap={4}>
-        <Box>
-          <GiHamburgerMenu />
-        </Box>
-        <Box>
-          <IoExitOutline />
-        </Box>
-      </Flex>
+      {type === "logged" && (
+        <>
+          <Box transform={"scaleX(-1)"}>
+            <MdOutlineDoubleArrow />
+          </Box>
+          <Flex gap={4}>
+            <Box>
+              <GiHamburgerMenu />
+            </Box>
+            <Box>
+              <IoExitOutline onClick={() => navigate("/")} />
+            </Box>
+          </Flex>
+        </>
+      )}
     </Flex>
   );
 };

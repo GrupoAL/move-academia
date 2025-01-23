@@ -1,8 +1,10 @@
 import { Button, Flex } from "@chakra-ui/react";
 import { GrRefresh } from "react-icons/gr";
 import { TfiSearch } from "react-icons/tfi";
+import { useNavigate } from "react-router-dom";
 
 export const FooterComponent = () => {
+  const navigate = useNavigate();
   return (
     <Flex
       position={"fixed"}
@@ -30,6 +32,7 @@ export const FooterComponent = () => {
           fontSize={"56px"}
           fontWeight={{ base: 600, sm: 600, md: 700, lg: 700 }}
           transform={"rotate(-45deg) scaleX(-1)"}
+          onClick={() => navigate("/dashboard")}
         >
           <GrRefresh />
         </Button>

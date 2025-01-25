@@ -1,59 +1,18 @@
 import { Flex, Text } from "@chakra-ui/react";
-import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ButtonComponent } from "../../components/button";
 import { ListComponent } from "../../components/listOptions";
+import { useSelectedOption } from "../../contexts/selectedOptions";
 import theme from "../../themes";
+import { listItems } from "../../Utils";
 import { VideoPlayerPage } from "../videoPlayer";
-
-const data = [
-  {
-    categoria: "Exercícios",
-    itens: [
-      "Leg Curl",
-      "Leg Extension",
-      "Supino Reto com Halter",
-      "Supino Reto com Barra",
-      "Supino Inclinado com Crucifixo",
-      "Mobilidade 9090",
-      "Mobilidade com Elástico",
-      "Mobilidade com Bastão",
-    ],
-  },
-  {
-    categoria: "Grupos Musculares",
-    itens: [
-      "Quadríceps",
-      "Isquiotibiais",
-      "Peitoral",
-      "Latíssimo",
-      "Dorsais",
-      "Glúteo",
-      "Adutores",
-      "Abdominais",
-    ],
-  },
-  {
-    categoria: "Aparelhos",
-    itens: [
-      "Low Row",
-      "Reverse Fly",
-      "D.A.P",
-      "Cross Over",
-      "Row Pure",
-      "Shoulder Press Pure",
-      "Banco Abdutor",
-      "Banco Adutor",
-    ],
-  },
-];
 
 export const DashboardPage = () => {
   const userName = "Usuário";
-  const [selectedOption, setSelectedOption] = useState("");
+  const { selectedOption, setSelectedOption } = useSelectedOption();
+
   const params = useParams();
   const navigate = useNavigate();
-  console.log({ params });
 
   addEventListener("keydown", (e) => {
     if (e.code === "Numpad8") {
@@ -75,7 +34,7 @@ export const DashboardPage = () => {
             Olá, {userName}!
           </Text>
           <Flex direction="column" w="100%" gap={3}>
-            {data.map((el) => (
+            {listItems.map((el) => (
               <ButtonComponent
                 key={el.categoria}
                 text={el.categoria}

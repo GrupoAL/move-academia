@@ -1,11 +1,14 @@
 import { Flex, List, ListItem, Text } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import { useNavigate, useParams } from "react-router-dom";
+import { useSelectedOption } from "../../contexts/selectedOptions";
 
 export const ListComponent = ({ title, array }) => {
   const navigate = useNavigate();
   const params = useParams();
-  console.log({ params });
+
+  const { setSelectedExercise } = useSelectedOption();
+
   return (
     <Flex
       direction={"column"}
@@ -30,7 +33,10 @@ export const ListComponent = ({ title, array }) => {
             borderBottom="0.5px solid"
             transition=".3s"
             _hover={{ cursor: "pointer", color: "primary.green" }}
-            onClick={() => navigate(`/dashboard/${params.activite}/${item}`)}
+            onClick={() => {
+              setSelectedExercise(item);
+              navigate(`/dashboard/${params.activite}/${item}`);
+            }}
           >
             {item}
           </ListItem>

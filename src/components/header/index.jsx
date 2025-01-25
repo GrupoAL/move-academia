@@ -1,12 +1,30 @@
 import { Box, Flex } from "@chakra-ui/react";
 import PropTypes from "prop-types";
-import { GiHamburgerMenu } from "react-icons/gi";
 import { IoExitOutline } from "react-icons/io5";
 import { MdOutlineDoubleArrow } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { MenuComponent } from "../menu";
 
 export const HeaderComponent = ({ type }) => {
   const navigate = useNavigate();
+  const params = useParams();
+
+  const backParams = () => {
+    const keys = Object.keys(params);
+    console.log({ keys });
+    if (keys.length > 0) {
+      const lastKey = keys[keys.length - 1]; // Última chave
+      const updatedParams = { ...params }; // Cria uma cópia dos parâmetros
+      delete updatedParams[lastKey]; // Remove a última chave
+
+      // Reconstrói a URL sem o último parâmetro
+      const newUrl = Object.entries(updatedParams)
+        .map(([key, value]) => `${key}/${value}`)
+        .join("/");
+
+      navigate(`/${newUrl}`); // Navega para a nova URL
+    }
+  };
   return (
     <Flex
       as={"header"}
@@ -22,15 +40,16 @@ export const HeaderComponent = ({ type }) => {
       {type === "logged" && (
         <>
           <Box transform={"scaleX(-1)"}>
-            <MdOutlineDoubleArrow />
+            <MdOutlineDoubleArrow
+              onClick={(e) => {
+                e.preventDefault();
+                backParams();
+              }}
+            />
           </Box>
-          <Flex gap={4}>
-            <Box>
-              <GiHamburgerMenu />
-            </Box>
-            <Box>
-              <IoExitOutline onClick={() => navigate("/")} />
-            </Box>
+          <Flex gap={4} alignItems={"center"}>
+            <MenuComponent />
+            <IoExitOutline onClick={() => navigate("/")} />
           </Flex>
         </>
       )}

@@ -1,7 +1,7 @@
 import { Input } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 
-export const InputComponent = ({ placeholder, type, bg }) => {
+export const InputComponent = ({ placeholder, type, bg, ...rest }) => {
   return (
     <Input
       type={type}
@@ -18,6 +18,7 @@ export const InputComponent = ({ placeholder, type, bg }) => {
         opacity: 0.6,
         fontSize: { base: "sm", sm: "sm", md: "md", lg: "lg" },
       }}
+      {...rest}
     />
   );
 };

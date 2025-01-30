@@ -7,7 +7,13 @@ import { InputComponent } from "../../components/input";
 export const RecoverPasswordPage = () => {
   const navigate = useNavigate();
   return (
-    <Flex w={"100%"} direction={"column"} alignItems={"center"} gap={5}>
+    <Flex
+      w={"100%"}
+      direction={"column"}
+      alignItems={"center"}
+      gap={5}
+      h={"50%"}
+    >
       <Flex
         bg="primary.green"
         w={{ base: "320px", sm: "320px", md: "460px", lg: "560px" }}

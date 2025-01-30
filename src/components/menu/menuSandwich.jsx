@@ -1,11 +1,13 @@
 import { HamburgerIcon } from "@chakra-ui/icons";
 import {
-  IconButton,
+  Divider,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
+  Text,
 } from "@chakra-ui/react";
+import { IoExitOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { useSelectedOption } from "../../contexts/selectedOptions";
 import { listItems } from "../../Utils";
@@ -20,7 +22,6 @@ export const MenuComponent = () => {
   return (
     <Menu>
       <MenuButton
-        as={IconButton}
         _expanded={{ bg: "none", color: "primary.yellow" }} // Garante que o fundo não muda quando expandido
         _active={{ bg: "none" }} // Garante que o fundo não muda quando clicado
         _hover={{ bg: "none" }} // Garante que o fundo não muda ao passar o mouse
@@ -62,6 +63,21 @@ export const MenuComponent = () => {
             {item.categoria}
           </MenuItem>
         ))}
+        <Divider w={"90%"} p={2} />
+        <Text
+          cursor={"pointer"}
+          color={"primary.bg"}
+          fontSize={"lg"}
+          fontWeight={700}
+          fontStyle={"italic"}
+          onClick={() => navigate("/")}
+          display={"flex"}
+          alignItems={"center"}
+          gap={3}
+          _hover={{ color: "primary.green" }}
+        >
+          Sair <IoExitOutline fontSize={"32px"} />
+        </Text>
       </MenuList>
     </Menu>
   );

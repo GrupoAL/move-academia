@@ -8,6 +8,7 @@ const theme = extendTheme({
       white: "#fff",
       yellow: "#c9e000",
       cardBg: "#c8df00",
+      cardImageBg: "#ab9f87",
     },
   },
   fontSizes: {

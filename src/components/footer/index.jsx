@@ -1,7 +1,7 @@
 import { Button, Flex } from "@chakra-ui/react";
 import { GrRefresh } from "react-icons/gr";
-import { TfiSearch } from "react-icons/tfi";
 import { useNavigate } from "react-router-dom";
+import { MenuSearch } from "../menu/menuSearch";
 
 export const FooterComponent = () => {
   const navigate = useNavigate();
@@ -36,20 +36,8 @@ export const FooterComponent = () => {
         >
           <GrRefresh />
         </Button>
-        <Button
-          bg={"primary.white"}
-          color="primary.yellow"
-          border={"2px solid"}
-          borderColor={"primary.yellow"}
-          borderRadius={"100%"}
-          fontSize={"40px"}
-          p={0}
-          w={"60px"}
-          h={"60px"}
-          transform={"scaleX(-1)"}
-        >
-          <TfiSearch />
-        </Button>
+        <MenuSearch />
+
         <Flex w={"60px"} h={"60px"}></Flex>
       </Flex>
     </Flex>

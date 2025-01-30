@@ -48,12 +48,7 @@ export const AppRoutes = () => {
       alignItems={"center"}
     >
       <HeaderComponent type={pageType} />
-      <Flex
-        minW={"100%"}
-        height={"70%"}
-        justifyContent={"center"}
-        alignItems={"center"}
-      >
+      <Flex minW={"100%"} justifyContent={"center"} alignItems={"center"}>
         <Routes>
           {RoutesData?.filter((data) => {
             return data.route && data.component;

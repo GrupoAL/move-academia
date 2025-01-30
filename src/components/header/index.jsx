@@ -1,9 +1,8 @@
 import { Box, Flex } from "@chakra-ui/react";
 import PropTypes from "prop-types";
-import { IoExitOutline } from "react-icons/io5";
 import { MdOutlineDoubleArrow } from "react-icons/md";
 import { useNavigate, useParams } from "react-router-dom";
-import { MenuComponent } from "../menu";
+import { MenuComponent } from "../menu/menuSandwich";
 
 export const HeaderComponent = ({ type }) => {
   const navigate = useNavigate();
@@ -49,7 +48,6 @@ export const HeaderComponent = ({ type }) => {
           </Box>
           <Flex gap={4} alignItems={"center"}>
             <MenuComponent />
-            <IoExitOutline onClick={() => navigate("/")} />
           </Flex>
         </>
       )}

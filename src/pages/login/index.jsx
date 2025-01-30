@@ -7,7 +7,13 @@ export const LoginPage = () => {
   const navigate = useNavigate();
 
   return (
-    <Flex w={"100%"} direction={"column"} alignItems={"center"} gap={5}>
+    <Flex
+      w={"100%"}
+      direction={"column"}
+      alignItems={"center"}
+      gap={5}
+      h={"50%"}
+    >
       <Avatar
         w={"200px"}
         h={"100px"}

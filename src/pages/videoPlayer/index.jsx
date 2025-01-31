@@ -79,7 +79,7 @@ export const VideoPlayerPage = ({ videoId }) => {
           </Flex>
 
           <Box
-            height={{ base: "450px", sm: "400px", md: "400px" }}
+            height={{ base: "350px", sm: "400px", md: "400px" }}
             bg="white"
             p={6}
             maxW="md"
@@ -87,7 +87,6 @@ export const VideoPlayerPage = ({ videoId }) => {
           >
             {isComplement ? (
               <Flex
-                h={"100%"}
                 direction="column"
                 align="start"
                 gap={5}
@@ -181,8 +180,15 @@ export const VideoPlayerPage = ({ videoId }) => {
                   <ModalOverlay />
                   <ModalContent
                     minW={{
-                      base: "250px",
-                      sm: "250px",
+                      base: "300px",
+                      sm: "300px",
+                      md: "550px",
+                      lg: "700px",
+                      xl: "700px",
+                    }}
+                    maxW={{
+                      base: "300px",
+                      sm: "300px",
                       md: "550px",
                       lg: "700px",
                       xl: "700px",
@@ -192,21 +198,35 @@ export const VideoPlayerPage = ({ videoId }) => {
                     alignItems={"center"}
                     bg={"primary.cardImageBg"}
                     position={"relative"}
-                    p={4}
+                    py={4}
                   >
                     <ModalBody>
                       <Image
                         objectFit={"cover"}
                         minW={{
-                          base: "300px",
-                          sm: "300px",
+                          base: "250px",
+                          sm: "250px",
                           md: "500px",
                           lg: "650px",
                           xl: "650px",
                         }}
                         minH={{
-                          base: "300px",
-                          sm: "300px",
+                          base: "250px",
+                          sm: "250px",
+                          md: "500px",
+                          lg: "650px",
+                          xl: "650px",
+                        }}
+                        maxW={{
+                          base: "250px",
+                          sm: "250px",
+                          md: "500px",
+                          lg: "650px",
+                          xl: "650px",
+                        }}
+                        maxH={{
+                          base: "250px",
+                          sm: "250px",
                           md: "500px",
                           lg: "650px",
                           xl: "650px",

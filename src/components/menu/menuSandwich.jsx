@@ -12,10 +12,8 @@ import { useNavigate } from "react-router-dom";
 import { useSelectedOption } from "../../contexts/selectedOptions";
 import { listItems } from "../../Utils";
 
-export const MenuComponent = () => {
+export const MenuSandwich = () => {
   const navigate = useNavigate();
-
-  //   const params = useParams();
 
   const { setSelectedOption } = useSelectedOption();
 
@@ -26,12 +24,14 @@ export const MenuComponent = () => {
         _active={{ bg: "none" }} // Garante que o fundo não muda quando clicado
         _hover={{ bg: "none" }} // Garante que o fundo não muda ao passar o mouse
         bg="none"
-        icon={<HamburgerIcon />}
         color={"primary.white"}
+        textAlign={"center"}
         fontSize={"36px"}
         position={"relative"}
         zIndex={2}
-      />
+      >
+        <HamburgerIcon />
+      </MenuButton>
       <MenuList
         display={"flex"}
         flexDir={"column"}

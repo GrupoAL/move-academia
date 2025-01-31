@@ -8,14 +8,11 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { TfiSearch } from "react-icons/tfi";
-import { useNavigate } from "react-router-dom";
 import { listSearch } from "../../Utils";
 import { InputComponent } from "../input";
 
 export const MenuSearch = () => {
-  const navigate = useNavigate();
-
-  //   const params = useParams();
+  // const navigate = useNavigate();
 
   const [searchTerm, setSearchTerm] = useState("");
 

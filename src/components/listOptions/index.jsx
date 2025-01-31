@@ -16,11 +16,21 @@ export const ListComponent = ({ title, array }) => {
       alignSelf={"start"}
       w={"full"}
       pt={"40px"}
-      pl={12}
+      pl={"5rem"}
       pr={2}
       gap={3}
     >
-      <Text color="primary.white" fontSize={"xl"} fontWeight={700}>
+      <Text
+        color="primary.white"
+        fontSize={{
+          base: "2xl",
+          sm: "2xl",
+          md: "48px",
+          lg: "64px",
+          xl: "64px",
+        }}
+        fontWeight={700}
+      >
         {title}
       </Text>
       <List display={"flex"} flexDirection={"column"} gap={3}>
@@ -28,7 +38,13 @@ export const ListComponent = ({ title, array }) => {
           <ListItem
             w={"fit-content"}
             key={index}
-            fontSize={"md"}
+            fontSize={{
+              base: "md",
+              sm: "md",
+              md: "lg",
+              lg: "lg",
+              xl: "2xl",
+            }}
             fontWeight={600}
             borderBottom="0.5px solid"
             transition=".3s"

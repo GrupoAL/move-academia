@@ -7,6 +7,13 @@ export const FooterComponent = () => {
   const navigate = useNavigate();
   return (
     <Flex
+      display={{
+        base: "flex",
+        sm: "flex",
+        md: "none",
+        lg: "none",
+        xl: "none",
+      }}
       position={"fixed"}
       bottom={0}
       as={"footer"}

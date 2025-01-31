@@ -28,18 +28,26 @@ export const VideoPlayerPage = ({ videoId }) => {
   const [isFullText, setIsFullText] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <Box
-      minW={{ base: "full", sm: "full", md: "full", lg: "1000px" }}
-      alignSelf={"start"}
+    <Flex
+      direction={{ base: "column", lg: "row" }}
+      align={{ base: "center", lg: "flex-start" }}
+      justify="center"
+      alignItems="center"
+      gap={6}
+      w="100%"
+      p={4}
     >
-      <AspectRatio ratio={16 / 10}>
-        <iframe
-          src={`https://www.youtube.com/embed/${videoId}`}
-          title="YouTube video"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        />
-      </AspectRatio>
+      {/* Video Section */}
+      <Box w={{ base: "100%", sm: "100%", md: "70%", lg: "50%" }}>
+        <AspectRatio ratio={16 / 9}>
+          <iframe
+            src={`https://www.youtube.com/embed/${videoId}`}
+            title="YouTube video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+        </AspectRatio>
+      </Box>
 
       {isFullText || isComplement ? (
         <Flex
@@ -75,6 +83,7 @@ export const VideoPlayerPage = ({ videoId }) => {
             bg="white"
             p={6}
             maxW="md"
+            position={"relative"}
           >
             {isComplement ? (
               <Flex
@@ -107,7 +116,13 @@ export const VideoPlayerPage = ({ videoId }) => {
             ) : (
               <>
                 <Text
-                  fontSize="2xl"
+                  fontSize={{
+                    base: "2xl",
+                    sm: "2xl",
+                    md: "32px",
+                    lg: "36px",
+                    xl: "36px",
+                  }}
                   fontWeight="bold"
                   fontStyle="italic"
                   color="gray.800"
@@ -116,11 +131,29 @@ export const VideoPlayerPage = ({ videoId }) => {
                 </Text>
                 <Text
                   textAlign="justify"
-                  fontSize={"sm"}
                   fontWeight="bold"
                   fontStyle="italic"
-                  lineHeight={"18px"}
-                  letterSpacing={"0.2px"}
+                  fontSize={{
+                    base: "sm",
+                    sm: "sm",
+                    md: "md",
+                    lg: "md",
+                    xl: "md",
+                  }}
+                  lineHeight={{
+                    base: "18px",
+                    sm: "18px",
+                    md: "24px",
+                    lg: "24px",
+                    xl: "24px",
+                  }}
+                  letterSpacing={{
+                    base: "0.2px",
+                    sm: "0.2px",
+                    md: "1px",
+                    lg: "1px",
+                    xl: "1px",
+                  }}
                   mb={2}
                 >
                   O exercício de Leg Extension é projetado para fortalecer e
@@ -147,7 +180,13 @@ export const VideoPlayerPage = ({ videoId }) => {
                 <Modal isOpen={isOpen} onClose={onClose}>
                   <ModalOverlay />
                   <ModalContent
-                    w={"fit-content"}
+                    minW={{
+                      base: "250px",
+                      sm: "250px",
+                      md: "550px",
+                      lg: "700px",
+                      xl: "700px",
+                    }}
                     display={"flex"}
                     justifyContent={"center"}
                     alignItems={"center"}
@@ -158,8 +197,20 @@ export const VideoPlayerPage = ({ videoId }) => {
                     <ModalBody>
                       <Image
                         objectFit={"cover"}
-                        w={"300px"}
-                        h={"300px"}
+                        minW={{
+                          base: "300px",
+                          sm: "300px",
+                          md: "500px",
+                          lg: "650px",
+                          xl: "650px",
+                        }}
+                        minH={{
+                          base: "300px",
+                          sm: "300px",
+                          md: "500px",
+                          lg: "650px",
+                          xl: "650px",
+                        }}
                         src={Cadeira}
                         alt=""
                       />
@@ -190,12 +241,11 @@ export const VideoPlayerPage = ({ videoId }) => {
             )}
             <Box
               position={"absolute"}
-              bottom={"8rem"}
+              bottom={"1rem"}
               fontSize={"2xl"}
               transform={"scaleX(-1)"}
               color={"primary.bg"}
               justifySelf={"end"}
-              pt={5}
               _hover={{ cursor: "pointer" }}
             >
               <MdOutlineDoubleArrow
@@ -206,31 +256,18 @@ export const VideoPlayerPage = ({ videoId }) => {
                 }}
               />
             </Box>
-
-            {/* <Box
-              fontSize={"2xl"}
-              transform={"scaleX(-1)"}
-              color={"primary.bg"}
-              justifySelf={"start"}
-              pt={5}
-              _hover={{ cursor: "pointer" }}
-            >
-              <MdOutlineDoubleArrow
-                onClick={() => setIsFullText(!isFullText)}
-              />
-            </Box> */}
           </Box>
         </Flex>
       ) : (
-        <Flex direction="column" align="center" justify="center" py={6}>
-          <Flex
-            justify="end"
-            align="center"
-            w="80%"
-            mb={6}
-            color="white"
-            gap={2}
-          >
+        <Flex
+          direction="column"
+          align="center"
+          justify="center"
+          py={6}
+          px={{ base: 0, sm: 0, md: 0, lg: 6, xl: 6 }}
+          w={{ base: "80%", sm: "80%", md: "80%", lg: "40%", xl: "30%" }}
+        >
+          <Flex justify="end" alignSelf="end" mb={6} color="white" gap={2}>
             <Text fontSize="md" fontWeight="bold">
               ASSISTIDO
             </Text>
@@ -249,11 +286,16 @@ export const VideoPlayerPage = ({ videoId }) => {
             shadow="lg"
             px={6}
             py={4}
-            w="80%"
             mb={6}
           >
             <Text
-              fontSize="2xl"
+              fontSize={{
+                base: "2xl",
+                sm: "2xl",
+                md: "32px",
+                lg: "36px",
+                xl: "36px",
+              }}
               fontWeight="bold"
               fontStyle="italic"
               color="gray.800"
@@ -263,20 +305,44 @@ export const VideoPlayerPage = ({ videoId }) => {
             </Text>
             <Text
               textAlign="justify"
-              fontSize={"sm"}
               fontWeight="bold"
               fontStyle="italic"
-              lineHeight={"18px"}
-              letterSpacing={"0.2px"}
+              fontSize={{
+                base: "sm",
+                sm: "sm",
+                md: "md",
+                lg: "md",
+                xl: "md",
+              }}
+              lineHeight={{
+                base: "18px",
+                sm: "18px",
+                md: "24px",
+                lg: "24px",
+                xl: "24px",
+              }}
+              letterSpacing={{
+                base: "0.2px",
+                sm: "0.2px",
+                md: "1px",
+                lg: "1px",
+                xl: "1px",
+              }}
               mb={2}
             >
               O exercício de Leg Extension é projetado para fortalecer e isolar
               o quadríceps, o grupo muscular da parte frontal da coxa.
               Auxiliando no desenvolvimento de força e definição muscular. Além
-              de ser uma ótima opção para...
+              de ser uma ótima opção para...{" "}
               <Text
                 as="span"
-                fontSize={"sm"}
+                fontSize={{
+                  base: "sm",
+                  sm: "sm",
+                  md: "md",
+                  lg: "md",
+                  xl: "md",
+                }}
                 color="primary.yellow"
                 fontWeight="bold"
                 cursor="pointer"
@@ -291,6 +357,13 @@ export const VideoPlayerPage = ({ videoId }) => {
             leftIcon={<ChevronDownIcon />}
             bg="white"
             color="green.600"
+            fontSize={{
+              base: "sm",
+              sm: "sm",
+              md: "md",
+              lg: "md",
+              xl: "md",
+            }}
             fontWeight="bold"
             rounded="2xl"
             shadow="lg"
@@ -303,7 +376,7 @@ export const VideoPlayerPage = ({ videoId }) => {
           </Button>
         </Flex>
       )}
-    </Box>
+    </Flex>
   );
 };
 

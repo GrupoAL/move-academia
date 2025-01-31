@@ -26,9 +26,15 @@ export const DashboardPage = () => {
         <Flex
           direction="column"
           alignSelf="start"
-          w={{ base: "80%", sm: "450px", md: "450px", lg: "550px" }}
+          w={{
+            base: "80%",
+            sm: "450px",
+            md: "450px",
+            lg: "450px",
+            xl: "450px",
+          }}
           gap={6}
-          mt="40px"
+          mt="3rem"
         >
           <Text fontWeight={700} fontSize="2xl" color={theme.colors.white}>
             Olá, {userName}!

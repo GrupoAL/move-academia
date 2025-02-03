@@ -46,6 +46,7 @@ export const AppRoutes = () => {
       width={"100dvw"}
       height={"100dvh"}
       alignItems={"center"}
+      overflow={"hidden"}
     >
       <HeaderComponent type={pageType} />
       <Flex minW={"100%"} justifyContent={"center"} alignItems={"center"}>

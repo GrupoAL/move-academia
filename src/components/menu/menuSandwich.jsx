@@ -39,7 +39,7 @@ export const MenuSandwich = () => {
         gap={4}
         position={"relative"}
         zIndex={1}
-        top={"-50px"}
+        top={"-55px"}
         padding="50px 12px 12px 12px"
       >
         {listItems.map((item) => (

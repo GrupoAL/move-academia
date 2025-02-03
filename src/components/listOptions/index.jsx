@@ -16,7 +16,7 @@ export const ListComponent = ({ title, array }) => {
       alignSelf={"start"}
       w={"full"}
       pt={"40px"}
-      pl={"5rem"}
+      pl={{ base: "2rem", sm: "2rem", md: "3rem", lg: "4rem", xl: "5rem" }}
       pr={2}
       gap={3}
     >
@@ -30,6 +30,7 @@ export const ListComponent = ({ title, array }) => {
           xl: "64px",
         }}
         fontWeight={700}
+        letterSpacing={"2px"}
       >
         {title}
       </Text>
@@ -45,6 +46,7 @@ export const ListComponent = ({ title, array }) => {
               lg: "lg",
               xl: "2xl",
             }}
+            letterSpacing={"1px"}
             fontWeight={600}
             borderBottom="0.5px solid"
             transition=".3s"

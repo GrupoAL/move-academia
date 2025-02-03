@@ -42,6 +42,7 @@ export const MenuSearch = () => {
           lg: "none",
           xl: "none",
         }}
+        _hover={{ bg: "primary.yellow", color: "primary.white" }}
         borderColor={"primary.yellow"}
         borderRadius={"100%"}
         fontSize={"40px"}
@@ -101,6 +102,7 @@ export const MenuSearch = () => {
             },
             _placeholder: {
               fontSize: { base: "sm", sm: "sm", md: "md", lg: "md" },
+              color: "primary.white",
             },
             py: { base: 4, sm: 4, md: 5, lg: 5 },
             px: { base: 4, sm: 4, md: 5, lg: 5 },

@@ -92,6 +92,8 @@ export const HeaderComponent = ({ type }) => {
                       lg: "lg",
                       xl: "xl",
                     }}
+                    _hover={{ color: "primary.yellow", cursor: "pointer" }}
+                    transition={".5s"}
                     fontWeight={"bold"}
                     key={i}
                     onClick={(e) => {
@@ -120,7 +122,7 @@ export const HeaderComponent = ({ type }) => {
               display={"flex"}
               alignItems={"center"}
               gap={3}
-              _hover={{ color: "primary.green" }}
+              _hover={{ color: "primary.yellow", cursor: "pointer" }}
             >
               <IoExitOutline fontSize={"32px"} /> Sair
             </Text>

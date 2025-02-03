@@ -36,7 +36,12 @@ export const DashboardPage = () => {
           gap={6}
           mt="3rem"
         >
-          <Text fontWeight={700} fontSize="2xl" color={theme.colors.white}>
+          <Text
+            fontWeight={700}
+            fontSize="2xl"
+            letterSpacing={"1px"}
+            color={theme.colors.white}
+          >
             Olá, {userName}!
           </Text>
           <Flex direction="column" w="100%" gap={3}>
@@ -50,6 +55,7 @@ export const DashboardPage = () => {
                 fontStyle="italic"
                 bg="primary.white"
                 color="primary.bg"
+                letterSpacing={"1px"}
                 onClick={(e) => {
                   e.preventDefault();
                   setSelectedOption(el);

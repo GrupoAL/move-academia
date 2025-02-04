@@ -41,36 +41,12 @@ export const DescriptionComponent = () => {
       justifyContent={"center"}
       maxH={{
         base: "350px",
-        sm: "350px",
         md: "400px",
         lg: "600px",
-        xl: "600px",
       }}
       gap={4}
-      overflowY={"scroll"}
-      pt={"2rem"}
     >
       <Flex
-        justify="end"
-        align="center"
-        w="full"
-        maxW="md"
-        pr={2}
-        color="white"
-        gap={2}
-      >
-        <Text fontSize="md" fontWeight="bold">
-          ASSISTIDO
-        </Text>
-        <Switch
-          isChecked={isWatched}
-          onChange={(e) => setIsWatched(e.target.checked)}
-          size="lg"
-          colorScheme="blue"
-        />
-      </Flex>
-      <Flex
-        id="Q CAO 1"
         direction="column"
         justifyContent={"start"}
         gap={4}
@@ -78,8 +54,8 @@ export const DescriptionComponent = () => {
           base: isFullText || isComplement ? "full" : "80%",
           sm: isFullText || isComplement ? "full" : "80%",
           md: isFullText || isComplement ? "full" : "80%",
-          lg: isFullText || isComplement ? "25%" : "40%",
-          xl: isFullText || isComplement ? "25%" : "30%",
+          lg: isFullText || isComplement ? "80%" : "80%",
+          xl: isFullText || isComplement ? "80%" : "80%",
         }}
         pt={{
           base: 0,
@@ -89,22 +65,32 @@ export const DescriptionComponent = () => {
           xl: 4,
         }}
       >
+        <Flex justify="end" align="center" pr={2} color="primary.white" gap={2}>
+          <Text fontSize="md" fontWeight="bold">
+            ASSISTIDO
+          </Text>
+          <Switch
+            isChecked={isWatched}
+            onChange={(e) => setIsWatched(e.target.checked)}
+            size="lg"
+            colorScheme="blue"
+          />
+        </Flex>
         <Box
           bg="white"
           w={"full"}
-          p={3}
+          h={"full"}
+          py={3}
+          px={isFullText || isComplement ? 6 : 3}
           rounded={"4px"}
-          pb={isFullText || isComplement ? "80px" : 0}
         >
           {isComplement ? (
             <Flex
-              id="Q CAO"
               direction="column"
               align="start"
               gap={5}
-              w={"100vw"}
               position={"relative"}
-              px={4}
+              h={"full"}
             >
               <Text fontSize="2xl" fontWeight="bold" fontStyle="italic">
                 Material Suplementar
@@ -127,8 +113,8 @@ export const DescriptionComponent = () => {
             <>
               <Text
                 fontSize={{
-                  base: "2xl",
-                  sm: "2xl",
+                  base: "lg",
+                  sm: "lg",
                   md: "32px",
                   lg: "36px",
                   xl: "36px",
@@ -275,7 +261,6 @@ export const DescriptionComponent = () => {
               color={"primary.bg"}
               justifySelf={"start"}
               pt={2}
-              ml={isComplement ? 4 : 0}
               _hover={{ cursor: "pointer" }}
             >
               <MdOutlineDoubleArrow
@@ -312,6 +297,7 @@ export const DescriptionComponent = () => {
             py={3}
             _hover={{ bg: "green.50" }}
             onClick={() => setIsComplement(!isComplement)}
+            mb={3}
           >
             MATERIAL COMPLEMENTAR
           </Button>

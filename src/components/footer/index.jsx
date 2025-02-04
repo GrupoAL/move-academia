@@ -14,7 +14,6 @@ export const FooterComponent = () => {
         lg: "none",
         xl: "none",
       }}
-      position={"fixed"}
       bottom={0}
       as={"footer"}
       w={"full"}

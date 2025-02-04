@@ -13,6 +13,7 @@ export const LoginPage = () => {
       alignItems={"center"}
       gap={5}
       h={"50%"}
+      mt={"3rem"}
     >
       <Avatar
         w={"200px"}

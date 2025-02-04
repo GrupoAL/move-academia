@@ -1,35 +1,27 @@
-import { AspectRatio, Box, Flex } from "@chakra-ui/react";
+import { AspectRatio, Box, Grid } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import { DescriptionComponent } from "../../components/descriptions";
 
 export const VideoPlayerPage = ({ videoId }) => {
   return (
-    <Flex
-      direction={{ base: "column", lg: "row" }}
-      align={{ base: "center", lg: "center" }}
-      justifyContent="center"
+    <Grid
+      templateColumns={{ base: "1fr", lg: "1fr 1fr" }}
       alignItems="center"
-      justifySelf={"center"}
-      alignSelf={"center"}
-      gap={{ base: 6, sm: 6, md: 6, lg: "3rem" }}
+      justifyContent="center"
       w="100%"
-      height={{
-        base: "fit-content",
-        sm: "fit-content",
-        md: "fit-content",
-        lg: "90vh",
-      }}
-      py={{
-        base: 0,
-        sm: 0,
-        md: 0,
-        lg: 1,
-      }}
+      height="100%"
+      overflow={"scroll"}
     >
-      <Box w={{ base: "100%", sm: "100%", md: "70%", lg: "50%" }}>
-        <AspectRatio
-          ratio={{ base: 16 / 9, sm: 14 / 7, md: 16 / 9, lg: 19 / 12 }}
-        >
+      {/* Área do Vídeo */}
+      <Box
+        alignSelf="center"
+        w="100%"
+        height={{ base: "300px", md: "100%", lg: "90%" }}
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <AspectRatio ratio={16 / 9} w="100%" h="100%" overflow="hidden">
           <iframe
             src={`https://www.youtube.com/embed/${videoId}`}
             title="YouTube video"
@@ -39,7 +31,7 @@ export const VideoPlayerPage = ({ videoId }) => {
         </AspectRatio>
       </Box>
       <DescriptionComponent />
-    </Flex>
+    </Grid>
   );
 };
 

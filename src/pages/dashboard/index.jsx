@@ -26,6 +26,7 @@ export const DashboardPage = () => {
         <Flex
           direction="column"
           alignSelf="start"
+          justifySelf={"center"}
           w={{
             base: "80%",
             sm: "450px",

@@ -13,6 +13,7 @@ export const RecoverPasswordPage = () => {
       alignItems={"center"}
       gap={5}
       h={"50%"}
+      mt={"3rem"}
     >
       <Flex
         bg="primary.green"
@@ -44,7 +45,11 @@ export const RecoverPasswordPage = () => {
             >
               Insira SEU E-MAIL ABAIXO:
             </Text>
-            <InputComponent bg="primary.white" type={"email"} />
+            <InputComponent
+              bg="primary.white"
+              type={"email"}
+              color={"primary.bg"}
+            />
           </Box>
         </Flex>
         <Flex justifyContent={"space-evenly"} w={"100%"} alignItems={"center"}>

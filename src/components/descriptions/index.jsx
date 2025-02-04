@@ -38,7 +38,7 @@ export const DescriptionComponent = () => {
     <Flex
       direction={"column"}
       alignItems={"center"}
-      justifyContent={"center"}
+      justifyContent={"start"}
       maxH={{
         base: "350px",
         md: "400px",
@@ -48,7 +48,6 @@ export const DescriptionComponent = () => {
     >
       <Flex
         direction="column"
-        justifyContent={"start"}
         gap={4}
         w={{
           base: isFullText || isComplement ? "full" : "80%",

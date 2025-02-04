@@ -6,7 +6,7 @@ export const VideoPlayerPage = ({ videoId }) => {
   return (
     <Grid
       templateColumns={{ base: "1fr", lg: "1fr 1fr" }}
-      alignItems="center"
+      alignItems="start"
       justifyContent="center"
       w="100%"
       height="100%"
@@ -16,7 +16,7 @@ export const VideoPlayerPage = ({ videoId }) => {
       <Box
         alignSelf="center"
         w="100%"
-        height={{ base: "300px", md: "100%", lg: "90%" }}
+        height={{ base: "100%", md: "100%", lg: "90%" }}
         display="flex"
         justifyContent="center"
         alignItems="center"

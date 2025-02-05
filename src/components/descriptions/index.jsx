@@ -12,9 +12,10 @@ import {
   ModalOverlay,
   Switch,
   Text,
+  useBreakpointValue,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdOutlineDoubleArrow } from "react-icons/md";
 import Cadeira from "../../assets/images/cadeira.jpg";
 import { useSelectedOption } from "../../contexts/selectedOptions";
@@ -34,19 +35,29 @@ export const DescriptionComponent = () => {
   const [isFullText, setIsFullText] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const isMobile = useBreakpointValue({ md: false, lg: true });
+
+  useEffect(() => {
+    if (isMobile) {
+      setIsFullText(true);
+    }
+  }, [isMobile]);
   return (
     <Flex
+      id="pinto"
       direction={"column"}
       alignItems={"center"}
       justifyContent={"start"}
-      maxH={{
-        base: "350px",
-        md: "400px",
+      h={{
+        base: isFullText || isComplement ? "100%" : "fit-content",
+        md: isFullText || isComplement ? "100%" : "fit-content",
         lg: "600px",
       }}
       gap={4}
     >
       <Flex
+        id="bum bum"
+        h={"full"}
         direction="column"
         gap={4}
         w={{
@@ -76,7 +87,7 @@ export const DescriptionComponent = () => {
           />
         </Flex>
         <Box
-          bg="white"
+          bg="primary.white"
           w={"full"}
           h={"full"}
           py={3}
@@ -84,13 +95,7 @@ export const DescriptionComponent = () => {
           rounded={"4px"}
         >
           {isComplement ? (
-            <Flex
-              direction="column"
-              align="start"
-              gap={5}
-              position={"relative"}
-              h={"full"}
-            >
+            <Flex direction="column" align="start" gap={5} h={"80%"}>
               <Text fontSize="2xl" fontWeight="bold" fontStyle="italic">
                 Material Suplementar
               </Text>
@@ -109,7 +114,7 @@ export const DescriptionComponent = () => {
               </List>
             </Flex>
           ) : (
-            <>
+            <Box height={"80%"}>
               <Text
                 fontSize={{
                   base: "lg",
@@ -144,7 +149,11 @@ export const DescriptionComponent = () => {
                 }}
                 mb={2}
               >
-                {isFullText ? exText : `${exText.slice(0, 200)}...`}
+                {!isMobile
+                  ? isFullText
+                    ? exText
+                    : `${exText.slice(0, 200)}...`
+                  : exText}
               </Text>
               <Text
                 as="span"
@@ -251,7 +260,7 @@ export const DescriptionComponent = () => {
                   </Button>
                 </ModalContent>
               </Modal>
-            </>
+            </Box>
           )}
           {(isComplement || isFullText) && (
             <Box
@@ -259,6 +268,7 @@ export const DescriptionComponent = () => {
               transform={"scaleX(-1)"}
               color={"primary.bg"}
               justifySelf={"start"}
+              alignSelf={"end"}
               pt={2}
               _hover={{ cursor: "pointer" }}
             >

@@ -1,4 +1,4 @@
-import { Flex, Text } from "@chakra-ui/react";
+import { Fade, Flex, SlideFade, Text } from "@chakra-ui/react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ButtonComponent } from "../../components/button";
 import { ListComponent } from "../../components/listOptions";
@@ -37,32 +37,42 @@ export const DashboardPage = () => {
           gap={6}
           mt="3rem"
         >
-          <Text
-            fontWeight={700}
-            fontSize="2xl"
-            letterSpacing={"1px"}
-            color={theme.colors.white}
-          >
-            Olá, {userName}!
-          </Text>
+          <Fade in transition={{ enter: { duration: 1 } }}>
+            <Text
+              fontWeight={700}
+              fontSize="2xl"
+              letterSpacing={"1px"}
+              color={theme.colors.white}
+            >
+              Olá, {userName}!
+            </Text>
+          </Fade>
           <Flex direction="column" w="100%" gap={3}>
-            {listItems.map((el) => (
-              <ButtonComponent
+            {listItems.map((el, i) => (
+              <SlideFade
                 key={el.categoria}
-                text={el.categoria}
-                h="60px"
-                fontSize="md"
-                fontWeight={700}
-                fontStyle="italic"
-                bg="primary.white"
-                color="primary.bg"
-                letterSpacing={"1px"}
-                onClick={(e) => {
-                  e.preventDefault();
-                  setSelectedOption(el);
-                  navigate(`/dashboard/${el.categoria}`);
-                }}
-              />
+                in
+                transition={{ enter: { duration: (i + 1) / 8 } }}
+                offsetX={"30px"}
+                offsetY={"0"}
+              >
+                <ButtonComponent
+                  text={el.categoria}
+                  h="60px"
+                  w={"full"}
+                  fontSize="md"
+                  fontWeight={700}
+                  fontStyle="italic"
+                  bg="primary.white"
+                  color="primary.bg"
+                  letterSpacing={"1px"}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setSelectedOption(el);
+                    navigate(`/dashboard/${el.categoria}`);
+                  }}
+                />
+              </SlideFade>
             ))}
           </Flex>
         </Flex>

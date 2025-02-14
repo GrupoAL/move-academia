@@ -10,6 +10,7 @@ import {
   ModalBody,
   ModalContent,
   ModalOverlay,
+  ScaleFade,
   Switch,
   Text,
   useBreakpointValue,
@@ -44,7 +45,6 @@ export const DescriptionComponent = () => {
   }, [isMobile]);
   return (
     <Flex
-      id="pinto"
       direction={"column"}
       alignItems={"center"}
       justifyContent={"start"}
@@ -53,13 +53,18 @@ export const DescriptionComponent = () => {
         md: isFullText || isComplement ? "100%" : "fit-content",
         lg: "600px",
       }}
+      pt={{
+        base: 4,
+        md: 2,
+        lg: "0",
+      }}
       gap={4}
     >
       <Flex
-        id="bum bum"
         h={"full"}
         direction="column"
         gap={4}
+        transition={1}
         w={{
           base: isFullText || isComplement ? "full" : "80%",
           sm: isFullText || isComplement ? "full" : "80%",
@@ -86,13 +91,16 @@ export const DescriptionComponent = () => {
             colorScheme="blue"
           />
         </Flex>
+
         <Box
           bg="primary.white"
           w={"full"}
           h={"full"}
           py={3}
           px={isFullText || isComplement ? 6 : 3}
+          x
           rounded={"4px"}
+          transition={1}
         >
           {isComplement ? (
             <Flex direction="column" align="start" gap={5} h={"80%"}>
@@ -262,6 +270,7 @@ export const DescriptionComponent = () => {
               </Modal>
             </Box>
           )}
+
           {(isComplement || isFullText) && (
             <Box
               fontSize={"2xl"}
@@ -284,32 +293,38 @@ export const DescriptionComponent = () => {
             </Box>
           )}
         </Box>
+
         {isComplement || isFullText ? (
           <></>
         ) : (
-          <Button
-            leftIcon={<ChevronDownIcon />}
-            bg="white"
-            color="primary.green"
-            fontSize={{
-              base: "sm",
-              sm: "sm",
-              md: "md",
-              lg: "md",
-              xl: "md",
-            }}
-            fontWeight="bold"
-            letterSpacing="1px"
-            shadow="lg"
-            w={"full"}
-            px={6}
-            py={3}
-            _hover={{ bg: "green.50" }}
-            onClick={() => setIsComplement(!isComplement)}
-            mb={3}
+          <ScaleFade
+            in={!isComplement}
+            transition={{ exit: { delay: 1 }, enter: { duration: 0.5 } }}
           >
-            MATERIAL COMPLEMENTAR
-          </Button>
+            <Button
+              leftIcon={<ChevronDownIcon />}
+              bg="white"
+              color="primary.green"
+              fontSize={{
+                base: "sm",
+                sm: "sm",
+                md: "md",
+                lg: "md",
+                xl: "md",
+              }}
+              fontWeight="bold"
+              letterSpacing="1px"
+              shadow="lg"
+              w={"full"}
+              px={6}
+              py={3}
+              _hover={{ bg: "green.50" }}
+              onClick={() => setIsComplement(!isComplement)}
+              mb={3}
+            >
+              MATERIAL COMPLEMENTAR
+            </Button>
+          </ScaleFade>
         )}
       </Flex>
     </Flex>

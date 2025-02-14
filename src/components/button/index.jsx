@@ -1,9 +1,17 @@
 import { Button } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 
-export const ButtonComponent = ({ type, text, color, bg, ...rest }) => {
+export const ButtonComponent = ({
+  type,
+  text,
+  color,
+  bg,
+  isLoading,
+  ...rest
+}) => {
   return (
     <Button
+      isLoading={isLoading}
       bg={type === "outline" ? "none" : bg}
       border="1px solid"
       borderColor={type === "outline" ? bg : "none"}
@@ -29,4 +37,5 @@ ButtonComponent.propTypes = {
   text: PropTypes.string,
   color: PropTypes.string,
   bg: PropTypes.string,
+  isLoading: PropTypes.boolean,
 };

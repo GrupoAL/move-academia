@@ -1,4 +1,4 @@
-import { Flex, List, ListItem, Text } from "@chakra-ui/react";
+import { Flex, List, ListItem, SlideFade, Text } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelectedOption } from "../../contexts/selectedOptions";
@@ -35,29 +35,36 @@ export const ListComponent = ({ title, array }) => {
         {title}
       </Text>
       <List display={"flex"} flexDirection={"column"} gap={3}>
-        {array.map((item, index) => (
-          <ListItem
-            w={"fit-content"}
-            key={index}
-            fontSize={{
-              base: "md",
-              sm: "md",
-              md: "lg",
-              lg: "lg",
-              xl: "2xl",
-            }}
-            letterSpacing={"1px"}
-            fontWeight={600}
-            borderBottom="0.5px solid"
-            transition=".3s"
-            _hover={{ cursor: "pointer", color: "primary.green" }}
-            onClick={() => {
-              setSelectedExercise(item);
-              navigate(`/dashboard/${params.activite}/${item}`);
-            }}
+        {array.map((item, i) => (
+          <SlideFade
+            key={i}
+            in
+            transition={{ enter: { duration: (i + 1) / 8 } }}
+            offsetX={"-30px"}
+            offsetY={"0"}
           >
-            {item}
-          </ListItem>
+            <ListItem
+              w={"fit-content"}
+              fontSize={{
+                base: "md",
+                sm: "md",
+                md: "lg",
+                lg: "lg",
+                xl: "2xl",
+              }}
+              letterSpacing={"1px"}
+              fontWeight={600}
+              borderBottom="0.5px solid"
+              transition=".3s"
+              _hover={{ cursor: "pointer", color: "primary.green" }}
+              onClick={() => {
+                setSelectedExercise(item);
+                navigate(`/dashboard/${params.activite}/${item}`);
+              }}
+            >
+              {item}
+            </ListItem>
+          </SlideFade>
         ))}
       </List>
     </Flex>

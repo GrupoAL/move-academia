@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ChakraProvider } from "@chakra-ui/react";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import App from "./App.jsx";
+import App from "./components/app/index.jsx";
 import { SelectedOptionProvider } from "./contexts/selectedOptions.jsx";
 import theme from "./themes/index.js";
 

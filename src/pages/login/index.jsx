@@ -20,9 +20,8 @@ export const LoginPage = () => {
   const handleLogin = () => {
     setTimeout(() => {
       onToggle();
-
       setIsLoading(!isLoading);
-      navigate("/dashboard");
+      navigate("/welcome");
     }, 2000);
   };
 

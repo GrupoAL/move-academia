@@ -1,6 +1,7 @@
 // Main Pages
 
 // Internal Pages
+import WelcomeAnimation from "../components/animations/login";
 import { DashboardPage } from "../pages/dashboard";
 import { LoginPage } from "../pages/login";
 import { RecoverPasswordPage } from "../pages/recoverPassword";
@@ -36,6 +37,16 @@ export const RoutesData = [
     route: "/player",
     title: "logged",
     component: VideoPlayerPage,
+  },
+  {
+    route: "/welcome",
+    title: "welcome",
+    component: WelcomeAnimation,
+  },
+  {
+    route: "/bye",
+    title: "bye",
+    component: WelcomeAnimation,
   },
 ];
 {

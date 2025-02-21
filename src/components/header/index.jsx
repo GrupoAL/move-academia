@@ -118,7 +118,7 @@ export const HeaderComponent = ({ type }) => {
               }}
               fontWeight={700}
               fontStyle={"italic"}
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/bye")}
               display={"flex"}
               alignItems={"center"}
               gap={3}

@@ -27,6 +27,11 @@ const theme = extendTheme({
         padding: 0,
         boxSizing: "border-box",
       },
+      "button, svg": {
+        WebkitTapHighlightColor: "transparent",
+        WebkitUserSelect: "none",
+        userSelect: "none",
+      },
       "::-webkit-scrollbar": {
         width: "8px", // Largura da barra
         borderRadius: "100%", // Deixa o polegar arredondado

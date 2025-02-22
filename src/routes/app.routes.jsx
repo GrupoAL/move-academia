@@ -2,7 +2,7 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 
 // Components
-import { Flex } from "@chakra-ui/react";
+import { Grid } from "@chakra-ui/react";
 import { FooterComponent } from "../components/footer";
 import { HeaderComponent } from "../components/header";
 import { RoutesData } from "../data";
@@ -40,34 +40,32 @@ export const AppRoutes = () => {
   const pageType = currentPage && currentPage.type ? currentPage.type : "off";
 
   return (
-    <Flex
-      direction={"column"}
+    <Grid
+      templateRows="auto 1fr auto"
       bg="primary.bg"
-      width={"100dvw"}
-      height={"100dvh"}
-      alignItems={"center"}
+      width="100dvw"
+      height="100dvh"
+      overflow="hidden"
     >
       <HeaderComponent type={pageType} />
-      <Flex minW={"100%"} justifyContent={"center"} alignItems={"center"}>
-        <Routes>
-          {RoutesData?.filter((data) => {
-            return data.route && data.component;
-          })?.map((route, idx) => {
-            if (route.route && route.component) {
-              return (
-                <Route
-                  key={`route-${idx}`}
-                  path={route.route}
-                  element={<route.component />}
-                />
-              );
-            }
+      <Routes>
+        {RoutesData?.filter((data) => {
+          return data.route && data.component;
+        })?.map((route, idx) => {
+          if (route.route && route.component) {
+            return (
+              <Route
+                key={`route-${idx}`}
+                path={route.route}
+                element={<route.component />}
+              />
+            );
+          }
 
-            return <></>;
-          })}
-        </Routes>
-      </Flex>
+          return <></>;
+        })}
+      </Routes>
       {pageType === "logged" && <FooterComponent />}
-    </Flex>
+    </Grid>
   );
 };

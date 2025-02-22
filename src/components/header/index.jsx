@@ -2,35 +2,24 @@ import { Box, Flex, List, ListItem, Text } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import { IoExitOutline } from "react-icons/io5";
 import { MdOutlineDoubleArrow } from "react-icons/md";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useSelectedOption } from "../../contexts/selectedOptions";
 import { listItems } from "../../Utils";
-import { MenuComponent } from "../menu/menuSandwich";
+import { MenuSandwich } from "../menu/menuSandwich";
 import { MenuSearch } from "../menu/menuSearch";
 
 export const HeaderComponent = ({ type }) => {
   const navigate = useNavigate();
-  const params = useParams();
 
   const backParams = () => {
-    const keys = Object.keys(params);
-    console.log({ keys });
-    if (keys.length > 0) {
-      const lastKey = keys[keys.length - 1]; // Última chave
-      const updatedParams = { ...params }; // Cria uma cópia dos parâmetros
-      delete updatedParams[lastKey]; // Remove a última chave
+    const path = location.pathname.split("/");
+    path.pop();
 
-      // Reconstrói a URL sem o último parâmetro
-      const newUrl = Object.entries(updatedParams)
-        .map(([key, value]) => `${key}/${value}`)
-        .join("/");
-
-      navigate(`/${newUrl}`); // Navega para a nova URL
-    }
+    navigate(`${path.join("/")}`);
   };
+
   const location = useLocation();
   const { setSelectedOption } = useSelectedOption();
-
   return (
     <Flex
       as={"header"}
@@ -46,6 +35,7 @@ export const HeaderComponent = ({ type }) => {
       {type === "logged" && (
         <>
           <Flex
+            w={"full"}
             display={{
               base: "flex",
               sm: "flex",
@@ -53,6 +43,9 @@ export const HeaderComponent = ({ type }) => {
               lg: "none",
               xl: "none",
             }}
+            py={"1rem"}
+            justifyContent={"space-between"}
+            alignItems={"center"}
           >
             <Box transform={"scaleX(-1)"}>
               <MdOutlineDoubleArrow
@@ -63,7 +56,7 @@ export const HeaderComponent = ({ type }) => {
               />
             </Box>
             <Flex gap={4} alignItems={"center"}>
-              <MenuComponent />
+              <MenuSandwich />
             </Flex>
           </Flex>
           <Flex
@@ -76,7 +69,7 @@ export const HeaderComponent = ({ type }) => {
             }}
             w={"full"}
             px={{
-              md: 6,
+              md: "4rem",
               lg: "4rem",
               xl: "5rem",
             }}
@@ -99,6 +92,8 @@ export const HeaderComponent = ({ type }) => {
                       lg: "lg",
                       xl: "xl",
                     }}
+                    _hover={{ color: "primary.yellow", cursor: "pointer" }}
+                    transition={".5s"}
                     fontWeight={"bold"}
                     key={i}
                     onClick={(e) => {
@@ -123,11 +118,11 @@ export const HeaderComponent = ({ type }) => {
               }}
               fontWeight={700}
               fontStyle={"italic"}
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/bye")}
               display={"flex"}
               alignItems={"center"}
               gap={3}
-              _hover={{ color: "primary.green" }}
+              _hover={{ color: "primary.yellow", cursor: "pointer" }}
             >
               <IoExitOutline fontSize={"32px"} /> Sair
             </Text>

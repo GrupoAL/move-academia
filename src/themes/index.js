@@ -21,7 +21,7 @@ const theme = extendTheme({
   styles: {
     global: {
       body: {
-        fontFamily: "Work Sans, sans-serif",
+        fontFamily: "Bebas Neue, serif",
         fontStyle: "italic",
         margin: 0,
         padding: 0,
@@ -33,8 +33,7 @@ const theme = extendTheme({
         userSelect: "none",
       },
       "::-webkit-scrollbar": {
-        width: "8px", // Largura da barra
-        borderRadius: "100%", // Deixa o polegar arredondado
+        display: "none",
       },
       "::-webkit-scrollbar-track": {
         background: "#fff", // Fundo da trilha

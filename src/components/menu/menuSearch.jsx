@@ -12,21 +12,37 @@ import { listSearch } from "../../Utils";
 import { InputComponent } from "../input";
 
 export const MenuSearch = () => {
-  // const navigate = useNavigate();
-
   const [searchTerm, setSearchTerm] = useState("");
 
   const filteredItems = listSearch.filter((item) =>
     item.toLowerCase().includes(searchTerm.toLowerCase())
   );
-  console.log({ filteredItems });
 
   return (
     <Menu>
       <MenuButton
-        bg={"primary.white"}
-        color="primary.yellow"
-        border={"2px solid"}
+        bg={{
+          base: "primary.white",
+          sm: "primary.white",
+          md: "none",
+          lg: "none",
+          xl: "none",
+        }}
+        color={{
+          base: "primary.yellow",
+          sm: "primary.yellow",
+          md: "primary.white",
+          lg: "primary.white",
+          xl: "primary.white",
+        }}
+        border={{
+          base: "2px solid",
+          sm: "2px solid",
+          md: "none",
+          lg: "none",
+          xl: "none",
+        }}
+        _hover={{ bg: "primary.yellow", color: "primary.white" }}
         borderColor={"primary.yellow"}
         borderRadius={"100%"}
         fontSize={"40px"}
@@ -48,15 +64,49 @@ export const MenuSearch = () => {
         zIndex={1}
         p={4}
         maxH={"350px"}
-        w={"300px"}
-        top={"-275px"}
-        left={"-125px"}
+        w={{
+          base: "300px",
+          sm: "300px",
+          md: "550px",
+          lg: "600px",
+          xl: "600px",
+        }}
+        top={{
+          base: "-275px",
+          sm: "-275px",
+          md: "-75px",
+          lg: "-75px",
+          xl: "-75px",
+        }}
+        left={{
+          base: "-125px",
+          sm: "-125px",
+          md: "-480px",
+          lg: "-525px",
+          xl: "-525px",
+        }}
       >
         <InputComponent
+          type={"text"}
           placeholder={"Procura algo?"}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          sx={{ borderColor: "white", outline: "white", border: "1px solid" }}
+          sx={{
+            borderColor: "white",
+            outline: "white",
+            border: "1px solid",
+            w: {
+              md: "450px",
+              lg: "500px",
+              xl: "500px",
+            },
+            _placeholder: {
+              fontSize: { base: "sm", sm: "sm", md: "md", lg: "md" },
+              color: "primary.white",
+            },
+            py: { base: 4, sm: 4, md: 5, lg: 5 },
+            px: { base: 4, sm: 4, md: 5, lg: 5 },
+          }}
         />
         <Box maxH={"350px"} overflowY={"scroll"}>
           {filteredItems?.map((item) => (

@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useState } from "react";
-
+import { createContext, useContext, useState } from "react";
+import PropTypes from "prop-types";
 // Criação do contexto
 const SelectedOptionContext = createContext();
 
@@ -33,5 +33,5 @@ export const useSelectedOption = () => {
 };
 
 SelectedOptionProvider.propTypes = {
-  children: React.Children,
+  children: PropTypes.node.isRequired,
 };

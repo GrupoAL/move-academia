@@ -22,7 +22,6 @@ const theme = extendTheme({
     global: {
       body: {
         fontFamily: "Bebas Neue, serif",
-        fontStyle: "italic",
         margin: 0,
         padding: 0,
         boxSizing: "border-box",

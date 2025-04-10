@@ -15,7 +15,16 @@ export const MenuSearch = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const filteredItems = listSearch.filter((item) =>
-    item.toLowerCase().includes(searchTerm.toLowerCase())
+    item
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .includes(
+        searchTerm
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+      )
   );
 
   return (
@@ -117,7 +126,6 @@ export const MenuSearch = () => {
               w={"fit-content"}
               color={"primary.white"}
               fontSize={"sm"}
-              fontStyle={"italic"}
               fontWeight={700}
               borderBottom="0.5px solid"
               transition=".3s"

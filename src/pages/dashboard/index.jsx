@@ -62,7 +62,6 @@ export const DashboardPage = () => {
                   w={"full"}
                   fontSize="md"
                   fontWeight={700}
-                  fontStyle="italic"
                   bg="primary.white"
                   color="primary.bg"
                   letterSpacing={"1px"}

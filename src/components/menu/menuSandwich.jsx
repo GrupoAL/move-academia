@@ -49,7 +49,6 @@ export const MenuSandwich = () => {
             w={"fit-content"}
             color={"primary.bg"}
             fontSize={"lg"}
-            fontStyle={"italic"}
             fontWeight={700}
             borderBottom="0.5px solid"
             transition=".3s"
@@ -69,7 +68,6 @@ export const MenuSandwich = () => {
           color={"primary.bg"}
           fontSize={"lg"}
           fontWeight={700}
-          fontStyle={"italic"}
           onClick={() => navigate("/bye")}
           display={"flex"}
           alignItems={"center"}

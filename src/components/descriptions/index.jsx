@@ -21,6 +21,7 @@ import { useEffect, useState } from "react";
 import { MdOutlineDoubleArrow } from "react-icons/md";
 import Cadeira from "../../assets/images/cadeira.jpg";
 import { useSelectedOption } from "../../contexts/selectedOptions";
+import PropTypes from "prop-types";
 
 const materialComplementar = [
   "Estudo cinetífico sobre articulações.",
@@ -30,8 +31,7 @@ const materialComplementar = [
 const exText =
   " O exercício de Leg Extension é projetado para fortalecer e isolar o quadríceps, o grupo muscular da parte frontal da coxa. Auxiliando no desenvolvimento de força e definição muscular. Além de ser uma ótima opção para quem deseja melhorar o desempenho em atividades que exigem a extensão das pernas, como correr e saltar, o leg extension também ajuda a fortalecer a articulação do joelho.";
 
-export const DescriptionComponent = () => {
-  const [isWatched, setIsWatched] = useState(false);
+export const DescriptionComponent = ({ isWatched, setIsWatched }) => {
   const { selectedExercise } = useSelectedOption();
   const [isComplement, setIsComplement] = useState(false);
   const [isFullText, setIsFullText] = useState(false);
@@ -132,7 +132,6 @@ export const DescriptionComponent = () => {
               py={3}
               px={isFullText || isComplement ? 6 : 3}
               rounded={"4px"}
-              transition={1}
             >
               {isComplement ? (
                 <Flex
@@ -142,7 +141,7 @@ export const DescriptionComponent = () => {
                   h={"80%"}
                   w={"full"}
                 >
-                  <Text fontSize="2xl" fontWeight="bold" fontStyle="italic">
+                  <Text fontSize="2xl" fontWeight="bold">
                     Material Suplementar
                   </Text>
                   <List spacing={2} mb={5}>
@@ -170,7 +169,6 @@ export const DescriptionComponent = () => {
                       xl: "36px",
                     }}
                     fontWeight="bold"
-                    fontStyle="italic"
                     text
                     color="gray.800"
                   >
@@ -179,7 +177,6 @@ export const DescriptionComponent = () => {
                   <Text
                     textAlign="justify"
                     fontWeight="bold"
-                    fontStyle="italic"
                     fontSize={{
                       base: "xs",
                       sm: "xs",
@@ -297,7 +294,6 @@ export const DescriptionComponent = () => {
                         _hover={{ bg: "primary.green", color: "primary.white" }}
                         fontSize={"2xl"}
                         fontWeight={"bold"}
-                        fontStyle={"italic"}
                         p={4}
                         w={"50px"}
                         h={"50px"}
@@ -370,4 +366,9 @@ export const DescriptionComponent = () => {
       </AnimatePresence>
     </Flex>
   );
+};
+
+DescriptionComponent.propTypes = {
+  isWatched: PropTypes.bool,
+  setIsWatched: PropTypes.func,
 };

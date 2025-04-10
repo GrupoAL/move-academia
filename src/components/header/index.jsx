@@ -117,7 +117,6 @@ export const HeaderComponent = ({ type }) => {
                 xl: "lg",
               }}
               fontWeight={700}
-              fontStyle={"italic"}
               onClick={() => navigate("/bye")}
               display={"flex"}
               alignItems={"center"}

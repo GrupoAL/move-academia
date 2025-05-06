@@ -79,7 +79,7 @@ export const DashboardPage = () => {
     }
 
     if (params.activite && params.choice) {
-      return <VideoPlayerPage videoId="vkkyibtK6I8" />;
+      return <VideoPlayerPage videoId="c_3j9CYlwlI" />;
     }
 
     if (selectedOption) {

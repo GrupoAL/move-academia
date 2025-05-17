@@ -12,11 +12,11 @@ const theme = extendTheme({
     },
   },
   fontSizes: {
-    "2xl": "32px",
-    xl: "28px",
-    lg: "24px",
-    md: "18px",
-    sm: "16px",
+    "2xl": "2rem", // 32px
+    xl: "1.75rem", // 28px
+    lg: "1.5rem", // 24px
+    md: "1.125rem", // 18px
+    sm: "1rem",
   },
   styles: {
     global: {

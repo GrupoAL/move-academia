@@ -11,8 +11,7 @@ export const InputComponent = ({ placeholder, type, bg, ...rest }) => {
       placeholder={placeholder}
       outline="none"
       border="none"
-      py={{ base: 4, sm: 4, md: 6, lg: 8 }}
-      px={{ base: 4, sm: 4, md: 6, lg: 8 }}
+      p={{ base: 4, sm: 4, md: 6, lg: 8 }}
       _placeholder={{
         color: "primary.white",
         opacity: 0.6,

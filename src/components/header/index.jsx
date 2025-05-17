@@ -32,102 +32,103 @@ export const HeaderComponent = ({ type }) => {
       fontSize={"2xl"}
       px={5}
     >
-      {type === "logged" && (
-        <>
-          <Flex
-            w={"full"}
-            display={{
-              base: "flex",
-              sm: "flex",
-              md: "none",
-              lg: "none",
-              xl: "none",
-            }}
-            py={"1rem"}
-            justifyContent={"space-between"}
-            alignItems={"center"}
-          >
-            <Box transform={"scaleX(-1)"}>
-              <MdOutlineDoubleArrow
-                onClick={(e) => {
-                  e.preventDefault();
-                  backParams();
-                }}
-              />
-            </Box>
-            <Flex gap={4} alignItems={"center"}>
-              <MenuSandwich />
-            </Flex>
-          </Flex>
-          <Flex
-            display={{
-              base: "none",
-              sm: "none",
-              md: "flex",
-              lg: "flex",
-              xl: "flex",
-            }}
-            w={"full"}
-            px={{
-              md: "4rem",
-              lg: "4rem",
-              xl: "5rem",
-            }}
-            py={6}
-            gap={6}
-            justifyContent={"end"}
-            alignItems={"center"}
-          >
-            {location.pathname !== "/dashboard" && (
-              <List
-                display={"flex"}
-                justifyContent={"center"}
-                w={"full"}
-                gap={9}
-              >
-                {listItems.map((item, i) => (
-                  <ListItem
-                    fontSize={{
-                      md: "md",
-                      lg: "lg",
-                      xl: "xl",
-                    }}
-                    _hover={{ color: "primary.yellow", cursor: "pointer" }}
-                    transition={".5s"}
-                    fontWeight={"bold"}
-                    key={i}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setSelectedOption(item);
-                      navigate(`/dashboard/${item.categoria}`);
-                    }}
-                  >
-                    {item.categoria}
-                  </ListItem>
-                ))}
-              </List>
-            )}
-            <MenuSearch />
-            <Text
-              cursor={"pointer"}
-              color={"primary.white"}
-              fontSize={{
-                md: "md",
-                lg: "lg",
-                xl: "lg",
+      {type === "logged" ||
+        (type === "adm" && (
+          <>
+            <Flex
+              w={"full"}
+              display={{
+                base: "flex",
+                sm: "flex",
+                md: "none",
+                lg: "none",
+                xl: "none",
               }}
-              fontWeight={700}
-              onClick={() => navigate("/bye")}
-              display={"flex"}
+              py={"1rem"}
+              justifyContent={"space-between"}
               alignItems={"center"}
-              gap={3}
-              _hover={{ color: "primary.yellow", cursor: "pointer" }}
             >
-              <IoExitOutline fontSize={"32px"} /> Sair
-            </Text>
-          </Flex>
-        </>
-      )}
+              <Box transform={"scaleX(-1)"}>
+                <MdOutlineDoubleArrow
+                  onClick={(e) => {
+                    e.preventDefault();
+                    backParams();
+                  }}
+                />
+              </Box>
+              <Flex gap={4} alignItems={"center"}>
+                <MenuSandwich />
+              </Flex>
+            </Flex>
+            <Flex
+              display={{
+                base: "none",
+                sm: "none",
+                md: "flex",
+                lg: "flex",
+                xl: "flex",
+              }}
+              w={"full"}
+              px={{
+                md: "4rem",
+                lg: "4rem",
+                xl: "5rem",
+              }}
+              py={6}
+              gap={6}
+              justifyContent={"end"}
+              alignItems={"center"}
+            >
+              {location.pathname !== "/dashboard" && (
+                <List
+                  display={"flex"}
+                  justifyContent={"center"}
+                  w={"full"}
+                  gap={9}
+                >
+                  {listItems.map((item, i) => (
+                    <ListItem
+                      fontSize={{
+                        md: "md",
+                        lg: "lg",
+                        xl: "xl",
+                      }}
+                      _hover={{ color: "primary.yellow", cursor: "pointer" }}
+                      transition={".5s"}
+                      fontWeight={"bold"}
+                      key={i}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setSelectedOption(item);
+                        navigate(`/dashboard/${item.categoria}`);
+                      }}
+                    >
+                      {item.categoria}
+                    </ListItem>
+                  ))}
+                </List>
+              )}
+              <MenuSearch />
+              <Text
+                cursor={"pointer"}
+                color={"primary.white"}
+                fontSize={{
+                  md: "md",
+                  lg: "lg",
+                  xl: "lg",
+                }}
+                fontWeight={700}
+                onClick={() => navigate("/bye")}
+                display={"flex"}
+                alignItems={"center"}
+                gap={3}
+                _hover={{ color: "primary.yellow", cursor: "pointer" }}
+              >
+                <IoExitOutline fontSize={"32px"} /> Sair
+              </Text>
+            </Flex>
+          </>
+        ))}
     </Flex>
   );
 };

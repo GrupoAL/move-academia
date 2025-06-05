@@ -6,10 +6,19 @@ import { useSelectedOption } from "../../contexts/selectedOptions";
 import theme from "../../themes";
 import { listItems } from "../../Utils";
 import { VideoPlayerPage } from "../videoPlayer";
+// import { useAppContext } from "../../contexts";
+import { usePing } from "../../hooks/useAuthQuery";
+import { useCategories } from "../../hooks/useCategoriesQuery";
 
 export const DashboardPage = () => {
   const userName = "Usuário";
   const { selectedOption, setSelectedOption } = useSelectedOption();
+
+  const { data } = usePing();
+  const { data: categories } = useCategories();
+
+  console.log("Ping data:", data);
+  console.log("categories data:", categories);
 
   const params = useParams();
   const navigate = useNavigate();

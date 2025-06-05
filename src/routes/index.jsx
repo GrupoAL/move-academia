@@ -1,6 +1,7 @@
 import { BrowserRouter } from "react-router-dom";
 // import { useAuth } from "../hooks/useAuth";
 import { AppRoutes } from "./app.routes";
+import { AppProvider } from "../contexts";
 
 export const Routes = () => {
   //   const { data } = useAuth();
@@ -8,7 +9,9 @@ export const Routes = () => {
   return (
     <BrowserRouter>
       {/* {data?.token ? <AppRoutes /> : <AuthRoutes />} */}
-      <AppRoutes />
+      <AppProvider>
+        <AppRoutes />
+      </AppProvider>
     </BrowserRouter>
   );
 };

@@ -8,7 +8,14 @@ const AdminPage = () => {
   const [activeTab, setActiveTab] = useState("categories");
 
   return (
-    <Box maxW="1000px" mx="auto" p={5}>
+    <Box
+      className="ADMIN"
+      minW={{ base: "328px" }}
+      w={"auto"}
+      maxW="1200px"
+      mx="auto"
+      p={5}
+    >
       <VStack spacing={{ base: 2, md: 6 }} align="stretch">
         <AdminTabs activeTab={activeTab} setActiveTab={setActiveTab} />
 

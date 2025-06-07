@@ -3,7 +3,7 @@ import {
   getCategories,
   createCategory,
   createExercise,
-} from "../services/categories";
+} from "../contexts/index";
 
 export const useCategories = () =>
   useQuery({

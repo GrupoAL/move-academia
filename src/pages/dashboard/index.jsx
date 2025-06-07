@@ -1,4 +1,4 @@
-import { Fade, Flex, SlideFade, Text } from "@chakra-ui/react";
+import { Button, Fade, Flex, SlideFade, Text } from "@chakra-ui/react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ButtonComponent } from "../../components/button";
 import { ListComponent } from "../../components/listOptions";
@@ -6,19 +6,30 @@ import { useSelectedOption } from "../../contexts/selectedOptions";
 import theme from "../../themes";
 import { listItems } from "../../Utils";
 import { VideoPlayerPage } from "../videoPlayer";
+import { useRegister } from "../../hooks/useAuthQuery";
 // import { useAppContext } from "../../contexts";
-import { usePing } from "../../hooks/useAuthQuery";
-import { useCategories } from "../../hooks/useCategoriesQuery";
 
 export const DashboardPage = () => {
   const userName = "Usuário";
   const { selectedOption, setSelectedOption } = useSelectedOption();
 
-  const { data } = usePing();
-  const { data: categories } = useCategories();
+  // const { data } = usePing();
+  // const { data: categories } = useCategories();
+  const { mutate } = useRegister();
+  const testeObject = {
+    nome: "Login User Test",
+    email: "testePWA@gmail.com",
+    password: "Password123!",
+  };
 
-  console.log("Ping data:", data);
-  console.log("categories data:", categories);
+  const tryRegister = async () => {
+    const formData = new FormData();
+    formData.append("nome", testeObject.nome);
+    formData.append("email", testeObject.email);
+    formData.append("password", testeObject.password);
+
+    mutate(testeObject);
+  };
 
   const params = useParams();
   const navigate = useNavigate();
@@ -55,6 +66,7 @@ export const DashboardPage = () => {
             >
               Olá, {userName}!
             </Text>
+            <Button onClick={tryRegister}>TESTE CARAI</Button>
           </Fade>
           <Flex direction="column" w="100%" gap={3}>
             {listItems.map((el, i) => (

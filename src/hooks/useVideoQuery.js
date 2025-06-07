@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getVideoByExercise } from "../services/videos";
+import { getVideoByExercise } from "../contexts/index";
 
 export const useVideo = (exerciseId) =>
   useQuery({

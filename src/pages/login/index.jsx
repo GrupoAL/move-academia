@@ -3,33 +3,61 @@ import {
   Button,
   Flex,
   SlideFade,
+  Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ButtonComponent } from "../../components/button";
 import { InputComponent } from "../../components/input";
+import { useLogin } from "../../hooks/useAuthQuery";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import { useAppContext } from "../../contexts";
 
+const fakeLogin = {
+  email: "testePWA@gmail.com",
+  password: "Password123!",
+};
 export const LoginPage = () => {
   const navigate = useNavigate();
 
-  const [isLoading, setIsLoading] = useState(false);
   const { isOpen, onToggle } = useDisclosure();
 
-  const handleLogin = () => {
-    setTimeout(() => {
-      onToggle();
-      setIsLoading(!isLoading);
-      navigate("/welcome");
-    }, 2000);
-  };
-
+  const { mutate, isPending } = useLogin();
+  const { data } = useAppContext();
   const handleAnimate = () => {
     onToggle();
     setTimeout(() => {
       navigate("/recoverPassword");
     }, 500);
   };
+
+  const loginSchema = yup.object({
+    email: yup.string().email("Email inválido").required("Email é obrigatório"),
+    password: yup.string().required("Senha é obrigatória"),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(loginSchema),
+  });
+
+  const onSubmit = async (loginData) => {
+    const token = data?.token;
+    const validateToken = localStorage.getItem("@moveAcademy:token");
+
+    if (token === validateToken) {
+      navigate("/dashboard");
+      return;
+    }
+
+    mutate(fakeLogin);
+  };
+
   return (
     <SlideFade
       in={!isOpen}
@@ -60,6 +88,8 @@ export const LoginPage = () => {
           justifyContent={"center"}
         >
           <Flex
+            as="form"
+            onSubmit={handleSubmit(onSubmit)}
             direction={"column"}
             gap={5}
             bg="primary.white"
@@ -71,24 +101,29 @@ export const LoginPage = () => {
               bg="primary.green"
               placeholder={"E-mail"}
               type={"email"}
+              {...register("email")}
             />
+            {errors.email && (
+              <Text color="red.500">{errors.email.message}</Text>
+            )}
             <InputComponent
               bg="primary.green"
               placeholder={"Senha"}
               type={"password"}
+              {...register("password")}
             />
+            {errors.password && (
+              <Text color="red.500">{errors.password.message}</Text>
+            )}
             <ButtonComponent
-              type={"outline"}
+              type="submit"
+              variant={"outline"}
               text={"Confirmar"}
               bg="primary.green"
               color="primary.white"
               sx={{ w: "150px" }}
               alignSelf={"end"}
-              isLoading={isLoading}
-              onClick={() => {
-                setIsLoading(!isLoading);
-                handleLogin();
-              }}
+              isLoading={isPending}
             />
           </Flex>
           <Button

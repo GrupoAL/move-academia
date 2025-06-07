@@ -10,48 +10,65 @@ import { VideoPlayerPage } from "../pages/videoPlayer";
 
 export const RoutesData = [
   {
+    name: "Home",
     route: "/",
     type: "off",
+    requiresAuth: false,
     component: LoginPage,
   },
   {
+    name: "Recover Password",
     route: "/recoverPassword",
     type: "off",
+    requiresAuth: false,
     component: RecoverPasswordPage,
   },
   {
+    name: "Dashboard",
     route: "/dashboard",
     type: "logged",
+    requiresAuth: true,
     component: DashboardPage,
   },
   {
+    name: "Activity Dashboard",
     route: "/dashboard/:activite",
     type: "logged",
+    requiresAuth: true,
     component: DashboardPage,
   },
   {
+    name: "Video Player",
     route: "/dashboard/:activite/:choice",
     type: "logged",
+    requiresAuth: true,
     component: DashboardPage,
   },
   {
+    name: "admin",
     route: "/admin",
     type: "adm",
+    requiresAuth: true,
     component: AdminPage,
   },
   {
+    name: "Video Player",
     route: "/player",
     type: "logged",
+    requiresAuth: true,
     component: VideoPlayerPage,
   },
   {
     route: "/welcome",
     type: "welcome",
+    requiresAuth: false,
     component: WelcomeAnimation,
   },
   {
+    name: "Bye",
     route: "/bye",
     type: "bye",
+    requiresAuth: false,
     component: WelcomeAnimation,
   },
 ];

@@ -1,62 +1,86 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { api } from "../services/api";
 
-export const AppContext = createContext();
+const AppContext = createContext({});
 
 export const AppProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [data, setData] = useState({});
 
-  const ping = async () => {
-    const res = await api.post("/");
+  //Login user ---------------------------------------------------
+  const login = async (data) => {
+    const res = await api.post("/login", data);
     return res.data;
   };
 
-  const login = async (credentials) => {
-    const res = await api.post("/login", credentials);
-    setUser(res.data.user);
-    return res.data;
-  };
-
+  //logout user ---------------------------------------------------
   const logout = async () => {
-    await api.get("/logout");
-    setUser(null);
-  };
-
-  const register = async (userData) => {
-    const res = await api.post("/register", userData);
+    const res = await api.get("/logout", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("@moveAcademy:token")}`,
+      },
+    });
     return res.data;
   };
 
-  const getCategories = async () => {
-    const res = await api.get("/categories");
+  //register user ---------------------------------------------------
+  const register = async (data) => {
+    const res = await api.post("/register", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return res.data;
   };
 
-  const createCategory = async (data) => {
-    const res = await api.post("/categories", data);
+  //manage user data ---------------------------------------------------
+  useEffect(() => {
+    const user = localStorage.getItem("@moveAcademy:user");
+    const token = localStorage.getItem("@moveAcademy:token");
+
+    if (token && user) {
+      setData({
+        user: user.nome,
+        token,
+      });
+    }
+  }, []);
+
+  //Update user account settings ---------------------------------------------------
+  const updateAccountSettings = async (data) => {
+    const res = await api.patch("/account/settings", data);
     return res.data;
   };
 
-  const createExercise = async (data) => {
-    const res = await api.post("/exercises", data);
-    return res.data;
-  };
-
+  //Get Video ---------------------------------------------------
   const getVideoByExercise = async (exerciseId) => {
     const res = await api.get(`/video/${exerciseId}`);
     return res.data;
   };
 
-  const updateAccountSettings = async (data) => {
-    const res = await api.patch("/account/settings", data);
+  //get Categories ---------------------------------------------------
+  const getCategories = async () => {
+    const res = await api.get("/categories");
+    return res.data;
+  };
+
+  //create Category ---------------------------------------------------
+  const createCategory = async (data) => {
+    const res = await api.post("/categories", data);
+    return res.data;
+  };
+
+  //create Exercise ---------------------------------------------------
+  const createExercise = async (data) => {
+    const res = await api.post("/exercises", data);
     return res.data;
   };
 
   return (
     <AppContext.Provider
       value={{
-        user,
+        data,
+        setData,
         login,
         logout,
         register,
@@ -65,7 +89,6 @@ export const AppProvider = ({ children }) => {
         createExercise,
         getVideoByExercise,
         updateAccountSettings,
-        ping,
       }}
     >
       {children}

@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { updateAccountSettings } from "../services/account";
+import { updateAccountSettings } from "../contexts/index";
 
 export const useUpdateAccountSettings = () =>
   useMutation({

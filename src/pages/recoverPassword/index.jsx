@@ -14,12 +14,14 @@ import { InputComponent } from "../../components/input";
 export const RecoverPasswordPage = () => {
   const navigate = useNavigate();
   const { isOpen, onToggle } = useDisclosure();
+
   const handleAnimate = () => {
     onToggle();
     setTimeout(() => {
       navigate("/");
     }, 500);
   };
+
   return (
     <SlideFade
       in={!isOpen}

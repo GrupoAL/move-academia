@@ -40,5 +40,5 @@ ButtonComponent.propTypes = {
   text: PropTypes.string,
   color: PropTypes.string,
   bg: PropTypes.string,
-  isLoading: PropTypes.boolean,
+  isLoading: PropTypes.any,
 };

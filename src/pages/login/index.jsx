@@ -15,10 +15,17 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useAppContext } from "../../contexts";
 
-const fakeLogin = {
-  email: "testePWA@gmail.com",
-  password: "Password123!",
+const logins = {
+  fake: {
+    email: "testePWA@gmail.com",
+    password: "Password123!",
+  },
+  admin: {
+    email: "sidny@gmail.com",
+    password: "Admin123!",
+  },
 };
+
 export const LoginPage = () => {
   const navigate = useNavigate();
 
@@ -55,7 +62,7 @@ export const LoginPage = () => {
       return;
     }
 
-    mutate(fakeLogin);
+    mutate(logins.admin);
   };
 
   return (

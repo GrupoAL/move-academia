@@ -1,7 +1,16 @@
 import { useMutation } from "@tanstack/react-query";
-import { updateAccountSettings } from "../contexts/index";
+import { useAppContext } from "../contexts";
 
-export const useUpdateAccountSettings = () =>
-  useMutation({
+export const useUpdateAccountSettings = () => {
+  const { updateAccountSettings } = useAppContext();
+
+  return useMutation({
     mutationFn: updateAccountSettings,
+    onSuccess: (data) => {
+      console.log("Account settings updated successfully:", data);
+    },
+    onError: (error) => {
+      console.error("Failed to update account settings:", error);
+    },
   });
+};

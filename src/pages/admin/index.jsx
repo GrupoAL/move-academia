@@ -15,6 +15,7 @@ const AdminPage = () => {
       maxW="1200px"
       mx="auto"
       p={5}
+      bg="black"
     >
       <VStack spacing={{ base: 2, md: 6 }} align="stretch">
         <AdminTabs activeTab={activeTab} setActiveTab={setActiveTab} />

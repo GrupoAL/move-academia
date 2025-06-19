@@ -7,29 +7,17 @@ import theme from "../../themes";
 import { listItems } from "../../Utils";
 import { VideoPlayerPage } from "../videoPlayer";
 import { useRegister } from "../../hooks/useAuthQuery";
+import { useAppContext } from "../../contexts";
 // import { useAppContext } from "../../contexts";
 
 export const DashboardPage = () => {
-  const userName = "Usuário";
+  const userName =
+    localStorage.getItem("@moveAcademy:user").split(" ")[0] || "Usuário";
+
   const { selectedOption, setSelectedOption } = useSelectedOption();
 
   // const { data } = usePing();
-  // const { data: categories } = useCategories();
-  const { mutate } = useRegister();
-  const testeObject = {
-    nome: "Login User Test",
-    email: "testePWA@gmail.com",
-    password: "Password123!",
-  };
-
-  const tryRegister = async () => {
-    const formData = new FormData();
-    formData.append("nome", testeObject.nome);
-    formData.append("email", testeObject.email);
-    formData.append("password", testeObject.password);
-
-    mutate(testeObject);
-  };
+  // const {  } = useAppContext();
 
   const params = useParams();
   const navigate = useNavigate();
@@ -66,7 +54,6 @@ export const DashboardPage = () => {
             >
               Olá, {userName}!
             </Text>
-            <Button onClick={tryRegister}>TESTE CARAI</Button>
           </Fade>
           <Flex direction="column" w="100%" gap={3}>
             {listItems.map((el, i) => (

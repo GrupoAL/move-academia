@@ -1,67 +1,56 @@
-import { useState } from "react";
 import {
   FormControl,
   FormLabel,
   VStack,
   Heading,
-  Alert,
-  AlertIcon,
-  useToast,
   Box,
+  Text,
 } from "@chakra-ui/react";
 import { InputComponent } from "../input";
 import { ButtonComponent } from "../button";
+import { useUpdateAccountSettings } from "../../hooks/useAccountSettings";
+import * as yup from "yup";
+import { useNavigate } from "react-router-dom";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
 
 const AccountSettings = () => {
-  const [accountData, setAccountData] = useState({
-    email: "admin@example.com",
-    currentPassword: "",
-    newPassword: "",
-    confirmPassword: "",
+  const { mutate, isPending } = useUpdateAccountSettings();
+
+  // const handleAnimate = () => {
+  //   onToggle();
+  //   setTimeout(() => {
+  //     navigate("/recoverPassword");
+  //   }, 500);
+  // };
+  const navigate = useNavigate();
+  const loginSchema = yup.object({
+    email: yup.string().email("Email inválido").required("Email é obrigatório"),
+    senhaAtual: yup.string().required("Senha é obrigatória"),
+    novaSenha: yup.string().required("Senha é obrigatória"),
+    confirmarNovaSenha: yup.string().required("Senha é obrigatória"),
   });
 
-  const [message, setMessage] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const toast = useToast();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(loginSchema),
+  });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setAccountData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+  const onSubmit = async (data) => {
+    console.log(data);
+    // const token = data?.token;
+    // const validateToken = localStorage.getItem("@moveAcademy:token");
+
+    // if (token === validateToken) {
+    //   navigate("/dashboard");
+    //   return;
+    // }
+
+    mutate(data);
   };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-
-    if (accountData.newPassword !== accountData.confirmPassword) {
-      setMessage("As senhas não coincidem!");
-      setIsLoading(false);
-      return;
-    }
-
-    // Simulando chamada API
-    setTimeout(() => {
-      toast({
-        title: "Dados atualizados",
-        description: "Suas informações foram atualizadas com sucesso.",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
-      setAccountData((prev) => ({
-        ...prev,
-        currentPassword: "",
-        newPassword: "",
-        confirmPassword: "",
-      }));
-      setMessage("");
-      setIsLoading(false);
-    }, 1500);
-  };
-
   return (
     <VStack spacing={{ base: 2, sm: 2, md: 6, lg: 6 }} align="stretch">
       <Heading
@@ -73,7 +62,7 @@ const AccountSettings = () => {
         Configurações de Conta
       </Heading>
 
-      <Box as="form" onSubmit={handleSubmit}>
+      <Box as="form" onSubmit={handleSubmit(onSubmit)}>
         <VStack spacing={{ base: 2, sm: 2, md: 4, lg: 4 }}>
           <FormControl isRequired>
             <FormLabel>E-mail:</FormLabel>
@@ -82,9 +71,11 @@ const AccountSettings = () => {
               bg="primary.green"
               type="email"
               name="email"
-              value={accountData.email}
-              onChange={handleChange}
+              {...register("email")} // Registering the input with react-hook-form
             />
+            {errors.email && (
+              <Text color="red.500">{errors.email.message}</Text>
+            )}
           </FormControl>
 
           <FormControl isRequired>
@@ -94,10 +85,12 @@ const AccountSettings = () => {
               bg="primary.green"
               type="password"
               name="currentPassword"
-              value={accountData.currentPassword}
-              onChange={handleChange}
+              {...register("senhaAtual")} // Registering the input with react-hook-form
               placeholder="Digite sua senha atual"
             />
+            {errors.senhaAtual && (
+              <Text color="red.500">{errors.senhaAtual.message}</Text>
+            )}
           </FormControl>
 
           <FormControl isRequired>
@@ -107,10 +100,12 @@ const AccountSettings = () => {
               bg="primary.green"
               type="password"
               name="newPassword"
-              value={accountData.newPassword}
-              onChange={handleChange}
+              {...register("novaSenha")} // Registering the input with react-hook-form
               placeholder="Digite a nova senha"
             />
+            {errors.novaSenha && (
+              <Text color="red.500">{errors.novaSenha.message}</Text>
+            )}
           </FormControl>
 
           <FormControl isRequired>
@@ -120,25 +115,21 @@ const AccountSettings = () => {
               bg="primary.green"
               type="password"
               name="confirmPassword"
-              value={accountData.confirmPassword}
-              onChange={handleChange}
+              {...register("confirmarNovaSenha")} // Registering the input with react-hook-form
               placeholder="Confirme a nova senha"
             />
+            {errors.confirmarNovaSenha && (
+              <Text color="red.500">{errors.confirmarNovaSenha.message}</Text>
+            )}
           </FormControl>
-
-          {message && (
-            <Alert status="error" borderRadius="md">
-              <AlertIcon />
-              {message}
-            </Alert>
-          )}
 
           <ButtonComponent
             type="submit"
+            variant={"solid"}
             color="primary.green"
             width="full"
             mt={{ base: 2, md: 4 }}
-            isLoading={isLoading}
+            isLoading={isPending}
             loadingText="Atualizando..."
             text={"Atualizar Dados"}
           />

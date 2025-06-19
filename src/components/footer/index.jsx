@@ -25,13 +25,8 @@ export const FooterComponent = () => {
       fontSize={"2xl"}
       px={5}
     >
-      <Flex
-        gap={8}
-        justifyContent={"space-evenly"}
-        alignItems={"center"}
-        w={"full"}
-      >
-        <Button
+      <Flex gap={8} justifyContent={"center"} alignItems={"center"} w={"full"}>
+        {/* <Button
           bg={"none"}
           _hover={{ bg: "none" }}
           color="primary.white"
@@ -41,10 +36,10 @@ export const FooterComponent = () => {
           onClick={() => navigate("/dashboard")}
         >
           <GrRefresh />
-        </Button>
+        </Button> */}
         <MenuSearch />
 
-        <Flex w={"60px"} h={"60px"}></Flex>
+        {/* <Flex w={"60px"} h={"60px"}></Flex> */}
       </Flex>
     </Flex>
   );

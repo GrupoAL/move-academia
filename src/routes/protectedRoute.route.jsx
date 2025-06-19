@@ -23,7 +23,7 @@ export const AdminRoute = ({ children }) => {
   }
 
   // Verificação real se é admin (substitua pela sua lógica)
-  const isAdmin = data.user?.role === "admin"; // Exemplo
+  const isAdmin = data?.user?.role === "admin"; // Exemplo
 
   if (!isAdmin) {
     // Autenticado mas não é admin - redireciona para dashboard

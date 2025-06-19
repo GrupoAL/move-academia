@@ -20,9 +20,9 @@ export const MenuSandwich = () => {
   return (
     <Menu>
       <MenuButton
-        _expanded={{ bg: "none", color: "primary.yellow" }} // Garante que o fundo não muda quando expandido
-        _active={{ bg: "none" }} // Garante que o fundo não muda quando clicado
-        _hover={{ bg: "none" }} // Garante que o fundo não muda ao passar o mouse
+        _expanded={{ bg: "none", color: "primary.yellow" }}
+        _active={{ bg: "none" }}
+        _hover={{ bg: "none" }}
         bg="none"
         color={"primary.white"}
         textAlign={"center"}

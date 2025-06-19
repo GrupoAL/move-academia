@@ -10,16 +10,19 @@ export const useLogin = () => {
     mutationFn: login,
     onSuccess: (data) => {
       const { user, token } = data;
-      localStorage.setItem("@moveAcademy:user", user.nome);
-      localStorage.setItem("@moveAcademy:token", token);
 
       if (token && user) {
         setData({
           user: user.nome,
           token,
+          isAdmin: user?.isAdmin || false,
         });
       }
-      navigate("/welcome");
+
+      localStorage.setItem("@moveAcademy:user", user.nome);
+      localStorage.setItem("@moveAcademy:token", token);
+
+      navigate("/dashboard");
     },
     onError: (error) => {
       console.error("Login failed:", error);
@@ -38,7 +41,7 @@ export const useLogout = () => {
       localStorage.removeItem("@moveAcademy:user");
       localStorage.removeItem("@moveAcademy:token");
       setData({});
-      navigate("/bye");
+      navigate("/");
     },
     onError: (error) => {
       console.error("Logout failed:", error);

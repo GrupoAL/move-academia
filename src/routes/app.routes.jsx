@@ -6,7 +6,7 @@ import { Grid } from "@chakra-ui/react";
 import { FooterComponent } from "../components/footer";
 import { HeaderComponent } from "../components/header";
 import { RoutesData } from "../data";
-import { AdminRoute, PrivateRoute } from "./protectedRoute.route";
+// import { AdminRoute, PrivateRoute } from "./protectedRoute.route";
 
 export const AppRoutes = () => {
   const location = useLocation();
@@ -59,17 +59,17 @@ export const AppRoutes = () => {
                 key={`route-${idx}`}
                 path={route.route}
                 element={
-                  route.onlyAdmin ? (
-                    <AdminRoute>
-                      <route.component />
-                    </AdminRoute>
-                  ) : route.requiresAuth ? (
-                    <PrivateRoute>
-                      <route.component />
-                    </PrivateRoute>
-                  ) : (
-                    <route.component />
-                  )
+                  // route.onlyAdmin ? (
+                  //   <AdminRoute>
+                  //     <route.component />
+                  //   </AdminRoute>
+                  // ) : route.requiresAuth ? (
+                  //   <PrivateRoute>
+                  //     <route.component />
+                  //   </PrivateRoute>
+                  // ) : (
+                  <route.component />
+                  // )
                 }
               />
             );

@@ -40,7 +40,7 @@ export const AppProvider = ({ children }) => {
 
     if (token && user) {
       setData({
-        user: user.nome,
+        user: user?.nome,
         token,
       });
     }
@@ -48,31 +48,53 @@ export const AppProvider = ({ children }) => {
 
   //Update user account settings ---------------------------------------------------
   const updateAccountSettings = async (data) => {
-    const res = await api.patch("/account/settings", data);
+    console.log("Updating account settings with data:", data);
+    const res = await api.patch("/account/settings", data, {
+      headers: {
+        "Content-Type": "Application/json",
+        Authorization: `Bearer ${localStorage.getItem("@moveAcademy:token")}`,
+      },
+    });
     return res.data;
   };
 
   //Get Video ---------------------------------------------------
   const getVideoByExercise = async (exerciseId) => {
-    const res = await api.get(`/video/${exerciseId}`);
+    const res = await api.get(`/video/${exerciseId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("@moveAcademy:token")}`,
+      },
+    });
     return res.data;
   };
 
   //get Categories ---------------------------------------------------
   const getCategories = async () => {
-    const res = await api.get("/categories");
+    const res = await api.get("/categories", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("@moveAcademy:token")}`,
+      },
+    });
     return res.data;
   };
 
   //create Category ---------------------------------------------------
   const createCategory = async (data) => {
-    const res = await api.post("/categories", data);
+    const res = await api.post("/categories", data, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("@moveAcademy:token")}`,
+      },
+    });
     return res.data;
   };
 
   //create Exercise ---------------------------------------------------
   const createExercise = async (data) => {
-    const res = await api.post("/exercises", data);
+    const res = await api.post("/exercises", data, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("@moveAcademy:token")}`,
+      },
+    });
     return res.data;
   };
 

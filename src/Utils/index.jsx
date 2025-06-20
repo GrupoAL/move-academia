@@ -130,29 +130,29 @@ export const listItems = [
   },
 ];
 
-export const listSearch = [
-  "Leg Curl",
-  "Leg Extension",
-  "Supino Reto com Halter",
-  "Supino Reto com Barra",
-  "Supino Inclinado com Crucifixo",
-  "Mobilidade 9090",
-  "Mobilidade com Elástico",
-  "Mobilidade com Bastão",
-  "Quadríceps",
-  "Isquiotibiais",
-  "Peitoral",
-  "Latíssimo",
-  "Dorsais",
-  "Glúteo",
-  "Adutores",
-  "Abdominais",
-  "Low Row",
-  "Reverse Fly",
-  "D.A.P",
-  "Cross Over",
-  "Row Pure",
-  "Shoulder Press Pure",
-  "Banco Abdutor",
-  "Banco Adutor",
-];
+export const flattenList = (items, path = []) => {
+  return items.flatMap((item) => {
+    const currentPath = [...path, item.nome || item.categoria];
+    if (item.itens) {
+      return flattenList(item.itens, currentPath);
+    } else {
+      return {
+        label: item.nome,
+        value: `/dashboard/${slugify(
+          currentPath[currentPath.length - 2]
+        )}/${slugify(item.nome)}`,
+        categoria: currentPath[currentPath.length - 2],
+      };
+    }
+  });
+};
+
+const slugify = (str) =>
+  str
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/[^\w\-]+/g, "")
+    .replace(/\-\-+/g, "-")
+    .trim();

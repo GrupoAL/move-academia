@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { useAppContext } from "../contexts/index";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export const useLogin = () => {
   const navigate = useNavigate();
@@ -25,7 +26,9 @@ export const useLogin = () => {
       navigate("/dashboard");
     },
     onError: (error) => {
-      console.error("Login failed:", error);
+      toast.error(
+        error.response?.data?.error || "Login failed. Please try again."
+      );
     },
   });
 };
@@ -34,7 +37,6 @@ export const useLogout = () => {
   const navigate = useNavigate();
 
   const { logout, setData } = useAppContext();
-
   return useMutation({
     mutationFn: logout,
     onSuccess: () => {
@@ -44,7 +46,10 @@ export const useLogout = () => {
       navigate("/");
     },
     onError: (error) => {
-      console.error("Logout failed:", error);
+      navigate("/");
+      toast.error(
+        error.response?.data?.error || "Logout failed. Redirecting to login."
+      );
     },
   });
 };

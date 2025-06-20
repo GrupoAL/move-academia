@@ -5,24 +5,29 @@ import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const WelcomeAnimation = () => {
+const WelcomeAnimation = ({ setVisible }) => {
   const [showWelcome, setShowWelcome] = useState(true);
   const navigate = useNavigate();
-  const pathname = window.location.pathname;
-  console.log({ pathname });
-  const compliment = pathname === "/welcome" ? "Bem vindo!" : "Até mais!";
-  const words = compliment.split(" ");
 
-  const path = pathname === "/welcome" ? "/dashboard" : "/";
+  const user = localStorage.getItem("@moveAcademy:user") || "";
+
+  const compliment = user ? `Bem vindo, ${user.split(" ")[0]}!` : "Até mais!";
+
+  const words = compliment.split(" ");
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowWelcome(false);
-      navigate(path);
+      setVisible(true);
+      return;
     }, 3000);
-
     return () => clearTimeout(timer);
-  }, [navigate]);
+  }, [user, navigate]);
+
+  const skipAnimation = () => {
+    setShowWelcome(false);
+    setVisible(true);
+  };
 
   return (
     <AnimatePresence>
@@ -32,9 +37,19 @@ const WelcomeAnimation = () => {
           animate={{ y: 0 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
+          onClick={skipAnimation}
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0, 0, 0, 0.8)",
+            zIndex: 10000,
+          }}
         >
           <Box
-            position="fixed"
+            position="absolute"
             top="0"
             left="0"
             width="100%"
@@ -53,7 +68,7 @@ const WelcomeAnimation = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0 }}
                     transition={{
-                      delay: wordIndex * 0.5 + letterIndex * 0.1, // Atraso baseado na posição da letra
+                      delay: wordIndex * 0.5 + letterIndex * 0.1,
                       duration: 0.5,
                     }}
                   >
@@ -80,5 +95,5 @@ const WelcomeAnimation = () => {
 export default WelcomeAnimation;
 
 WelcomeAnimation.propTypes = {
-  textType: PropTypes.string,
+  setVisible: PropTypes.func,
 };

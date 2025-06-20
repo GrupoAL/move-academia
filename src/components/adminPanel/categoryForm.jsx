@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import {
   FormControl,
   FormLabel,
@@ -30,44 +30,6 @@ const CategoryForm = () => {
     category: "",
     exerciseName: "",
   });
-
-  const containerRef = useRef(null);
-
-  useEffect(() => {
-    const checkScroll = () => {
-      const el = containerRef.current;
-      if (!el) return;
-
-      const scrollTop = el.scrollTop;
-      const scrollHeight = el.scrollHeight;
-      const clientHeight = el.clientHeight;
-
-      const hasScrollUp = scrollTop > 0;
-      const hasScrollDown = scrollTop + clientHeight < scrollHeight;
-
-      if (hasScrollUp) {
-        console.log("🔼 Scroll disponível para cima");
-        // função para cima
-      }
-
-      if (hasScrollDown) {
-        console.log("🔽 Scroll disponível para baixo");
-        // função para baixo
-      }
-    };
-
-    // Checar ao montar e ao rolar
-    const el = containerRef.current;
-    if (el) {
-      checkScroll();
-      el.addEventListener("scroll", checkScroll);
-    }
-
-    // Limpeza do listener
-    return () => {
-      if (el) el.removeEventListener("scroll", checkScroll);
-    };
-  }, []);
 
   const [categories, setCategories] = useState([]);
   const toast = useToast();

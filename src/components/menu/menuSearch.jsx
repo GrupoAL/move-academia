@@ -1,31 +1,30 @@
 import {
   Box,
   IconButton,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
   Modal,
   ModalBody,
-  ModalCloseButton,
   ModalContent,
   ModalHeader,
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { TfiSearch } from "react-icons/tfi";
-import { listSearch } from "../../Utils";
+import { flattenList, listItems } from "../../Utils";
 import { InputComponent } from "../input";
 import { ButtonComponent } from "../button";
-// import { useNavigate } from "react-router-dom";
-// import { useSelectedOption } from "../../contexts/selectedOptions";
+import { BounceArrowAnimation } from "../animations/bounceArrow";
+import { useNavigate } from "react-router-dom";
 
 export const MenuSearch = () => {
+  const navigate = useNavigate();
+
   const [searchTerm, setSearchTerm] = useState("");
 
-  const filteredItems = listSearch.filter((item) =>
-    item
+  const searchOptions = flattenList(listItems);
+
+  const filteredItems = searchOptions.filter((item) =>
+    item?.label
       .toLowerCase()
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
@@ -38,9 +37,42 @@ export const MenuSearch = () => {
   );
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-  // const navigate = useNavigate();
 
-  // const { setSelectedOption } = useSelectedOption();
+  const scrollRef = useRef();
+
+  const [canScrollUp, setCanScrollUp] = useState(false);
+  const [canScrollDown, setCanScrollDown] = useState(false);
+
+  const checkScrollPossibility = () => {
+    const el = scrollRef.current;
+    if (!el) return;
+
+    const epsilon = 1;
+
+    const isAbleToScrollUp = el.scrollTop > epsilon;
+    const isAbleToScrollDown =
+      el.scrollTop + el.clientHeight < el.scrollHeight - epsilon;
+
+    setCanScrollUp(isAbleToScrollUp);
+    setCanScrollDown(isAbleToScrollDown);
+  };
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+
+    checkScrollPossibility();
+
+    el.addEventListener("scroll", checkScrollPossibility);
+
+    return () => {
+      el.removeEventListener("scroll", checkScrollPossibility);
+    };
+  }, []);
+
+  useEffect(() => {
+    checkScrollPossibility();
+  }, []);
 
   return (
     <>
@@ -89,22 +121,30 @@ export const MenuSearch = () => {
           position={"fixed"}
           zIndex={1}
           p={4}
-          maxH={"350px"}
+          transition={"ease-in 0.3s"}
+          w={{ base: "90vw", md: "60vw", lg: "50vw", xl: "40vw" }}
+          maxW={{ base: "90vw", md: "60vw", lg: "50vw", xl: "40vw" }}
+          maxH={"80vh"}
+          h={"80vh"}
           border={`1px solid #fff`}
+          px={6}
+          py={2}
         >
           <ModalHeader
             color={"primary.white"}
             fontSize={{ base: "lg", md: "xl", xl: "2xl" }}
-            p={"24px 0 0 0"}
+            px={6}
+            pt={6}
+            pb={0}
           >
-            O que pretende treinar hoje?
+            Procura algo?
           </ModalHeader>
-          <ModalBody>
+          <ModalBody display={"flex"} flexDir={"column"} gap={8}>
             <InputComponent
               type={"text"}
-              placeholder={"Procura algo?"}
+              placeholder={"Digite aqui..."}
               value={searchTerm}
-              // onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(e) => setSearchTerm(e.target.value)}
               sx={{
                 borderColor: "white",
                 outline: "white",
@@ -113,34 +153,64 @@ export const MenuSearch = () => {
                 _placeholder: {
                   fontSize: { base: "sm", sm: "sm", md: "md", lg: "md" },
                   color: "primary.white",
+                  opacity: 0.3,
                 },
                 py: { base: 4, sm: 4, md: 5, lg: 5 },
                 px: { base: 4, sm: 4, md: 5, lg: 5 },
               }}
             />
-            <Box maxH={"200px"} overflowY={"scroll"}>
-              {filteredItems?.map((item) => (
-                <Box
-                  bg={"none"}
-                  key={item}
-                  p={0}
-                  w={"fit-content"}
-                  color={"primary.white"}
-                  fontSize={"sm"}
-                  fontWeight={700}
-                  borderBottom="0.5px solid"
-                  transition=".3s"
-                  lineHeight={"24px"}
-                  _hover={{ cursor: "pointer", color: "primary.green" }}
-                  onClick={() => {
-                    // setSelectedOption(item);
-                    console.log(`/dashboard/${item.categoria}`);
-                    // navigate(`/dashboard/${item.categoria}`);
-                  }}
-                >
-                  {item}
-                </Box>
-              ))}
+
+            <Box position={"relative"}>
+              <Box
+                color="white"
+                position={"absolute"}
+                top="-2%"
+                left="50%"
+                transform="translate(-50%, -50%)"
+              >
+                {canScrollUp && <BounceArrowAnimation position={"up"} />}
+              </Box>
+              <Box
+                ref={scrollRef}
+                maxH={"50dvh"}
+                overflowY={"auto"}
+                p={2}
+                position={"relative"}
+                onScroll={checkScrollPossibility}
+              >
+                {filteredItems?.map((item) => (
+                  <Box
+                    key={item.value}
+                    p={1}
+                    borderBottom="0.5px solid"
+                    color={"primary.white"}
+                    fontSize={"sm"}
+                    fontWeight={700}
+                    transition={".3s"}
+                    _hover={{
+                      cursor: "pointer",
+                      color: "primary.green",
+                      fontSize: "xl",
+                    }}
+                    onClick={() => {
+                      onClose();
+                      navigate(item.value);
+                    }}
+                  >
+                    {item.label}
+                  </Box>
+                ))}
+              </Box>
+              <Box
+                mb={2}
+                color="white"
+                position={"absolute"}
+                top="105%"
+                left="50%"
+                transform="translate(-50%, -50%)"
+              >
+                {canScrollDown && <BounceArrowAnimation position={"down"} />}
+              </Box>
             </Box>
           </ModalBody>
         </ModalContent>

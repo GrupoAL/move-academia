@@ -14,22 +14,14 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useAppContext } from "../../contexts";
-
-const logins = {
-  fake: {
-    email: "testePWA@gmail.com",
-    password: "Password123!",
-  },
-  admin: {
-    email: "sidny@gmail.com",
-    password: "Admin123!",
-  },
-};
+// import WelcomeAnimation from "../../components/animations/login";
+// import { useState } from "react";
 
 export const LoginPage = () => {
   const navigate = useNavigate();
 
   const { isOpen, onToggle } = useDisclosure();
+  // const [visible, setVisible] = useState(false);
 
   const { mutate, isPending } = useLogin();
   const { data } = useAppContext();
@@ -62,7 +54,7 @@ export const LoginPage = () => {
       return;
     }
 
-    mutate(logins.admin);
+    mutate(loginData);
   };
 
   return (
@@ -72,6 +64,8 @@ export const LoginPage = () => {
       offsetX="-20px"
       offsetY="0px"
     >
+      {/* <WelcomeAnimation setVisible={setVisible} /> */}
+      {/* {visible && ( */}
       <Flex
         w={"100%"}
         direction={"column"}
@@ -128,7 +122,7 @@ export const LoginPage = () => {
               text={"Confirmar"}
               bg="primary.green"
               color="primary.white"
-              sx={{ w: "150px" }}
+              w="150px"
               alignSelf={"end"}
               isLoading={isPending}
             />
@@ -146,6 +140,7 @@ export const LoginPage = () => {
           </Button>
         </Flex>
       </Flex>
+      {/* )} */}
     </SlideFade>
   );
 };

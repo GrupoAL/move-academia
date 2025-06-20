@@ -16,7 +16,6 @@ import { MenuSearch } from "../menu/menuSearch";
 import { useLogout } from "../../hooks/useAuthQuery";
 import { useAppContext } from "../../contexts";
 import { useEffect, useState } from "react";
-// import WelcomeAnimation from "../animations/login";
 
 export const HeaderComponent = () => {
   const navigate = useNavigate();
@@ -59,7 +58,6 @@ export const HeaderComponent = () => {
       fontSize={"2xl"}
       px={5}
     >
-      {/* <WelcomeAnimation /> */}
       {data?.token && (
         <>
           <Flex

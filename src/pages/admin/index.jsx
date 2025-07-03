@@ -1,12 +1,22 @@
 import { useState } from "react";
 import { Box, VStack } from "@chakra-ui/react";
-import CategoryForm from "../../components/adminPanel/categoryForm";
 import AccountSettings from "../../components/adminPanel/accountSettings";
 import AdminTabs from "../../components/adminPanel/adminTabs";
+import { ExerciseForm } from "../../components/adminPanel/categoryForm";
+import { listItems } from "../../Utils";
 
 const AdminPage = () => {
   const [activeTab, setActiveTab] = useState("categories");
-
+  const handleAddExercise = (
+    category,
+    subcategory,
+    muscleGroup,
+    newExercise
+  ) => {
+    // Aqui você pode implementar a lógica para adicionar o exercício à sua lista
+    console.log({ category, subcategory, muscleGroup, newExercise });
+    // Exemplo: atualizar o estado ou fazer uma chamada API
+  };
   return (
     <Box
       className="ADMIN"
@@ -21,7 +31,12 @@ const AdminPage = () => {
         <AdminTabs activeTab={activeTab} setActiveTab={setActiveTab} />
 
         <Box bg="gray.50" p={6} borderRadius="md" boxShadow="md">
-          {activeTab === "categories" && <CategoryForm />}
+          {activeTab === "categories" && (
+            <ExerciseForm
+              listItems={listItems}
+              onAddExercise={handleAddExercise}
+            />
+          )}
           {activeTab === "account" && <AccountSettings />}
         </Box>
       </VStack>

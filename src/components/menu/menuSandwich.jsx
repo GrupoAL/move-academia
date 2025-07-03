@@ -11,11 +11,17 @@ import { IoExitOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { useSelectedOption } from "../../contexts/selectedOptions";
 import { listItems } from "../../Utils";
+import { useLogout } from "../../hooks/useAuthQuery";
 
 export const MenuSandwich = () => {
   const navigate = useNavigate();
 
   const { setSelectedOption } = useSelectedOption();
+  const { mutate } = useLogout();
+
+  const handleLogout = () => {
+    mutate();
+  };
 
   return (
     <Menu>
@@ -68,7 +74,7 @@ export const MenuSandwich = () => {
           color={"primary.bg"}
           fontSize={"lg"}
           fontWeight={700}
-          onClick={() => navigate("/bye")}
+          onClick={handleLogout}
           display={"flex"}
           alignItems={"center"}
           gap={3}

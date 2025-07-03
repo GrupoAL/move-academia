@@ -12,12 +12,15 @@ import {
 import PropTypes from "prop-types";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelectedOption } from "../../contexts/selectedOptions";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
+import { CanScrollComponent } from "../handleScroller";
 
 export const ListComponent = ({ title, array }) => {
   const navigate = useNavigate();
   const params = useParams();
+  const scrollRef = useRef();
+
   const { selectedOption, setSelectedExercise } = useSelectedOption();
 
   const [stack, setStack] = useState([{ title, items: array }]);
@@ -65,7 +68,7 @@ export const ListComponent = ({ title, array }) => {
       pr={2}
       gap={5}
     >
-      <Flex align="center" gap={4}>
+      <Flex gap={4} flexDir={"column"} transition={".3s"} width={"fit-content"}>
         <Breadcrumb
           separator=">"
           fontWeight="medium"
@@ -87,8 +90,9 @@ export const ListComponent = ({ title, array }) => {
               border={"none"}
               _hover={"none"}
               sx={{ span: { m: 0 } }}
-            ></Button>
+            />
           )}
+
           {breadcrumbItems.map((level, index) => {
             const realIndex = isMobile ? stack.length - 1 : index;
             return (
@@ -104,7 +108,7 @@ export const ListComponent = ({ title, array }) => {
                       ? "primary.white"
                       : "primary.green"
                   }
-                  fontSize={"lg"}
+                  fontSize={{ base: "md", md: "lg", lg: "xl", "2xl": "3xl" }}
                   cursor="pointer"
                 >
                   {level.title}
@@ -113,53 +117,51 @@ export const ListComponent = ({ title, array }) => {
             );
           })}
         </Breadcrumb>
-
-        {/* <Text
-          color="primary.white"
-          fontSize={{
-            base: "2xl",
-            sm: "2xl",
-            md: "48px",
-            lg: "64px",
-            xl: "64px",
-          }}
-          fontWeight={700}
-          letterSpacing={"2px"}
-        >
-          {current.title}
-        </Text> */}
       </Flex>
 
-      <List display={"flex"} flexDirection={"column"} gap={3}>
-        {current.items.map((item, i) => (
-          <SlideFade
-            key={i}
-            in
-            transition={{ enter: { duration: (i + 1) / 8 } }}
-            offsetX={"-30px"}
-            offsetY={"0"}
+      <Flex position="relative" width={"fit-content"} h={"100%"}>
+        <CanScrollComponent scrollRef={scrollRef}>
+          <List
+            ref={scrollRef}
+            display={"flex"}
+            flexDirection={"column"}
+            gap={3}
+            sx={{
+              maxHeight: "clamp(30vh, 60vh, 80vh)",
+            }}
+            overflowY={"auto"}
           >
-            <ListItem
-              w={"fit-content"}
-              fontSize={{
-                base: "md",
-                sm: "md",
-                md: "lg",
-                lg: "lg",
-                xl: "2xl",
-              }}
-              letterSpacing={"1px"}
-              fontWeight={600}
-              borderBottom="0.5px solid"
-              transition=".3s"
-              _hover={{ cursor: "pointer", color: "primary.green" }}
-              onClick={() => handleItemClick(item)}
-            >
-              {item.nome}
-            </ListItem>
-          </SlideFade>
-        ))}
-      </List>
+            {current.items.map((item, i) => (
+              <SlideFade
+                key={i}
+                in
+                transition={{ enter: { duration: (i + 1) / 8 } }}
+                offsetX={"-30px"}
+                offsetY={"0"}
+              >
+                <ListItem
+                  w={"fit-content"}
+                  fontSize={{
+                    base: "md",
+                    sm: "md",
+                    md: "lg",
+                    lg: "lg",
+                    xl: "2xl",
+                  }}
+                  letterSpacing={"1px"}
+                  fontWeight={600}
+                  borderBottom="0.5px solid"
+                  transition=".3s"
+                  _hover={{ cursor: "pointer", color: "primary.green" }}
+                  onClick={() => handleItemClick(item)}
+                >
+                  {item.nome}
+                </ListItem>
+              </SlideFade>
+            ))}
+          </List>
+        </CanScrollComponent>
+      </Flex>
     </Flex>
   );
 };

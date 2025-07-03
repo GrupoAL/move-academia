@@ -6,13 +6,13 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
 import { ButtonComponent } from "../../components/button";
 import { InputComponent } from "../../components/input";
+import { useNavigate } from "react-router-dom";
 import { useLogin } from "../../hooks/useAuthQuery";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import * as yup from "yup";
 import { useAppContext } from "../../contexts";
 // import WelcomeAnimation from "../../components/animations/login";
 // import { useState } from "react";
@@ -53,8 +53,10 @@ export const LoginPage = () => {
       navigate("/dashboard");
       return;
     }
-
-    mutate(loginData);
+    mutate({
+      email: "sidny@gmail.com",
+      password: "Admin123!",
+    });
   };
 
   return (

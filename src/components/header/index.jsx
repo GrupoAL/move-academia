@@ -1,8 +1,13 @@
 import {
   Box,
+  Button,
   Flex,
   List,
   ListItem,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   Text,
   useBreakpointValue,
 } from "@chakra-ui/react";
@@ -16,6 +21,7 @@ import { MenuSearch } from "../menu/menuSearch";
 import { useLogout } from "../../hooks/useAuthQuery";
 import { useAppContext } from "../../contexts";
 import { useEffect, useState } from "react";
+import { ChevronDownIcon } from "@chakra-ui/icons";
 
 export const HeaderComponent = () => {
   const navigate = useNavigate();
@@ -42,10 +48,8 @@ export const HeaderComponent = () => {
     location.pathname === "/dashboard" ? setIsDash(false) : setIsDash(true);
   }, [location]);
 
-  const { setSelectedOption } = useSelectedOption();
-
   const isMobile = useBreakpointValue({ base: true, md: false });
-
+  const { setSelectedOption, selectedOption } = useSelectedOption();
   return (
     <Flex
       as={"header"}
@@ -67,7 +71,10 @@ export const HeaderComponent = () => {
             justifyContent={"space-between"}
             alignItems={"center"}
           >
-            <Box transform={"scaleX(-1)"}>
+            <Box
+              transform={"scaleX(-1)"}
+              _hover={{ cursor: "pointer", color: "primary.yellow" }}
+            >
               {isDash && (
                 <MdOutlineDoubleArrow
                   onClick={(e) => {
@@ -77,6 +84,7 @@ export const HeaderComponent = () => {
                 />
               )}
             </Box>
+
             {isMobile && (
               <Flex gap={4} alignItems={"center"}>
                 <MenuSandwich />
@@ -97,35 +105,87 @@ export const HeaderComponent = () => {
               justifyContent={"end"}
               alignItems={"center"}
             >
-              {location.pathname !== "/dashboard" && (
-                <List
-                  display={"flex"}
-                  justifyContent={"center"}
-                  w={"full"}
-                  gap={9}
-                >
-                  {listItems.map((item, i) => (
-                    <ListItem
+              <Menu transition={".3s"}>
+                {() => (
+                  <>
+                    <MenuButton
+                      as={Button}
+                      rightIcon={<ChevronDownIcon />}
+                      variant="outline"
+                      border={"none"}
+                      borderBottom={"1px solid white"}
+                      borderRadius={0}
+                      color={"primary.white"}
+                      size="lg"
                       fontSize={{
-                        md: "md",
-                        lg: "lg",
-                        xl: "xl",
+                        base: "md",
+                        md: "lg",
+                        lg: "xl",
+                        "2xl": "3xl",
                       }}
-                      _hover={{ color: "primary.yellow", cursor: "pointer" }}
-                      transition={".5s"}
-                      fontWeight={"bold"}
-                      key={i}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setSelectedOption(item);
-                        navigate(`/dashboard/${item.categoria}`);
+                      px={6}
+                      _hover={{
+                        color: "primary.yellow",
+                        borderColor: "primary.yellow",
+                      }}
+                      _active={{
+                        color: "primary.yellow",
+                        borderColor: "primary.yellow",
                       }}
                     >
-                      {item.categoria}
-                    </ListItem>
-                  ))}
-                </List>
-              )}
+                      {selectedOption
+                        ? selectedOption.categoria
+                        : "Selecione uma categoria"}
+                    </MenuButton>
+
+                    <MenuList
+                      bg={"black"}
+                      py={0}
+                      minW="200px"
+                      boxShadow="xl"
+                      border={"1px solid white"}
+                      borderRadius={"8px"}
+                      overflow={"hidden"}
+                    >
+                      {listItems.map((item, i) => (
+                        <MenuItem
+                          key={i}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setSelectedOption(item);
+                          }}
+                          color={"primary.white"}
+                          _expanded={{
+                            bg: "black",
+                            border: "1px solid white",
+                            borderRadius: "8px",
+                          }}
+                          bg={"primary.green"}
+                          fontSize={{
+                            base: "md",
+                            md: "lg",
+                            lg: "xl",
+                            "2xl": "3xl",
+                          }}
+                          transition={".3s"}
+                          _hover={{
+                            bg: "primary.white",
+                            color: "primary.green",
+                          }}
+                          _focus={{
+                            bg: "primary.white",
+                            color: "primary.green",
+                          }}
+                          px={4}
+                          py={3}
+                        >
+                          <Text fontWeight="medium">{item.categoria}</Text>
+                        </MenuItem>
+                      ))}
+                    </MenuList>
+                  </>
+                )}
+              </Menu>
               <MenuSearch />
               <Text
                 cursor={"pointer"}

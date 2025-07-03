@@ -47,6 +47,8 @@ export const useLogout = () => {
     },
     onError: (error) => {
       navigate("/");
+      localStorage.removeItem("@moveAcademy:user");
+      localStorage.removeItem("@moveAcademy:token");
       toast.error(
         error.response?.data?.error || "Logout failed. Redirecting to login."
       );
@@ -67,11 +69,3 @@ export const useRegister = () => {
     },
   });
 };
-
-// export const usePing = () =>
-//   useQuery({
-//     queryKey: ["ping"],
-//     queryFn: ping,
-//     retry: 0,
-//     refetchOnWindowFocus: false,
-//   });

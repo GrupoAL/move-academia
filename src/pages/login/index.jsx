@@ -53,10 +53,8 @@ export const LoginPage = () => {
       navigate("/dashboard");
       return;
     }
-    mutate({
-      email: "sidny@gmail.com",
-      password: "Admin123!",
-    });
+
+    mutate(loginData);
   };
 
   return (

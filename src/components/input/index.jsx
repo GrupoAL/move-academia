@@ -1,33 +1,34 @@
 import { Input } from "@chakra-ui/react";
 import PropTypes from "prop-types";
+import { forwardRef } from "react";
 
-export const InputComponent = ({ placeholder, type, bg }) => {
-  return (
-    <Input
-      type={type}
-      bg={bg}
-      color="primary.white"
-      fontSize={{ base: "sm", sm: "sm", md: "md", lg: "lg" }}
-      fontWeight={{ base: 600, sm: 600, md: 600, lg: 700 }}
-      placeholder={placeholder}
-      alignContent={"center"}
-      alignItems={"center"}
-      textAlign="center"
-      outline="none"
-      border="none"
-      py={{ base: 4, sm: 4, md: 6, lg: 8 }}
-      px={{ base: 4, sm: 4, md: 6, lg: 8 }}
-      _placeholder={{
-        textAlign: "center",
-        color: "primary.white",
-        fontSize: { base: "sm", sm: "sm", md: "md", lg: "lg" },
-        fontWeight: { base: 600, sm: 600, md: 600, lg: 700 },
-      }}
-    />
-  );
-};
+export const InputComponent = forwardRef(
+  ({ placeholder, type, bg, ...rest }, ref) => {
+    return (
+      <Input
+        ref={ref}
+        type={type}
+        bg={bg}
+        color="primary.white"
+        fontSize={{ base: "sm", sm: "sm", md: "md", lg: "lg" }}
+        placeholder={placeholder}
+        outline="none"
+        border="none"
+        p={{ base: 4, sm: 4, md: 6, lg: 8 }}
+        _placeholder={{
+          color: "primary.white",
+          opacity: 0.6,
+          fontSize: { base: "sm", sm: "sm", md: "md", lg: "lg" },
+        }}
+        {...rest}
+      />
+    );
+  }
+);
+InputComponent.displayName = "InputComponent";
 
 InputComponent.propTypes = {
+  ref: PropTypes.any,
   type: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   bg: PropTypes.any,

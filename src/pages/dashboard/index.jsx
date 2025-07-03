@@ -1,91 +1,119 @@
-import { Flex, Text } from "@chakra-ui/react";
-import { useState } from "react";
+import { Fade, Flex, SlideFade, Text } from "@chakra-ui/react";
+import { useNavigate, useParams } from "react-router-dom";
 import { ButtonComponent } from "../../components/button";
 import { ListComponent } from "../../components/listOptions";
+import { useSelectedOption } from "../../contexts/selectedOptions";
 import theme from "../../themes";
-
-const data = [
-  {
-    categoria: "Exercícios",
-    itens: [
-      "Leg Curl",
-      "Leg Extension",
-      "Supino Reto com Halter",
-      "Supino Reto com Barra",
-      "Supino Inclinado com Crucifixo",
-      "Mobilidade 9090",
-      "Mobilidade com Elástico",
-      "Mobilidade com Bastão",
-    ],
-  },
-  {
-    categoria: "Grupos Musculares",
-    itens: [
-      "Quadríceps",
-      "Isquiotibiais",
-      "Peitoral",
-      "Latíssimo",
-      "Dorsais",
-      "Glúteo",
-      "Adutores",
-      "Abdominais",
-    ],
-  },
-  {
-    categoria: "Aparelhos",
-    itens: [
-      "Low Row",
-      "Reverse Fly",
-      "D.A.P",
-      "Cross Over",
-      "Row Pure",
-      "Shoulder Press Pure",
-      "Banco Abdutor",
-      "Banco Adutor",
-    ],
-  },
-];
+import { listItems } from "../../Utils";
+import { VideoPlayerPage } from "../videoPlayer";
+import WelcomeAnimation from "../../components/animations/login";
+import { useState } from "react";
+// import { useAppContext } from "../../contexts";
 
 export const DashboardPage = () => {
-  const userName = "Sidny";
-  const [selectedOption, setSelectedOption] = useState("");
+  const userName =
+    localStorage.getItem("@moveAcademy:user").split(" ")[0] || "Usuário";
+
+  const { selectedOption, setSelectedOption } = useSelectedOption();
+
+  const [visible, setVisible] = useState(false);
+
+  // const { data } = usePing();
+  // const {  } = useAppContext();
+
+  const params = useParams();
+  const navigate = useNavigate();
 
   addEventListener("keydown", (e) => {
     if (e.code === "Numpad8") {
       setSelectedOption("");
     }
   });
-  return (
-    <>
-      {selectedOption === "" && (
-        <Flex direction={"column"} w={"80%"} gap={6}>
-          <Text fontWeight={700} fontSize="2xl" color={theme.colors.white}>
-            Olá, {userName}!
-          </Text>
-          <Flex direction={"column"} w={"100%"} gap={3}>
-            {data.map((el) => (
-              <ButtonComponent
-                key={el.categoria}
-                text={el.categoria}
-                h={"60px"}
-                fontSize="md"
-                fontWeight={700}
-                fontStyle={"italic"}
-                onClick={(e) => {
-                  e.preventDefault();
-                  setSelectedOption(el);
+
+  const renderMainContent = () => {
+    if (!params.activite) {
+      return (
+        <Flex
+          direction="column"
+          alignSelf="start"
+          justifySelf={"center"}
+          w={{
+            base: "80%",
+            sm: "450px",
+            md: "450px",
+            lg: "450px",
+            xl: "450px",
+          }}
+          gap={6}
+          mt="3rem"
+        >
+          <WelcomeAnimation setVisible={setVisible} />
+          {visible && (
+            <>
+              <Fade
+                in
+                transition={{
+                  enter: { duration: 2.5 },
+                  exit: { duration: 0.5 },
                 }}
-              />
-            ))}
-          </Flex>
+              >
+                <Text
+                  fontWeight={700}
+                  fontSize="2xl"
+                  letterSpacing={"1px"}
+                  color={theme.colors.white}
+                >
+                  Olá, {userName}!
+                </Text>
+              </Fade>
+              <Flex direction="column" w="100%" gap={3}>
+                {listItems.map((el, i) => (
+                  <SlideFade
+                    key={el.categoria}
+                    in
+                    transition={{ enter: { duration: (i + 1) / 8 } }}
+                    offsetX={"30px"}
+                    offsetY={"0"}
+                  >
+                    <ButtonComponent
+                      text={el.categoria}
+                      h="60px"
+                      w={"full"}
+                      fontSize="md"
+                      fontWeight={700}
+                      bg="primary.white"
+                      color="primary.bg"
+                      letterSpacing={"1px"}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setSelectedOption(el);
+                        navigate(`/dashboard/${el.categoria}`);
+                      }}
+                    />
+                  </SlideFade>
+                ))}
+              </Flex>
+            </>
+          )}
         </Flex>
-      )}
-      {selectedOption && (
+      );
+    }
+
+    if (params.activite && params.choice) {
+      return <VideoPlayerPage videoId="c_3j9CYlwlI" />;
+    }
+
+    if (selectedOption) {
+      return (
         <ListComponent
           title={selectedOption.categoria}
           array={selectedOption.itens}
         />
-      )}
-    </>
-  );
+      );
+    }
+
+    return null;
+  };
+
+  return <>{renderMainContent()}</>;
 };

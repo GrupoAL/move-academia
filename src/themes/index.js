@@ -8,27 +8,31 @@ const theme = extendTheme({
       white: "#fff",
       yellow: "#c9e000",
       cardBg: "#c8df00",
+      cardImageBg: "#ab9f87",
     },
   },
   fontSizes: {
-    "2xl": "32px",
-    xl: "28px",
-    lg: "24px",
-    md: "18px",
-    sm: "16px",
+    "2xl": "2rem", // 32px
+    xl: "1.75rem", // 28px
+    lg: "1.5rem", // 24px
+    md: "1.125rem", // 18px
+    sm: "1rem",
   },
   styles: {
     global: {
       body: {
-        fontFamily: "Work Sans, sans-serif",
-        fontStyle: "italic",
+        fontFamily: "Bebas Neue, serif",
         margin: 0,
         padding: 0,
         boxSizing: "border-box",
       },
+      "button, svg": {
+        WebkitTapHighlightColor: "transparent",
+        WebkitUserSelect: "none",
+        userSelect: "none",
+      },
       "::-webkit-scrollbar": {
-        width: "8px", // Largura da barra
-        borderRadius: "100%", // Deixa o polegar arredondado
+        display: "none",
       },
       "::-webkit-scrollbar-track": {
         background: "#fff", // Fundo da trilha

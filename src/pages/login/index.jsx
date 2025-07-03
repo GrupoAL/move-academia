@@ -1,10 +1,21 @@
-import { Avatar, Button, Flex, useDisclosure } from "@chakra-ui/react";
+import {
+  Avatar,
+  Button,
+  Flex,
+  SlideFade,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { ButtonComponent } from "../../components/button";
 import { InputComponent } from "../../components/input";
 import { useNavigate } from "react-router-dom";
 import { useLogin } from "../../hooks/useAuthQuery";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { useAppContext } from "../../contexts";
+// import WelcomeAnimation from "../../components/animations/login";
+// import { useState } from "react";
 
 export const LoginPage = () => {
   const navigate = useNavigate();
@@ -49,56 +60,89 @@ export const LoginPage = () => {
   };
 
   return (
-    <Flex w={"100%"} direction={"column"} alignItems={"center"} gap={5}>
-      <Avatar
-        w={"200px"}
-        h={"100px"}
-        src="#"
-        sx={{
-          bg: "none",
-        }}
-      ></Avatar>
+    <SlideFade
+      in={!isOpen}
+      transition={{ exit: { duration: 0.5 }, enter: { duration: 0.5 } }}
+      offsetX="-20px"
+      offsetY="0px"
+    >
+      {/* <WelcomeAnimation setVisible={setVisible} /> */}
+      {/* {visible && ( */}
       <Flex
-        w={{ base: "80%", sm: "450px", md: "450px", lg: "550px" }}
+        w={"100%"}
         direction={"column"}
         alignItems={"center"}
-        justifyContent={"center"}
+        gap={5}
+        h={"50%"}
+        mt={"3rem"}
       >
+        <Avatar
+          w={"200px"}
+          h={"100px"}
+          src="#"
+          sx={{
+            bg: "none",
+          }}
+        ></Avatar>
         <Flex
+          w={{ base: "80%", sm: "450px", md: "450px", lg: "550px" }}
           direction={"column"}
-          gap={5}
-          bg="primary.white"
-          p="20px 24px"
-          w={"100%"}
-          rounded={8}
+          alignItems={"center"}
+          justifyContent={"center"}
         >
-          <InputComponent
-            bg="primary.green"
-            placeholder={"SEU EMAIL AQUI"}
-            type={"email"}
-          />
-          <InputComponent
-            bg="primary.green"
-            placeholder={"SUA SENHA AQUI"}
-            type={"password"}
-          />
-          <ButtonComponent
-            text={"CONFIRMAR"}
-            bg="primary.green"
-            color="primary.white"
-          />
+          <Flex
+            as="form"
+            onSubmit={handleSubmit(onSubmit)}
+            direction={"column"}
+            gap={5}
+            bg="primary.white"
+            p="20px 24px"
+            w={"100%"}
+            rounded={8}
+          >
+            <InputComponent
+              bg="primary.green"
+              placeholder={"E-mail"}
+              type={"email"}
+              {...register("email")}
+            />
+            {errors.email && (
+              <Text color="red.500">{errors.email.message}</Text>
+            )}
+            <InputComponent
+              bg="primary.green"
+              placeholder={"Senha"}
+              type={"password"}
+              {...register("password")}
+            />
+            {errors.password && (
+              <Text color="red.500">{errors.password.message}</Text>
+            )}
+            <ButtonComponent
+              type="submit"
+              variant={"outline"}
+              text={"Confirmar"}
+              bg="primary.green"
+              color="primary.white"
+              w="150px"
+              alignSelf={"end"}
+              isLoading={isPending}
+            />
+          </Flex>
+          <Button
+            bg="primary.bg"
+            color="primary.yellow"
+            _hover={{ bg: "none", textDecoration: "underline" }}
+            alignSelf={"end"}
+            fontSize={{ base: "sm", sm: "sm", md: "md", lg: "lg" }}
+            fontWeight={{ base: 600, sm: 600, md: 600, lg: 700 }}
+            onClick={() => handleAnimate()}
+          >
+            Esqueci minha senha!
+          </Button>
         </Flex>
-        <Button
-          bg="primary.bg"
-          color="primary.yellow"
-          _hover={{ bg: "none" }}
-          alignSelf={"end"}
-          fontSize={{ base: "sm", sm: "sm", md: "md", lg: "lg" }}
-          fontWeight={{ base: 600, sm: 600, md: 600, lg: 700 }}
-        >
-          ESQUECI MINHA SENHA
-        </Button>
       </Flex>
-    </Flex>
+      {/* )} */}
+    </SlideFade>
   );
 };

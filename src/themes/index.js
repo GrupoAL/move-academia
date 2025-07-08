@@ -25,6 +25,7 @@ const theme = extendTheme({
         margin: 0,
         padding: 0,
         boxSizing: "border-box",
+        background: "black",
       },
       "button, svg": {
         WebkitTapHighlightColor: "transparent",

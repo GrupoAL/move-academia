@@ -6,18 +6,16 @@ import { useSelectedOption } from "../../contexts/selectedOptions";
 import theme from "../../themes";
 import { listItems } from "../../Utils";
 import { VideoPlayerPage } from "../videoPlayer";
-import WelcomeAnimation from "../../components/animations/login";
-import { useState } from "react";
+
 // import { useAppContext } from "../../contexts";
 
 export const DashboardPage = () => {
   const userName =
     localStorage.getItem("@moveAcademy:user").split(" ")[0] || "Usuário";
 
+  // const isAnimate = sessionStorage.getItem("@moveAcademya:isLogin");
+
   const { selectedOption, setSelectedOption } = useSelectedOption();
-
-  const [visible, setVisible] = useState(false);
-
   // const { data } = usePing();
   // const {  } = useAppContext();
 
@@ -47,54 +45,49 @@ export const DashboardPage = () => {
           gap={6}
           mt="3rem"
         >
-          <WelcomeAnimation setVisible={setVisible} />
-          {visible && (
-            <>
-              <Fade
+          <Fade
+            in
+            transition={{
+              enter: { duration: 2.5 },
+              exit: { duration: 0.5 },
+            }}
+          >
+            <Text
+              fontWeight={700}
+              fontSize="2xl"
+              letterSpacing={"1px"}
+              color={theme.colors.white}
+            >
+              Olá, {userName}!
+            </Text>
+          </Fade>
+          <Flex direction="column" w="100%" gap={3}>
+            {listItems.map((el, i) => (
+              <SlideFade
+                key={el.categoria}
                 in
-                transition={{
-                  enter: { duration: 2.5 },
-                  exit: { duration: 0.5 },
-                }}
+                transition={{ enter: { duration: (i + 1) / 8 } }}
+                offsetX={"30px"}
+                offsetY={"0"}
               >
-                <Text
+                <ButtonComponent
+                  text={el.categoria}
+                  h={{ base: "40px", md: "60px" }}
+                  w={"full"}
+                  fontSize="md"
                   fontWeight={700}
-                  fontSize="2xl"
+                  bg="primary.white"
+                  color="primary.bg"
                   letterSpacing={"1px"}
-                  color={theme.colors.white}
-                >
-                  Olá, {userName}!
-                </Text>
-              </Fade>
-              <Flex direction="column" w="100%" gap={3}>
-                {listItems.map((el, i) => (
-                  <SlideFade
-                    key={el.categoria}
-                    in
-                    transition={{ enter: { duration: (i + 1) / 8 } }}
-                    offsetX={"30px"}
-                    offsetY={"0"}
-                  >
-                    <ButtonComponent
-                      text={el.categoria}
-                      h="60px"
-                      w={"full"}
-                      fontSize="md"
-                      fontWeight={700}
-                      bg="primary.white"
-                      color="primary.bg"
-                      letterSpacing={"1px"}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setSelectedOption(el);
-                        navigate(`/dashboard/${el.categoria}`);
-                      }}
-                    />
-                  </SlideFade>
-                ))}
-              </Flex>
-            </>
-          )}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setSelectedOption(el);
+                    navigate(`/dashboard/${el.categoria}`);
+                  }}
+                />
+              </SlideFade>
+            ))}
+          </Flex>
         </Flex>
       );
     }

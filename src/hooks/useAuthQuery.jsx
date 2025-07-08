@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 
 export const useLogin = () => {
   const navigate = useNavigate();
-  const { login, setData } = useAppContext();
+  const { login, setData, setCanAnimate } = useAppContext();
 
   return useMutation({
     mutationFn: login,
@@ -19,7 +19,10 @@ export const useLogin = () => {
           isAdmin: user?.isAdmin || false,
         });
       }
-
+      setCanAnimate({
+        run: true,
+        message: `Bem vindo, ${user.nome.split(" ")[0]}!`,
+      });
       localStorage.setItem("@moveAcademy:user", user.nome);
       localStorage.setItem("@moveAcademy:token", token);
 
@@ -36,13 +39,17 @@ export const useLogin = () => {
 export const useLogout = () => {
   const navigate = useNavigate();
 
-  const { logout, setData } = useAppContext();
+  const { logout, setData, setCanAnimate } = useAppContext();
   return useMutation({
     mutationFn: logout,
     onSuccess: () => {
+      setData({});
       localStorage.removeItem("@moveAcademy:user");
       localStorage.removeItem("@moveAcademy:token");
-      setData({});
+      setCanAnimate({
+        run: true,
+        message: `Até mais!`,
+      });
       navigate("/");
     },
     onError: (error) => {

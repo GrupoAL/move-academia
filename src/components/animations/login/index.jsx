@@ -1,42 +1,33 @@
-// src/components/WelcomeAnimation.jsx
 import { Box, Text } from "@chakra-ui/react";
 import { AnimatePresence, motion } from "framer-motion";
-import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useAppContext } from "../../../contexts";
 
-const WelcomeAnimation = ({ setVisible }) => {
-  const [showWelcome, setShowWelcome] = useState(true);
-  const navigate = useNavigate();
+const WelcomeAnimation = () => {
+  const { canAnimate, setCanAnimate } = useAppContext();
 
-  const user = localStorage.getItem("@moveAcademy:user") || "";
-
-  const compliment = user ? `Bem vindo, ${user.split(" ")[0]}!` : "Até mais!";
-
-  const words = compliment.split(" ");
+  const words = canAnimate.message.split(" ");
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setShowWelcome(false);
-      setVisible(true);
+      setCanAnimate({ run: false, message: "" });
       return;
     }, 3000);
     return () => clearTimeout(timer);
-  }, [user, navigate]);
+  }, [canAnimate]);
 
   const skipAnimation = () => {
-    setShowWelcome(false);
-    setVisible(true);
+    setCanAnimate({ run: false, message: "" });
   };
 
   return (
     <>
-      {showWelcome && (
-        <AnimatePresence>
+      <AnimatePresence>
+        {canAnimate.run && (
           <motion.div
-            initial={{ y: "-100vw" }}
-            animate={{ y: 0 }}
-            exit={{ opacity: 0 }}
+            initial={{ y: "-100vw", opacity: 1 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: "-100vw", opacity: 1 }}
             transition={{ duration: 0.5 }}
             onClick={skipAnimation}
             style={{
@@ -88,14 +79,10 @@ const WelcomeAnimation = ({ setVisible }) => {
               ))}
             </Box>
           </motion.div>
-        </AnimatePresence>
-      )}
+        )}
+      </AnimatePresence>
     </>
   );
 };
 
 export default WelcomeAnimation;
-
-WelcomeAnimation.propTypes = {
-  setVisible: PropTypes.func,
-};

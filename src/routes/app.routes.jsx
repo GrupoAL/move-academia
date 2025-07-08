@@ -6,11 +6,13 @@ import { Grid } from "@chakra-ui/react";
 import { FooterComponent } from "../components/footer";
 import { HeaderComponent } from "../components/header";
 import { RoutesData } from "../data";
+import { useAppContext } from "../contexts";
 // import { AdminRoute, PrivateRoute } from "./protectedRoute.route";
 
 export const AppRoutes = () => {
   const location = useLocation();
   const currentPath = location.pathname;
+  const { canAnimate } = useAppContext();
 
   // Find the corresponding page data in RoutesData based on the current route
   const currentPage = RoutesData.find((item) => {
@@ -49,35 +51,37 @@ export const AppRoutes = () => {
       overflow="hidden"
     >
       <HeaderComponent type={pageType} />
-      <Routes>
-        {RoutesData?.filter((data) => {
-          return data.route && data.component;
-        })?.map((route, idx) => {
-          if (route.route && route.component) {
-            return (
-              <Route
-                key={`route-${idx}`}
-                path={route.route}
-                element={
-                  // route.onlyAdmin ? (
-                  //   <AdminRoute>
-                  //     <route.component />
-                  //   </AdminRoute>
-                  // ) : route.requiresAuth ? (
-                  //   <PrivateRoute>
-                  //     <route.component />
-                  //   </PrivateRoute>
-                  // ) : (
-                  <route.component />
-                  // )
-                }
-              />
-            );
-          }
+      {!canAnimate.run && (
+        <Routes>
+          {RoutesData?.filter((data) => {
+            return data.route && data.component;
+          })?.map((route, idx) => {
+            if (route.route && route.component) {
+              return (
+                <Route
+                  key={`route-${idx}`}
+                  path={route.route}
+                  element={
+                    // route.onlyAdmin ? (
+                    //   <AdminRoute>
+                    //     <route.component />
+                    //   </AdminRoute>
+                    // ) : route.requiresAuth ? (
+                    //   <PrivateRoute>
+                    //     <route.component />
+                    //   </PrivateRoute>
+                    // ) : (
+                    <route.component />
+                    // )
+                  }
+                />
+              );
+            }
 
-          return <></>;
-        })}
-      </Routes>
+            return <></>;
+          })}
+        </Routes>
+      )}
       {pageType === "logged" && <FooterComponent />}
     </Grid>
   );

@@ -7,6 +7,11 @@ const AppContext = createContext({});
 export const AppProvider = ({ children }) => {
   const [data, setData] = useState({});
 
+  const [canAnimate, setCanAnimate] = useState({
+    run: false,
+    message: "",
+  });
+
   //Login user ---------------------------------------------------
   const login = async (data) => {
     const res = await api.post("/login", data);
@@ -103,6 +108,8 @@ export const AppProvider = ({ children }) => {
       value={{
         data,
         setData,
+        canAnimate,
+        setCanAnimate,
         login,
         logout,
         register,

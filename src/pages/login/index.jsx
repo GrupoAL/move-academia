@@ -64,8 +64,6 @@ export const LoginPage = () => {
       offsetX="-20px"
       offsetY="0px"
     >
-      {/* <WelcomeAnimation setVisible={setVisible} /> */}
-      {/* {visible && ( */}
       <Flex
         w={"100%"}
         direction={"column"}
@@ -140,7 +138,6 @@ export const LoginPage = () => {
           </Button>
         </Flex>
       </Flex>
-      {/* )} */}
     </SlideFade>
   );
 };

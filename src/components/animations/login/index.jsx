@@ -25,9 +25,9 @@ const WelcomeAnimation = () => {
       <AnimatePresence>
         {canAnimate.run && (
           <motion.div
-            initial={{ y: "-100vw", opacity: 1 }}
+            initial={{ y: "-100vh", opacity: 1 }}
             animate={{ y: 0, opacity: 1 }}
-            exit={{ y: "-100vw", opacity: 1 }}
+            exit={{ y: "-100vh", opacity: 1 }}
             transition={{ duration: 0.5 }}
             onClick={skipAnimation}
             style={{

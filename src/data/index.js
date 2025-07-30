@@ -1,7 +1,7 @@
 // Main Pages
 
 // Internal Pages
-import WelcomeAnimation from "../components/animations/login";
+import WelcomeAnimation from "../components/animations/welcome";
 import AdminPage from "../pages/admin";
 import { DashboardPage } from "../pages/dashboard";
 import { LoginPage } from "../pages/login";

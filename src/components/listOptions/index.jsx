@@ -77,20 +77,20 @@ export const ListComponent = ({ title, array }) => {
           {/* Botão Voltar */}
           {isMobile && stack.length > 1 && (
             <Button
-              leftIcon={<ChevronLeftIcon />}
-              size="lg"
+              rightIcon={<ChevronLeftIcon />}
               color="primary.white"
               onClick={handleGoBack}
-              w={"24px"}
-              minW={"24px"}
-              h={"24px"}
-              minH={"24px"}
               bg={"transparent"}
               p={0}
+              height={"27px"}
               border={"none"}
               _hover={"none"}
               sx={{ span: { m: 0 } }}
-            />
+              fontSize={{ base: "md", md: "lg", lg: "xl" }}
+              fontWeight={500}
+            >
+              Voltar
+            </Button>
           )}
 
           {breadcrumbItems.map((level, index) => {

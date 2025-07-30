@@ -1,42 +1,24 @@
-import { Navigate, useLocation } from "react-router-dom";
+// src/routes/ProtectedRoute.jsx
+import { Navigate } from "react-router-dom";
 import { useAppContext } from "../contexts";
+
 import PropTypes from "prop-types";
 
-export const PrivateRoute = ({ children }) => {
+export const ProtectedRoute = ({ children, onlyAdmin = false }) => {
   const { data } = useAppContext();
-  const location = useLocation();
 
   if (!data?.token) {
-    // Não autenticado - redireciona para login com state da rota atual
-    return <Navigate to="/" state={{ from: location }} replace />;
-  }
-  return children;
-};
-
-export const AdminRoute = ({ children }) => {
-  const { data } = useAppContext();
-  const location = useLocation();
-
-  if (!data?.token) {
-    // Não autenticado - redireciona para login
-    return <Navigate to="/" state={{ from: location }} replace />;
+    return <Navigate to="/" replace />;
   }
 
-  // Verificação real se é admin (substitua pela sua lógica)
-  const isAdmin = data?.user?.role === "admin"; // Exemplo
-
-  if (!isAdmin) {
-    // Autenticado mas não é admin - redireciona para dashboard
+  if (onlyAdmin && !data?.isAdmin) {
     return <Navigate to="/dashboard" replace />;
   }
 
   return children;
 };
 
-PrivateRoute.propTypes = {
-  children: PropTypes.node,
-};
-
-AdminRoute.propTypes = {
-  children: PropTypes.node,
+ProtectedRoute.propTypes = {
+  children: PropTypes.node.isRequired,
+  onlyAdmin: PropTypes.bool,
 };

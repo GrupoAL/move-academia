@@ -6,10 +6,10 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import { GrRefresh } from "react-icons/gr";
 import { useNavigate } from "react-router-dom";
 import { ButtonComponent } from "../../components/button";
 import { InputComponent } from "../../components/input";
+import { MdOutlineDoubleArrow } from "react-icons/md";
 
 export const RecoverPasswordPage = () => {
   const navigate = useNavigate();
@@ -85,10 +85,10 @@ export const RecoverPasswordPage = () => {
               color="primary.white"
               fontSize={"36px"}
               fontWeight={{ base: 600, sm: 600, md: 700, lg: 700 }}
-              transform={"rotate(-45deg) scaleX(-1)"}
+              transform={"scaleX(-1)"}
               onClick={() => handleAnimate()}
             >
-              <GrRefresh />
+              <MdOutlineDoubleArrow />
             </Button>
             <ButtonComponent
               bg="primary.white"

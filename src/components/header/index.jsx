@@ -1,9 +1,8 @@
 import {
+  Badge,
   Box,
   Button,
   Flex,
-  List,
-  ListItem,
   Menu,
   MenuButton,
   MenuItem,
@@ -28,7 +27,7 @@ export const HeaderComponent = () => {
 
   const [isDash, setIsDash] = useState();
 
-  const { data } = useAppContext();
+  const { data, canReturn, setCanReturn } = useAppContext();
   const { mutate } = useLogout();
 
   const handleLogout = () => {
@@ -46,7 +45,8 @@ export const HeaderComponent = () => {
 
   useEffect(() => {
     location.pathname === "/dashboard" ? setIsDash(false) : setIsDash(true);
-  }, [location]);
+    setCanReturn(true);
+  }, [location, setCanReturn]);
 
   const isMobile = useBreakpointValue({ base: true, md: false });
   const { setSelectedOption, selectedOption } = useSelectedOption();
@@ -79,7 +79,7 @@ export const HeaderComponent = () => {
                   transform={"scaleX(-1)"}
                   _hover={{ cursor: "pointer", color: "primary.yellow" }}
                 >
-                  {isDash && (
+                  {isDash && canReturn && (
                     <MdOutlineDoubleArrow
                       onClick={(e) => {
                         e.preventDefault();
@@ -186,8 +186,11 @@ export const HeaderComponent = () => {
                                 py={3}
                               >
                                 <Text fontWeight="medium">
-                                  {item.categoria}
+                                  {item.categoria} sss
                                 </Text>
+                                {data?.user?.isAdmin && (
+                                  <Text fontWeight="medium">Admin</Text>
+                                )}
                               </MenuItem>
                             ))}
                           </MenuList>

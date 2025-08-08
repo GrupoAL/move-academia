@@ -22,9 +22,9 @@ export const LoginPage = () => {
 
   const { isOpen, onToggle } = useDisclosure();
   // const [visible, setVisible] = useState(false);
-
   const { mutate, isPending } = useLogin();
   const { data } = useAppContext();
+
   const handleAnimate = () => {
     onToggle();
     setTimeout(() => {
@@ -63,6 +63,7 @@ export const LoginPage = () => {
       transition={{ exit: { duration: 0.5 }, enter: { duration: 0.5 } }}
       offsetX="-20px"
       offsetY="0px"
+      exit={{ opacity: 0, transform: "translateY(-20px)" }}
     >
       <Flex
         w={"100%"}

@@ -7,7 +7,7 @@ function App() {
     <>
       <ToastContainer
         position="top-right"
-        autoClose={3000} // tempo de fechamento automático
+        autoClose={3000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

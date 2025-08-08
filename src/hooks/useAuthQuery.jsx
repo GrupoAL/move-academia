@@ -2,6 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useAppContext } from "../contexts/index";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { encryptUserData } from "../Utils/encrypt";
 
 export const useLogin = () => {
   const navigate = useNavigate();
@@ -9,7 +10,7 @@ export const useLogin = () => {
 
   return useMutation({
     mutationFn: login,
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       const { user, token } = data;
 
       if (token && user) {
@@ -23,9 +24,15 @@ export const useLogin = () => {
         run: true,
         message: `Bem vindo, ${user.nome.split(" ")[0]}!`,
       });
-      localStorage.setItem("@moveAcademy:user", user.nome);
-      localStorage.setItem("@moveAcademy:token", token);
+      // localStorage.setItem("@moveAcademy:user", user.nome);
+      // localStorage.setItem("@moveAcademy:token", token);
+      const encryptedUserData = await encryptUserData({
+        username: user.nome,
+        token,
+        isAdmin: user?.isAdmin || false,
+      });
 
+      localStorage.setItem("@moveAcademy:userData", encryptedUserData);
       navigate("/dashboard");
     },
     onError: (error) => {
@@ -46,6 +53,7 @@ export const useLogout = () => {
       setData({});
       localStorage.removeItem("@moveAcademy:user");
       localStorage.removeItem("@moveAcademy:token");
+      localStorage.removeItem("@moveAcademy:userData");
       setCanAnimate({
         run: true,
         message: `Até mais!`,
@@ -56,6 +64,8 @@ export const useLogout = () => {
       navigate("/");
       localStorage.removeItem("@moveAcademy:user");
       localStorage.removeItem("@moveAcademy:token");
+      localStorage.removeItem("@moveAcademy:userData");
+
       toast.error(
         error.response?.data?.error || "Logout failed. Redirecting to login."
       );

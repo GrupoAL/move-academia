@@ -6,12 +6,12 @@ import { useSelectedOption } from "../../contexts/selectedOptions";
 import theme from "../../themes";
 import { listItems } from "../../Utils";
 import { VideoPlayerPage } from "../videoPlayer";
+import { useAppContext } from "../../contexts";
 
 // import { useAppContext } from "../../contexts";
 
 export const DashboardPage = () => {
-  const userName =
-    localStorage.getItem("@moveAcademy:user").split(" ")[0] || "Usuário";
+  const { data } = useAppContext();
 
   // const isAnimate = sessionStorage.getItem("@moveAcademya:isLogin");
 
@@ -58,7 +58,7 @@ export const DashboardPage = () => {
               letterSpacing={"1px"}
               color={theme.colors.white}
             >
-              Olá, {userName}!
+              Olá, {data?.user.split(" ")[0]}!
             </Text>
           </Fade>
           <Flex direction="column" w="100%" gap={3}>

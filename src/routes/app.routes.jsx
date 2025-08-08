@@ -5,25 +5,41 @@ import { HeaderComponent } from "../components/header";
 import { FooterComponent } from "../components/footer";
 import { RoutesData } from "../data";
 import PropTypes from "prop-types";
-// Protect Route
-const ProtectedRoute = ({ children, onlyAdmin = false }) => {
-  const { data } = useAppContext();
 
-  if (!data?.token) {
-    return <Navigate to="/" replace />;
-  }
+const PublicRoute = ({ children }) => {
+  const { data, loading } = useAppContext();
 
-  if (onlyAdmin && !data?.isAdmin) {
+  if (loading) return null;
+
+  if (data?.token) {
     return <Navigate to="/dashboard" replace />;
   }
 
   return children;
 };
 
-const PublicRoute = ({ children }) => {
-  const { data } = useAppContext();
+const PrivateRoute = ({ children }) => {
+  const { data, loading } = useAppContext();
 
-  if (data?.token) {
+  if (loading) return null;
+
+  if (!data?.token) {
+    return <Navigate to="/" replace />;
+  }
+
+  return children;
+};
+
+const AdminRoute = ({ children }) => {
+  const { data, loading } = useAppContext();
+
+  if (loading) return null;
+
+  if (!data?.token) {
+    return <Navigate to="/" replace />;
+  }
+
+  if (!data?.isAdmin) {
     return <Navigate to="/dashboard" replace />;
   }
 
@@ -35,7 +51,6 @@ export const AppRoutes = () => {
   const currentPath = location.pathname;
   const { canAnimate } = useAppContext();
 
-  // Finds the page related to RoutesData
   const currentPage = RoutesData.find((item) => {
     if (item.route === currentPath) return true;
 
@@ -68,31 +83,40 @@ export const AppRoutes = () => {
         <Routes>
           {RoutesData?.filter((data) => data.route && data.component)?.map(
             (route, idx) => {
-              const isPublicRoute = ["off", "welcome", "bye"].includes(
-                route.type
-              );
+              // Define o wrapper de rota apropriado
+              let routeWrapper;
 
-              const routeElement = isPublicRoute ? (
-                <PublicRoute>
-                  <route.component />
-                </PublicRoute>
-              ) : (
-                <ProtectedRoute onlyAdmin={route.onlyAdmin}>
-                  <route.component />
-                </ProtectedRoute>
-              );
+              if (route.onlyAdmin) {
+                routeWrapper = (
+                  <AdminRoute>
+                    <route.component />
+                  </AdminRoute>
+                );
+              } else if (["off", "welcome", "bye"].includes(route.type)) {
+                routeWrapper = (
+                  <PublicRoute>
+                    <route.component />
+                  </PublicRoute>
+                );
+              } else {
+                routeWrapper = (
+                  <PrivateRoute>
+                    <route.component />
+                  </PrivateRoute>
+                );
+              }
 
               return (
                 <Route
                   key={`route-${idx}`}
                   path={route.route}
-                  element={routeElement}
+                  element={routeWrapper}
                 />
               );
             }
           )}
 
-          {/* fallback */}
+          {/* Rota de fallback */}
           <Route
             path="*"
             element={
@@ -107,12 +131,12 @@ export const AppRoutes = () => {
     </Grid>
   );
 };
-
-ProtectedRoute.propTypes = {
-  children: PropTypes.node.isRequired,
-  onlyAdmin: PropTypes.bool,
-};
-
 PublicRoute.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+PrivateRoute.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+AdminRoute.propTypes = {
   children: PropTypes.node.isRequired,
 };

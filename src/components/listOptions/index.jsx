@@ -2,7 +2,6 @@ import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
-  Button,
   Flex,
   List,
   ListItem,
@@ -13,8 +12,8 @@ import PropTypes from "prop-types";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelectedOption } from "../../contexts/selectedOptions";
 import { useEffect, useRef, useState } from "react";
-import { ChevronLeftIcon } from "@chakra-ui/icons";
 import { CanScrollComponent } from "../handleScroller";
+import { useAppContext } from "../../contexts";
 
 export const ListComponent = ({ title, array }) => {
   const navigate = useNavigate();
@@ -26,6 +25,8 @@ export const ListComponent = ({ title, array }) => {
   const [stack, setStack] = useState([{ title, items: array }]);
 
   const current = stack[stack.length - 1];
+
+  const { setCanReturn } = useAppContext();
 
   useEffect(() => {
     setStack([{ title, items: array }]);
@@ -42,20 +43,20 @@ export const ListComponent = ({ title, array }) => {
     }
   };
 
+  useEffect(() => {
+    if (stack.length >= 2) {
+      setCanReturn(false);
+      return;
+    }
+    setCanReturn(true);
+  }, [stack, setCanReturn]);
+
   const handleBreadcrumbClick = (index) => {
     const newStack = stack.slice(0, index + 1);
     setStack(newStack);
   };
 
-  const handleGoBack = () => {
-    if (stack.length > 1) {
-      const newStack = stack.slice(0, stack.length - 1);
-      setStack(newStack);
-    }
-  };
   const isMobile = useBreakpointValue({ base: true, md: false });
-
-  const breadcrumbItems = isMobile ? [stack[stack.length - 1]] : stack;
 
   return (
     <Flex
@@ -74,27 +75,8 @@ export const ListComponent = ({ title, array }) => {
           fontWeight="medium"
           fontSize={{ base: "md", md: "lg", lg: "xl" }}
         >
-          {/* Botão Voltar */}
-          {isMobile && stack.length > 1 && (
-            <Button
-              rightIcon={<ChevronLeftIcon />}
-              color="primary.white"
-              onClick={handleGoBack}
-              bg={"transparent"}
-              p={0}
-              height={"27px"}
-              border={"none"}
-              _hover={"none"}
-              sx={{ span: { m: 0 } }}
-              fontSize={{ base: "md", md: "lg", lg: "xl" }}
-              fontWeight={500}
-            >
-              Voltar
-            </Button>
-          )}
-
-          {breadcrumbItems.map((level, index) => {
-            const realIndex = isMobile ? stack.length - 1 : index;
+          {stack.map((level, index) => {
+            const realIndex = index;
             return (
               <BreadcrumbItem key={realIndex}>
                 <BreadcrumbLink
@@ -111,7 +93,9 @@ export const ListComponent = ({ title, array }) => {
                   fontSize={{ base: "md", md: "lg", lg: "xl", "2xl": "3xl" }}
                   cursor="pointer"
                 >
-                  {level.title}
+                  {isMobile && realIndex !== stack.length - 1
+                    ? level.title.slice(0, 4).concat("...")
+                    : level.title}
                 </BreadcrumbLink>
               </BreadcrumbItem>
             );

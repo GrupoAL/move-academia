@@ -1,11 +1,13 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { api } from "../services/api";
+import { decryptUserData } from "../Utils/encrypt";
 
 const AppContext = createContext({});
 
 export const AppProvider = ({ children }) => {
   const [data, setData] = useState({});
+  const [canReturn, setCanReturn] = useState(true);
 
   const [canAnimate, setCanAnimate] = useState({
     run: false,
@@ -22,7 +24,7 @@ export const AppProvider = ({ children }) => {
   const logout = async () => {
     const res = await api.get("/logout", {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("@moveAcademy:token")}`,
+        Authorization: `Bearer ${data?.token}`,
       },
     });
     return res.data;
@@ -40,15 +42,26 @@ export const AppProvider = ({ children }) => {
 
   //manage user data ---------------------------------------------------
   useEffect(() => {
-    const user = localStorage.getItem("@moveAcademy:user");
-    const token = localStorage.getItem("@moveAcademy:token");
+    const decrypt = async () => {
+      const stored = localStorage.getItem("@moveAcademy:userData");
+      if (!stored) return null;
 
-    if (token && user) {
-      setData({
-        user: user?.nome,
-        token,
-      });
-    }
+      try {
+        const res = await decryptUserData(stored);
+        if (res.token && res.user) {
+          setData({
+            user: res.user?.nome,
+            token: res.token,
+            isAdmin: res.user?.isAdmin || false,
+          });
+        }
+        return;
+      } catch (err) {
+        console.error("Error decrypting user data:", err);
+        return null;
+      }
+    };
+    decrypt();
   }, []);
 
   //Update user account settings ---------------------------------------------------
@@ -57,7 +70,7 @@ export const AppProvider = ({ children }) => {
     const res = await api.patch("/account/settings", data, {
       headers: {
         "Content-Type": "Application/json",
-        Authorization: `Bearer ${localStorage.getItem("@moveAcademy:token")}`,
+        Authorization: `Bearer ${data?.token}`,
       },
     });
     return res.data;
@@ -67,7 +80,7 @@ export const AppProvider = ({ children }) => {
   const getVideoByExercise = async (exerciseId) => {
     const res = await api.get(`/video/${exerciseId}`, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("@moveAcademy:token")}`,
+        Authorization: `Bearer ${data?.token}`,
       },
     });
     return res.data;
@@ -77,7 +90,7 @@ export const AppProvider = ({ children }) => {
   const getCategories = async () => {
     const res = await api.get("/categories", {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("@moveAcademy:token")}`,
+        Authorization: `Bearer ${data?.token}`,
       },
     });
     return res.data;
@@ -87,7 +100,7 @@ export const AppProvider = ({ children }) => {
   const createCategory = async (data) => {
     const res = await api.post("/categories", data, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("@moveAcademy:token")}`,
+        Authorization: `Bearer ${data?.token}`,
       },
     });
     return res.data;
@@ -97,7 +110,7 @@ export const AppProvider = ({ children }) => {
   const createExercise = async (data) => {
     const res = await api.post("/exercises", data, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("@moveAcademy:token")}`,
+        Authorization: `Bearer ${data?.token}`,
       },
     });
     return res.data;
@@ -110,6 +123,8 @@ export const AppProvider = ({ children }) => {
         setData,
         canAnimate,
         setCanAnimate,
+        canReturn,
+        setCanReturn,
         login,
         logout,
         register,

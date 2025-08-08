@@ -13,9 +13,7 @@ const AdminPage = () => {
     muscleGroup,
     newExercise
   ) => {
-    // Aqui você pode implementar a lógica para adicionar o exercício à sua lista
     console.log({ category, subcategory, muscleGroup, newExercise });
-    // Exemplo: atualizar o estado ou fazer uma chamada API
   };
   return (
     <Box

@@ -12,10 +12,11 @@ import { useNavigate } from "react-router-dom";
 import { useSelectedOption } from "../../contexts/selectedOptions";
 import { listItems } from "../../Utils";
 import { useLogout } from "../../hooks/useAuthQuery";
+import { useAppContext } from "../../contexts";
 
 export const MenuSandwich = () => {
   const navigate = useNavigate();
-
+  const { data } = useAppContext();
   const { setSelectedOption } = useSelectedOption();
   const { mutate } = useLogout();
 
@@ -69,6 +70,21 @@ export const MenuSandwich = () => {
           </MenuItem>
         ))}
         <Divider w={"90%"} p={2} />
+        {data?.isAdmin && (
+          <Text
+            cursor={"pointer"}
+            color={"primary.bg"}
+            fontSize={"lg"}
+            fontWeight={700}
+            onClick={() => navigate("/admin")}
+            display={"flex"}
+            alignItems={"center"}
+            gap={3}
+            _hover={{ color: "primary.green" }}
+          >
+            Admin
+          </Text>
+        )}
         <Text
           cursor={"pointer"}
           color={"primary.bg"}

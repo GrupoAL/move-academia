@@ -16,7 +16,7 @@ const AdminTabs = ({ activeTab, setActiveTab }) => {
             bg: activeTab === "categories" ? "white" : "primary.green",
           }}
           fontWeight={activeTab === "categories" ? "bold" : "normal"}
-          text={"Categorias de Exercícios"}
+          text={"Categorias e Exercícios"}
         />
 
         <ButtonComponent

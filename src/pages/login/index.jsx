@@ -14,14 +14,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { useAppContext } from "../../contexts";
-// import WelcomeAnimation from "../../components/animations/login";
-// import { useState } from "react";
 
 export const LoginPage = () => {
   const navigate = useNavigate();
 
   const { isOpen, onToggle } = useDisclosure();
-  // const [visible, setVisible] = useState(false);
   const { mutate, isPending } = useLogin();
   const { data } = useAppContext();
 

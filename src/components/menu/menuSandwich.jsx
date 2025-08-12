@@ -13,6 +13,7 @@ import { useSelectedOption } from "../../contexts/selectedOptions";
 import { listItems } from "../../Utils";
 import { useLogout } from "../../hooks/useAuthQuery";
 import { useAppContext } from "../../contexts";
+import { GrUserAdmin } from "react-icons/gr";
 
 export const MenuSandwich = () => {
   const navigate = useNavigate();
@@ -76,13 +77,16 @@ export const MenuSandwich = () => {
             color={"primary.bg"}
             fontSize={"lg"}
             fontWeight={700}
-            onClick={() => navigate("/admin")}
+            onClick={() => {
+              setSelectedOption("admin");
+              navigate("/admin");
+            }}
             display={"flex"}
             alignItems={"center"}
             gap={3}
             _hover={{ color: "primary.green" }}
           >
-            Admin
+            Admin <GrUserAdmin fontSize={"32px"} />
           </Text>
         )}
         <Text

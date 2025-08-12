@@ -24,10 +24,8 @@ export const useLogin = () => {
         run: true,
         message: `Bem vindo, ${user.nome.split(" ")[0]}!`,
       });
-      // localStorage.setItem("@moveAcademy:user", user.nome);
-      // localStorage.setItem("@moveAcademy:token", token);
       const encryptedUserData = await encryptUserData({
-        username: user.nome,
+        user: user.nome,
         token,
         isAdmin: user?.isAdmin || false,
       });
@@ -51,8 +49,7 @@ export const useLogout = () => {
     mutationFn: logout,
     onSuccess: () => {
       setData({});
-      localStorage.removeItem("@moveAcademy:user");
-      localStorage.removeItem("@moveAcademy:token");
+
       localStorage.removeItem("@moveAcademy:userData");
       setCanAnimate({
         run: true,
@@ -62,8 +59,6 @@ export const useLogout = () => {
     },
     onError: (error) => {
       navigate("/");
-      localStorage.removeItem("@moveAcademy:user");
-      localStorage.removeItem("@moveAcademy:token");
       localStorage.removeItem("@moveAcademy:userData");
 
       toast.error(

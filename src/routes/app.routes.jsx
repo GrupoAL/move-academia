@@ -1,15 +1,34 @@
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
-import { useAppContext } from "../contexts";
 import { Grid } from "@chakra-ui/react";
 import { HeaderComponent } from "../components/header";
 import { FooterComponent } from "../components/footer";
 import { RoutesData } from "../data";
 import PropTypes from "prop-types";
+import { useAppContext } from "../contexts/index.jsx";
+import { decryptUserData } from "../Utils/encrypt.js";
+
+const decrypt = async () => {
+  const stored = localStorage.getItem("@moveAcademy:userData");
+  if (!stored) return null;
+
+  try {
+    const res = await decryptUserData(stored);
+    if (res.token && res.user) {
+      return {
+        user: res.user?.nome,
+        token: res.token,
+        isAdmin: res.user?.isAdmin || false,
+      };
+    }
+  } catch (err) {
+    console.error("Error decrypting user data:", err);
+    return null;
+  }
+};
 
 const PublicRoute = ({ children }) => {
-  const { data, loading } = useAppContext();
-
-  if (loading) return null;
+  const { data } = useAppContext();
+  decrypt();
 
   if (data?.token) {
     return <Navigate to="/dashboard" replace />;
@@ -19,9 +38,8 @@ const PublicRoute = ({ children }) => {
 };
 
 const PrivateRoute = ({ children }) => {
-  const { data, loading } = useAppContext();
-
-  if (loading) return null;
+  const { data } = useAppContext();
+  decrypt();
 
   if (!data?.token) {
     return <Navigate to="/" replace />;
@@ -31,9 +49,9 @@ const PrivateRoute = ({ children }) => {
 };
 
 const AdminRoute = ({ children }) => {
-  const { data, loading } = useAppContext();
+  const { data } = useAppContext();
 
-  if (loading) return null;
+  decrypt();
 
   if (!data?.token) {
     return <Navigate to="/" replace />;

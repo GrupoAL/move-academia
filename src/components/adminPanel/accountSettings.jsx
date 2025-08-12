@@ -10,7 +10,7 @@ import { InputComponent } from "../input";
 import { ButtonComponent } from "../button";
 import { useUpdateAccountSettings } from "../../hooks/useAccountSettings";
 import * as yup from "yup";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 
@@ -23,7 +23,7 @@ const AccountSettings = () => {
   //     navigate("/recoverPassword");
   //   }, 500);
   // };
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const loginSchema = yup.object({
     email: yup.string().email("Email inválido").required("Email é obrigatório"),
     senhaAtual: yup.string().required("Senha é obrigatória"),

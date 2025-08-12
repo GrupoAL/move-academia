@@ -8,6 +8,7 @@ export const ButtonComponent = ({
   color,
   bg,
   isLoading,
+  children,
   ...rest
 }) => {
   return (
@@ -29,7 +30,7 @@ export const ButtonComponent = ({
       }}
       {...rest}
     >
-      {text}
+      {children || <>{text}</>}
     </Button>
   );
 };
@@ -38,7 +39,8 @@ ButtonComponent.propTypes = {
   type: PropTypes.string,
   variant: PropTypes.string,
   text: PropTypes.string,
-  color: PropTypes.string,
-  bg: PropTypes.string,
+  color: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  bg: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   isLoading: PropTypes.any,
+  children: PropTypes.node,
 };

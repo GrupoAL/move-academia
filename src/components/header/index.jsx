@@ -1,5 +1,4 @@
 import {
-  Badge,
   Box,
   Button,
   Flex,
@@ -186,11 +185,8 @@ export const HeaderComponent = () => {
                                 py={3}
                               >
                                 <Text fontWeight="medium">
-                                  {item.categoria} sss
+                                  {item.categoria}
                                 </Text>
-                                {data?.user?.isAdmin && (
-                                  <Text fontWeight="medium">Admin</Text>
-                                )}
                               </MenuItem>
                             ))}
                           </MenuList>

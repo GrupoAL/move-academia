@@ -58,7 +58,7 @@ export const DashboardPage = () => {
               letterSpacing={"1px"}
               color={theme.colors.white}
             >
-              Olá, {data?.user.split(" ")[0]}!
+              Olá, {data?.user?.split(" ")[0]}!
             </Text>
           </Fade>
           <Flex direction="column" w="100%" gap={3}>

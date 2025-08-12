@@ -6,9 +6,11 @@ import { useState } from "react";
 
 export const VideoPlayerPage = ({ videoId }) => {
   const [isWatched, setIsWatched] = useState(false);
+
   const handleVideoEnd = () => {
     setIsWatched(true);
   };
+
   return (
     <Grid
       templateColumns={{ base: "1fr", lg: "1fr 1fr" }}
@@ -18,7 +20,6 @@ export const VideoPlayerPage = ({ videoId }) => {
       height="100%"
       overflow={"scroll"}
     >
-      {/* Área do Vídeo */}
       <Box
         alignSelf="center"
         w="100%"
@@ -37,15 +38,8 @@ export const VideoPlayerPage = ({ videoId }) => {
                 autoplay: 1,
               },
             }}
-            onEnd={handleVideoEnd} // <-- Aqui dispara quando o vídeo termina
+            onEnd={handleVideoEnd}
           />
-          {/* <iframe
-            src={`https://www.youtube.com/embed/${videoId}`}
-            title="YouTube video"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            onEnded={console.log("Video ended")}
-          /> */}
         </AspectRatio>
       </Box>
       <DescriptionComponent isWatched={isWatched} setIsWatched={setIsWatched} />

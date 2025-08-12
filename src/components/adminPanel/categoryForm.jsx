@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   FormControl,
   FormErrorMessage,
   FormLabel,
@@ -11,11 +10,15 @@ import {
   Radio,
   RadioGroup,
   Collapse,
+  Heading,
 } from "@chakra-ui/react";
-import { useState } from "react";
+// import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { ButtonComponent } from "../button";
+import { useUpdateAccountSettings } from "../../hooks/useAccountSettings";
+import PropTypes from "prop-types";
 
 // Esquema de validação com Yup
 const exerciseSchema = yup.object().shape({
@@ -49,13 +52,15 @@ const exerciseSchema = yup.object().shape({
 
 export const ExerciseForm = ({ listItems, onAddItem }) => {
   const toast = useToast();
+  const { isPending } = useUpdateAccountSettings();
+
   const {
     register,
     handleSubmit,
     watch,
     reset,
     setValue,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm({
     resolver: yupResolver(exerciseSchema),
     defaultValues: {
@@ -63,7 +68,7 @@ export const ExerciseForm = ({ listItems, onAddItem }) => {
     },
   });
 
-  const [isAddingNew, setIsAddingNew] = useState(false);
+  // const [isAddingNew, setIsAddingNew] = useState(false);
   const mode = watch("mode");
   const selectedCategory = watch("category");
   const selectedSubcategory = watch("subcategory");
@@ -165,11 +170,19 @@ export const ExerciseForm = ({ listItems, onAddItem }) => {
   };
 
   return (
-    <Box maxW="md" mx="auto" mt={8} p={6} borderWidth="1px" borderRadius="lg">
+    <Box maxW="md" mx="auto">
+      <Heading
+        as="h2"
+        fontSize="lg"
+        fontFamily={"Bebas Neue, serif"}
+        color={"primary.green"}
+      >
+        Cadastros
+      </Heading>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Stack spacing={4}>
           <FormControl>
-            <FormLabel>Tipo de Cadastro</FormLabel>
+            <FormLabel>o que vamos cadastrar?</FormLabel>
             <RadioGroup
               value={mode}
               onChange={(val) => {
@@ -386,19 +399,28 @@ export const ExerciseForm = ({ listItems, onAddItem }) => {
             )}
           </Collapse>
 
-          <Button
+          <ButtonComponent
             type="submit"
-            colorScheme="blue"
-            isLoading={isSubmitting}
-            loadingText="Cadastrando..."
+            variant={"solid"}
+            color="primary.green"
+            width="full"
+            mt={{ base: 2, md: 4 }}
+            isLoading={isPending}
+            loadingText="Atualizando..."
+            text={"Atualizar Dados"}
           >
             {mode === "category" && "Adicionar Categoria"}
             {mode === "subcategory" && "Adicionar Subcategoria"}
             {mode === "muscleGroup" && "Adicionar Grupo Muscular"}
             {mode === "exercise" && "Cadastrar Exercício"}
-          </Button>
+          </ButtonComponent>
         </Stack>
       </form>
     </Box>
   );
+};
+
+ExerciseForm.propTypes = {
+  listItems: PropTypes.array,
+  onAddItem: PropTypes.func,
 };

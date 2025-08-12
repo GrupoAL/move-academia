@@ -28,7 +28,6 @@ export const InputComponent = forwardRef(
 InputComponent.displayName = "InputComponent";
 
 InputComponent.propTypes = {
-  ref: PropTypes.any,
   type: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   bg: PropTypes.any,

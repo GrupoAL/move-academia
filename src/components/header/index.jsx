@@ -1,25 +1,13 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  Text,
-  useBreakpointValue,
-} from "@chakra-ui/react";
+import { Box, Flex, Text, useBreakpointValue } from "@chakra-ui/react";
 import { IoExitOutline } from "react-icons/io5";
 import { MdOutlineDoubleArrow } from "react-icons/md";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useSelectedOption } from "../../contexts/selectedOptions";
-import { listItems } from "../../Utils";
 import { MenuSandwich } from "../menu/menuSandwich";
 import { MenuSearch } from "../menu/menuSearch";
 import { useLogout } from "../../hooks/useAuthQuery";
 import { useAppContext } from "../../contexts";
 import { useEffect, useState } from "react";
-import { ChevronDownIcon } from "@chakra-ui/icons";
+import { MenuExercise } from "../menu/menuExercise";
 
 export const HeaderComponent = () => {
   const navigate = useNavigate();
@@ -48,7 +36,6 @@ export const HeaderComponent = () => {
   }, [location, setCanReturn]);
 
   const isMobile = useBreakpointValue({ base: true, md: false });
-  const { setSelectedOption, selectedOption } = useSelectedOption();
   const { canAnimate } = useAppContext();
 
   return (
@@ -87,7 +74,7 @@ export const HeaderComponent = () => {
                     />
                   )}
                 </Box>
-
+                {isDash && isMobile && <MenuExercise />}
                 {isMobile && (
                   <Flex gap={4} alignItems={"center"}>
                     <MenuSandwich />
@@ -108,92 +95,7 @@ export const HeaderComponent = () => {
                   justifyContent={"end"}
                   alignItems={"center"}
                 >
-                  {isDash && (
-                    <Menu transition={".3s"}>
-                      {() => (
-                        <>
-                          <MenuButton
-                            as={Button}
-                            rightIcon={<ChevronDownIcon />}
-                            variant="outline"
-                            border={"none"}
-                            borderBottom={"1px solid white"}
-                            borderRadius={0}
-                            color={"primary.white"}
-                            size="lg"
-                            fontSize={{
-                              base: "md",
-                              md: "lg",
-                              lg: "xl",
-                              "2xl": "3xl",
-                            }}
-                            px={6}
-                            _hover={{
-                              color: "primary.yellow",
-                              borderColor: "primary.yellow",
-                            }}
-                            _active={{
-                              color: "primary.yellow",
-                              borderColor: "primary.yellow",
-                            }}
-                          >
-                            {selectedOption
-                              ? selectedOption.categoria
-                              : "Selecione uma categoria"}
-                          </MenuButton>
-
-                          <MenuList
-                            bg={"black"}
-                            py={0}
-                            minW="200px"
-                            boxShadow="xl"
-                            border={"1px solid white"}
-                            borderRadius={"8px"}
-                            overflow={"hidden"}
-                          >
-                            {listItems.map((item, i) => (
-                              <MenuItem
-                                key={i}
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  setSelectedOption(item);
-                                  navigate(`/dashboard/${item.categoria}`);
-                                }}
-                                color={"primary.white"}
-                                _expanded={{
-                                  bg: "black",
-                                  border: "1px solid white",
-                                  borderRadius: "8px",
-                                }}
-                                bg={"primary.green"}
-                                fontSize={{
-                                  base: "md",
-                                  md: "lg",
-                                  lg: "xl",
-                                  "2xl": "3xl",
-                                }}
-                                transition={".3s"}
-                                _hover={{
-                                  bg: "primary.white",
-                                  color: "primary.green",
-                                }}
-                                _focus={{
-                                  bg: "primary.white",
-                                  color: "primary.green",
-                                }}
-                                px={4}
-                                py={3}
-                              >
-                                <Text fontWeight="medium">
-                                  {item.categoria}
-                                </Text>
-                              </MenuItem>
-                            ))}
-                          </MenuList>
-                        </>
-                      )}
-                    </Menu>
-                  )}
+                  {isDash && <MenuExercise />}
                   <MenuSearch />
                   <Text
                     cursor={"pointer"}

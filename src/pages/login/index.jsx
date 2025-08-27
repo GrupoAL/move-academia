@@ -123,6 +123,8 @@ export const LoginPage = () => {
               isLoading={isPending}
             />
           </Flex>
+          {/*
+         Temporary disabled
           <Button
             bg="primary.bg"
             color="primary.yellow"
@@ -133,7 +135,7 @@ export const LoginPage = () => {
             onClick={() => handleAnimate()}
           >
             Esqueci minha senha!
-          </Button>
+          </Button>*/}
         </Flex>
       </Flex>
     </SlideFade>

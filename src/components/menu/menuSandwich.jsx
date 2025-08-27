@@ -1,8 +1,16 @@
 import { HamburgerIcon } from "@chakra-ui/icons";
-import { Divider, Menu, MenuButton, MenuList, Text } from "@chakra-ui/react";
+import {
+  Divider,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Text,
+} from "@chakra-ui/react";
 import { IoExitOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { useSelectedOption } from "../../contexts/selectedOptions";
+import { listItems } from "../../Utils";
 import { useLogout } from "../../hooks/useAuthQuery";
 import { useAppContext } from "../../contexts";
 import { GrUserAdmin } from "react-icons/gr";
@@ -42,6 +50,27 @@ export const MenuSandwich = () => {
         top={"-55px"}
         padding="50px 12px 12px 12px"
       >
+        {listItems.map((item) => (
+          <MenuItem
+            key={item.categoria}
+            p={0}
+            w={"fit-content"}
+            color={"primary.bg"}
+            fontSize={"lg"}
+            fontWeight={700}
+            borderBottom="0.5px solid"
+            transition=".3s"
+            lineHeight={"24px"}
+            _hover={{ cursor: "pointer", color: "primary.green" }}
+            onClick={() => {
+              setSelectedOption(item);
+              navigate(`/dashboard/${item.categoria}`);
+            }}
+          >
+            {item.categoria}
+          </MenuItem>
+        ))}
+        <Divider w={"90%"} p={2} />
         {data?.isAdmin && (
           <Text
             cursor={"pointer"}
@@ -60,8 +89,6 @@ export const MenuSandwich = () => {
             Admin <GrUserAdmin fontSize={"32px"} />
           </Text>
         )}
-        <Divider w={"90%"} p={2} />
-
         <Text
           cursor={"pointer"}
           color={"primary.bg"}

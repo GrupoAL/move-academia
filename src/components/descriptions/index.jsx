@@ -1,4 +1,4 @@
-import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
+import { ChevronDownIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -67,12 +67,16 @@ export const DescriptionComponent = ({ isWatched, setIsWatched }) => {
         pr={2}
         color="primary.white"
         gap={2}
-        mt={2}
       >
         <Text fontSize="md" fontWeight="bold">
           ASSISTIDO
         </Text>
-        <Switch isChecked={isWatched} size="lg" colorScheme="blue" />
+        <Switch
+          isChecked={isWatched}
+          onChange={(e) => setIsWatched(e.target.checked)}
+          size="lg"
+          colorScheme="blue"
+        />
       </Flex>
       <AnimatePresence>
         <motion.div
@@ -81,12 +85,12 @@ export const DescriptionComponent = ({ isWatched, setIsWatched }) => {
               ? "80%"
               : isFullText || isComplement
               ? "100%"
-              : "80%",
+              : "80%", // Tamanho X (100px) e Tamanho Y (300px)
             height: isMobile
               ? "80%"
               : isFullText || isComplement
               ? "100%"
-              : "80%",
+              : "80%", // Tamanho X (50px) e Tamanho Y (200px)
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -328,35 +332,34 @@ export const DescriptionComponent = ({ isWatched, setIsWatched }) => {
             {!isMobile && (isComplement || isFullText) ? (
               <></>
             ) : (
-              <Button
-                leftIcon={<ChevronDownIcon />}
-                bg="white"
-                color="primary.green"
-                fontSize={{
-                  base: "sm",
-                  sm: "sm",
-                  md: "md",
-                  lg: "md",
-                  xl: "md",
-                }}
-                sx={{
-                  ".chakra-button__icon": {
-                    transition: "0.3s ease-in-out",
-                    transform: isComplement ? "rotate(180deg)" : "rotate(0deg)",
-                  },
-                }}
-                fontWeight="bold"
-                letterSpacing="1px"
-                shadow="lg"
-                w={"full"}
-                px={6}
-                py={3}
-                _hover={{ bg: "green.50" }}
-                onClick={() => setIsComplement(!isComplement)}
-                mb={3}
+              <ScaleFade
+                in={!isComplement}
+                transition={{ exit: { delay: 1 }, enter: { duration: 0.5 } }}
               >
-                MATERIAL COMPLEMENTAR
-              </Button>
+                <Button
+                  leftIcon={<ChevronDownIcon />}
+                  bg="white"
+                  color="primary.green"
+                  fontSize={{
+                    base: "sm",
+                    sm: "sm",
+                    md: "md",
+                    lg: "md",
+                    xl: "md",
+                  }}
+                  fontWeight="bold"
+                  letterSpacing="1px"
+                  shadow="lg"
+                  w={"full"}
+                  px={6}
+                  py={3}
+                  _hover={{ bg: "green.50" }}
+                  onClick={() => setIsComplement(!isComplement)}
+                  mb={3}
+                >
+                  MATERIAL COMPLEMENTAR
+                </Button>
+              </ScaleFade>
             )}
           </Flex>
         </motion.div>

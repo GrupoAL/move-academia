@@ -58,12 +58,13 @@ export const useLogout = () => {
       navigate("/");
     },
     onError: (error) => {
-      navigate("/");
       localStorage.removeItem("@moveAcademy:userData");
+      setData({});
 
       toast.error(
         error.response?.data?.error || "Logout failed. Redirecting to login."
       );
+      navigate("/");
     },
   });
 };

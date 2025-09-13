@@ -3,7 +3,7 @@ import { Box, VStack } from "@chakra-ui/react";
 import AccountSettings from "../../components/adminPanel/accountSettings";
 import AdminTabs from "../../components/adminPanel/adminTabs";
 import { ExerciseForm } from "../../components/adminPanel/categoryForm";
-import { listItems } from "../../Utils";
+// import { listItems } from "../../Utils";
 
 const AdminPage = () => {
   const [activeTab, setActiveTab] = useState("categories");

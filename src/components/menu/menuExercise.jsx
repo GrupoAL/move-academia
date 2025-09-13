@@ -6,14 +6,16 @@ import {
   MenuList,
   Text,
 } from "@chakra-ui/react";
-import { listItems } from "../../Utils";
 import { useNavigate } from "react-router-dom";
 import { useSelectedOption } from "../../contexts/selectedOptions";
 import { ChevronDownIcon } from "@chakra-ui/icons";
+import { useGetExercises } from "../../hooks/useExercisesQuery";
 
 export const MenuExercise = () => {
   const navigate = useNavigate();
   const { setSelectedOption, selectedOption } = useSelectedOption();
+  const { data: listItems } = useGetExercises();
+
   return (
     <Menu transition={".3s"}>
       {() => (
@@ -57,42 +59,43 @@ export const MenuExercise = () => {
             borderRadius={"8px"}
             overflow={"hidden"}
           >
-            {listItems.map((item, i) => (
-              <MenuItem
-                key={i}
-                onClick={(e) => {
-                  e.preventDefault();
-                  setSelectedOption(item);
-                  navigate(`/dashboard/${item.categoria}`);
-                }}
-                color={"primary.white"}
-                _expanded={{
-                  bg: "black",
-                  border: "1px solid white",
-                  borderRadius: "8px",
-                }}
-                bg={"primary.green"}
-                fontSize={{
-                  base: "md",
-                  md: "lg",
-                  lg: "xl",
-                  "2xl": "3xl",
-                }}
-                transition={".3s"}
-                _hover={{
-                  bg: "primary.white",
-                  color: "primary.green",
-                }}
-                _focus={{
-                  bg: "primary.white",
-                  color: "primary.green",
-                }}
-                px={4}
-                py={3}
-              >
-                <Text fontWeight="medium">{item.categoria}</Text>
-              </MenuItem>
-            ))}
+            {listItems &&
+              listItems.map((item, i) => (
+                <MenuItem
+                  key={i}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setSelectedOption(item);
+                    navigate(`/dashboard/${item.categoria}`);
+                  }}
+                  color={"primary.white"}
+                  _expanded={{
+                    bg: "black",
+                    border: "1px solid white",
+                    borderRadius: "8px",
+                  }}
+                  bg={"primary.green"}
+                  fontSize={{
+                    base: "md",
+                    md: "lg",
+                    lg: "xl",
+                    "2xl": "3xl",
+                  }}
+                  transition={".3s"}
+                  _hover={{
+                    bg: "primary.white",
+                    color: "primary.green",
+                  }}
+                  _focus={{
+                    bg: "primary.white",
+                    color: "primary.green",
+                  }}
+                  px={4}
+                  py={3}
+                >
+                  <Text fontWeight="medium">{item.categoria}</Text>
+                </MenuItem>
+              ))}
           </MenuList>
         </>
       )}

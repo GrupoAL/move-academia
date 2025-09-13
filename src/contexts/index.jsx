@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { api } from "../services/api";
 import { decryptUserData } from "../Utils/encrypt";
+import { convertExercises } from "../Utils";
 
 const AppContext = createContext();
 
@@ -111,12 +112,24 @@ export const AppProvider = ({ children }) => {
 
   //create Exercise ---------------------------------------------------
   const createExercise = async (data) => {
-    const res = await api.post("/exercises", data, {
+    const res = await api.post("/exercicios", data, {
       headers: {
         Authorization: `Bearer ${data?.token}`,
       },
     });
     return res.data;
+  };
+
+  //Get Exercises ---------------------------------------------------
+  const getExercises = async (token) => {
+    const res = await api.get("/exercicios", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const converted = convertExercises(res.data);
+    return converted;
   };
 
   return (
@@ -138,6 +151,7 @@ export const AppProvider = ({ children }) => {
         createExercise,
         getVideoByExercise,
         updateAccountSettings,
+        getExercises,
       }}
     >
       {children}

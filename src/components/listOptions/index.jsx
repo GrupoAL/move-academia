@@ -119,7 +119,7 @@ export const ListComponent = ({ title, array }) => {
               <SlideFade
                 key={i}
                 in
-                transition={{ enter: { duration: (i + 1) / 8 } }}
+                transition={{ enter: { duration: i <= 10 ? (i + 1) / 8 : 0 } }}
                 offsetX={"-30px"}
                 offsetY={"0"}
               >

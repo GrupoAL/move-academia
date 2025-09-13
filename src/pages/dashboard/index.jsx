@@ -1,23 +1,18 @@
-import { Fade, Flex, SlideFade, Text } from "@chakra-ui/react";
+import { Fade, Flex, SlideFade, Spinner, Text } from "@chakra-ui/react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ButtonComponent } from "../../components/button";
 import { ListComponent } from "../../components/listOptions";
 import { useSelectedOption } from "../../contexts/selectedOptions";
 import theme from "../../themes";
-import { listItems } from "../../Utils";
 import { VideoPlayerPage } from "../videoPlayer";
 import { useAppContext } from "../../contexts";
-
-// import { useAppContext } from "../../contexts";
+import { useGetExercises } from "../../hooks/useExercisesQuery";
 
 export const DashboardPage = () => {
   const { data } = useAppContext();
 
-  // const isAnimate = sessionStorage.getItem("@moveAcademya:isLogin");
-
   const { selectedOption, setSelectedOption } = useSelectedOption();
-  // const { data } = usePing();
-  // const {  } = useAppContext();
+  const { data: listItems, isLoading } = useGetExercises();
 
   const params = useParams();
   const navigate = useNavigate();
@@ -62,31 +57,38 @@ export const DashboardPage = () => {
             </Text>
           </Fade>
           <Flex direction="column" w="100%" gap={3}>
-            {listItems.map((el, i) => (
-              <SlideFade
-                key={el.categoria}
-                in
-                transition={{ enter: { duration: (i + 1) / 8 } }}
-                offsetX={"30px"}
-                offsetY={"0"}
-              >
-                <ButtonComponent
-                  text={el.categoria}
-                  h={{ base: "40px", md: "60px" }}
-                  w={"full"}
-                  fontSize="md"
-                  fontWeight={700}
-                  bg="primary.white"
-                  color="primary.bg"
-                  letterSpacing={"1px"}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setSelectedOption(el);
-                    navigate(`/dashboard/${el.categoria}`);
-                  }}
-                />
-              </SlideFade>
-            ))}
+            {isLoading && (
+              <Flex w={"full"} alignItems={"center"} justifyContent={"center"}>
+                <Spinner color="primary.green" size="xl" />
+              </Flex>
+            )}
+
+            {listItems &&
+              listItems.map((el, i) => (
+                <SlideFade
+                  key={el.categoria}
+                  in
+                  transition={{ enter: { duration: (i + 1) / 8 } }}
+                  offsetX={"30px"}
+                  offsetY={"0"}
+                >
+                  <ButtonComponent
+                    text={el.categoria}
+                    h={{ base: "40px", md: "60px" }}
+                    w={"full"}
+                    fontSize="md"
+                    fontWeight={700}
+                    bg="primary.white"
+                    color="primary.bg"
+                    letterSpacing={"1px"}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setSelectedOption(el);
+                      navigate(`/dashboard/${el.categoria}`);
+                    }}
+                  />
+                </SlideFade>
+              ))}
           </Flex>
         </Flex>
       );

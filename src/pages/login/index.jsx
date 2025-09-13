@@ -1,11 +1,4 @@
-import {
-  Avatar,
-  Button,
-  Flex,
-  SlideFade,
-  Text,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { Avatar, Flex, SlideFade, Text, useDisclosure } from "@chakra-ui/react";
 import { ButtonComponent } from "../../components/button";
 import { InputComponent } from "../../components/input";
 import { useNavigate } from "react-router-dom";

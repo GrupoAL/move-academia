@@ -10,31 +10,43 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
 import { TfiSearch } from "react-icons/tfi";
-import { flattenList, listItems } from "../../Utils";
+import { flattenList } from "../../Utils";
 import { InputComponent } from "../input";
 import { ButtonComponent } from "../button";
 import { BounceArrowAnimation } from "../animations/bounceArrow";
 import { useNavigate } from "react-router-dom";
+import { useGetExercises } from "../../hooks/useExercisesQuery";
 
 export const MenuSearch = () => {
   const navigate = useNavigate();
 
   const [searchTerm, setSearchTerm] = useState("");
+  const { data: listItems, isLoading } = useGetExercises();
+  const [filteredItems, setFilteredItems] = useState("");
 
-  const searchOptions = flattenList(listItems);
-
-  const filteredItems = searchOptions.filter((item) =>
-    item?.label
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .includes(
-        searchTerm
+  useEffect(() => {
+    if (listItems && !isLoading) {
+      const newFiltered = flattenList(listItems)?.filter((item) =>
+        item?.label
           .toLowerCase()
           .normalize("NFD")
           .replace(/[\u0300-\u036f]/g, "")
-      )
-  );
+          .includes(
+            searchTerm
+              .toLowerCase()
+              .normalize("NFD")
+              .replace(/[\u0300-\u036f]/g, "")
+          )
+      );
+
+      const uniqueFiltered = newFiltered.filter(
+        (item, index, self) =>
+          index === self.findIndex((t) => t.label === item.label)
+      );
+
+      setFilteredItems(uniqueFiltered);
+    }
+  }, [listItems, isLoading, searchTerm]);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -178,28 +190,29 @@ export const MenuSearch = () => {
                 position={"relative"}
                 onScroll={checkScrollPossibility}
               >
-                {filteredItems?.map((item) => (
-                  <Box
-                    key={item.value}
-                    p={1}
-                    borderBottom="0.5px solid"
-                    color={"primary.white"}
-                    fontSize={"sm"}
-                    fontWeight={700}
-                    transition={".3s"}
-                    _hover={{
-                      cursor: "pointer",
-                      color: "primary.green",
-                      fontSize: "xl",
-                    }}
-                    onClick={() => {
-                      onClose();
-                      navigate(item.value);
-                    }}
-                  >
-                    {item.label}
-                  </Box>
-                ))}
+                {filteredItems &&
+                  filteredItems?.map((item) => (
+                    <Box
+                      key={item.value}
+                      p={1}
+                      borderBottom="0.5px solid"
+                      color={"primary.white"}
+                      fontSize={"sm"}
+                      fontWeight={700}
+                      transition={".3s"}
+                      _hover={{
+                        cursor: "pointer",
+                        color: "primary.green",
+                        fontSize: "xl",
+                      }}
+                      onClick={() => {
+                        onClose();
+                        navigate(item.value);
+                      }}
+                    >
+                      {item.label}
+                    </Box>
+                  ))}
               </Box>
               <Box
                 mb={2}
